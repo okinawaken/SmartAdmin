@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.lab1024.sa.common.common.code.SystemErrorCode;
 import net.lab1024.sa.common.common.code.UserErrorCode;
 import net.lab1024.sa.common.common.domain.ResponseDTO;
-import net.lab1024.sa.common.common.domain.SystemEnvironment;
+import net.lab1024.sa.common.common.domain.SystemEnv;
 import net.lab1024.sa.common.common.exception.BusinessException;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ import java.util.stream.Collectors;
 public class GlobalExceptionHandler {
 
     @Autowired
-    private SystemEnvironment systemEnvironment;
+    private SystemEnv systemEnvironment;
 
     /**
      * json 格式错误 缺少请求体

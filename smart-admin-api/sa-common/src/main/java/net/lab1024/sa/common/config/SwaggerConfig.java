@@ -57,7 +57,7 @@ import java.util.Map;
 @Slf4j
 @EnableSwagger2
 @Configuration
-@Conditional(SystemEnvironmentConfig.class)
+@Conditional(SystemEnvConfig.class)
 public class SwaggerConfig implements EnvironmentAware, BeanDefinitionRegistryPostProcessor {
 
     /**

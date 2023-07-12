@@ -15,7 +15,7 @@ import lombok.Getter;
  */
 @AllArgsConstructor
 @Getter
-public enum SystemEnvironmentEnum implements BaseEnum {
+public enum SystemEnvEnum implements BaseEnum {
     /**
      * dev
      */

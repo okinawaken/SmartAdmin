@@ -8,6 +8,7 @@ import net.lab1024.sa.common.common.interceptor.AbstractInterceptor;
 import net.lab1024.sa.common.common.util.SmartEnumUtil;
 import net.lab1024.sa.common.handler.GlobalExceptionHandler;
 import net.lab1024.sa.common.module.support.token.TokenService;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.context.annotation.Configuration;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,22 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Configuration
 public class AdminInterceptor extends AbstractInterceptor {
+
+    /**
+     * 开发环境 方便调试 默认 user id 1
+     * 可以根据id 查询实际用户数据
+     *
+     * @param token
+     */
+    @Override
+    public RequestUser getDevRequestUser(String token) {
+        long userId = NumberUtils.toLong(token, 1L);
+        RequestUser requestUser = new RequestUser();
+        requestUser.setUserId(userId);
+        requestUser.setUserName("dev");
+        requestUser.setUserType(UserTypeEnum.ADMIN_EMPLOYEE);
+        return requestUser;
+    }
 
     @Override
     public RequestUser checkTokenAndGetUser() {

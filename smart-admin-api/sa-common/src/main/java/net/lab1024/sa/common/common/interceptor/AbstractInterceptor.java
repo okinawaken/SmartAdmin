@@ -8,8 +8,12 @@ import net.lab1024.sa.common.common.constant.RequestHeaderConst;
 import net.lab1024.sa.common.common.constant.StringConst;
 import net.lab1024.sa.common.common.domain.RequestUser;
 import net.lab1024.sa.common.common.domain.ResponseDTO;
+import net.lab1024.sa.common.common.domain.SystemEnv;
+import net.lab1024.sa.common.common.enumeration.SystemEnvEnum;
 import net.lab1024.sa.common.common.util.SmartRequestUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.CollectionUtils;
@@ -23,6 +27,7 @@ import java.util.List;
 
 /**
  * 抽象拦截器
+ * 如果有额外的拦截处理 可以继承此类
  *
  * @Author 1024创新实验室: 罗伊
  * @Date 2021-10-09 20:56:14
@@ -32,12 +37,23 @@ import java.util.List;
  */
 public abstract class AbstractInterceptor implements HandlerInterceptor {
 
+    @Autowired
+    private SystemEnv systemEnv;
+
     /**
      * Token获取用户信息
      *
      * @return
      */
     public abstract RequestUser checkTokenAndGetUser();
+
+    /**
+     * 获取 dev 开发用户
+     *
+     * @param token
+     * @return
+     */
+    public abstract RequestUser getDevRequestUser(String token);
 
     /**
      * 拦截路径
@@ -89,24 +105,25 @@ public abstract class AbstractInterceptor implements HandlerInterceptor {
         if (this.contain(this.getIgnoreUrlList(), target)) {
             return true;
         }
-        //不需要登录
-        NoNeedLogin noNeedLogin = ((HandlerMethod) handler).getMethodAnnotation(NoNeedLogin.class);
         // 检查是否包含 token
         String xRequestToken = request.getParameter(RequestHeaderConst.TOKEN);
         String xHeaderToken = request.getHeader(RequestHeaderConst.TOKEN);
         String xAccessToken = StringUtils.isNotBlank(xRequestToken) ? xRequestToken : xHeaderToken;
         // 包含token 则获取用户信息 并保存
         if (StringUtils.isNotBlank(xAccessToken)) {
-            RequestUser requestUser = this.checkTokenAndGetUser();
-            if (requestUser != null) {
-                SmartRequestUtil.setUser(requestUser);
+            // TODO listen 待处理有token 已失效的情况
+            RequestUser requestUser;
+            // 开发环境 token 处理 不需要的话 可以去掉
+            if (SystemEnvEnum.DEV == systemEnv.getCurrentEnv() && NumberUtils.isDigits(xAccessToken)) {
+                requestUser = this.getDevRequestUser(xAccessToken);
+            } else {
+                requestUser = this.checkTokenAndGetUser();
             }
-            // 有token 无需登录
-            if (null != noNeedLogin) {
-                return true;
-            }
+            SmartRequestUtil.setUser(requestUser);
         }
-        // 无token 无需登录
+
+        // 是否需要登录
+        NoNeedLogin noNeedLogin = ((HandlerMethod) handler).getMethodAnnotation(NoNeedLogin.class);
         if (null != noNeedLogin) {
             return true;
         }

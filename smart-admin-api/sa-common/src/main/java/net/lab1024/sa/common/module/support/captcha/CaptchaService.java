@@ -2,10 +2,9 @@ package net.lab1024.sa.common.module.support.captcha;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import lombok.extern.slf4j.Slf4j;
-import net.lab1024.sa.common.common.code.UserErrorCode;
 import net.lab1024.sa.common.common.constant.StringConst;
 import net.lab1024.sa.common.common.domain.ResponseDTO;
-import net.lab1024.sa.common.common.domain.SystemEnvironment;
+import net.lab1024.sa.common.common.domain.SystemEnv;
 import net.lab1024.sa.common.common.exception.BusinessException;
 import net.lab1024.sa.common.constant.RedisKeyConst;
 import net.lab1024.sa.common.module.support.captcha.domain.CaptchaForm;
@@ -43,7 +42,7 @@ public class CaptchaService {
     @Autowired
     private DefaultKaptcha defaultKaptcha;
     @Autowired
-    private SystemEnvironment systemEnvironment;
+    private SystemEnv systemEnvironment;
     @Autowired
     private RedisService redisService;
 

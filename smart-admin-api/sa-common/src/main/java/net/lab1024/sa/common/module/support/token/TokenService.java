@@ -46,7 +46,7 @@ public class TokenService {
         SaLoginModel loginModel = new SaLoginModel();
         // 此次登录的客户端设备类型, 用于[同端互斥登录]时指定此次登录的设备类型
         loginModel.setDevice(String.valueOf(loginDeviceEnum.getDesc()));
-        // 扩展参数
+        // 扩展参数 只在 jwt 模式下 有效
         loginModel.setExtra(EXTRA_KEY_USER_NAME, userName);
         loginModel.setExtra(EXTRA_KEY_USER_TYPE, userTypeEnum.getValue());
 

@@ -3,7 +3,7 @@ package net.lab1024.sa.common.common.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import net.lab1024.sa.common.common.enumeration.SystemEnvironmentEnum;
+import net.lab1024.sa.common.common.enumeration.SystemEnvEnum;
 
 /**
  * 系统环境
@@ -16,7 +16,7 @@ import net.lab1024.sa.common.common.enumeration.SystemEnvironmentEnum;
  */
 @AllArgsConstructor
 @Getter
-public class SystemEnvironment {
+public class SystemEnv {
 
     /**
      * 是否位生产环境
@@ -31,5 +31,5 @@ public class SystemEnvironment {
     /**
      * 当前环境
      */
-    private SystemEnvironmentEnum currentEnvironment;
+    private SystemEnvEnum currentEnv;
 }
