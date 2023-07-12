@@ -49,7 +49,7 @@
             </exclusions>
         </dependency>
 
-        <!-- sa-token -->
+        <!-- sa-token start -->
         <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-spring-boot-starter</artifactId>
@@ -59,6 +59,13 @@
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-redis-jackson</artifactId>
         </dependency>
+
+        <!-- Sa-Token 整合 jwt -->
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-jwt</artifactId>
+        </dependency>
+        <!-- sa-token end -->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

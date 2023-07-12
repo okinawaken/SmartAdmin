@@ -32,7 +32,11 @@ public enum UserErrorCode implements ErrorCode {
 
     USER_STATUS_ERROR(30008, "用户状态异常"),
 
-    FORM_REPEAT_SUBMIT(30009, "请勿重复提交");
+    FORM_REPEAT_SUBMIT(30009, "请勿重复提交"),
+
+    LOGIN_FROM_OTHER(30010, "您的账号已在其他地方登录"),
+
+    ;
 
     private final int code;
 

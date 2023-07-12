@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -38,10 +39,6 @@ public class MenuService {
 
     @Autowired
     private MenuDao menuDao;
-
-    @Autowired
-    private List<RequestUrlVO> authUrl;
-
     /**
      * 添加菜单
      *
@@ -284,7 +281,8 @@ public class MenuService {
      * @return
      */
     public ResponseDTO<List<RequestUrlVO>> getAuthUrl() {
-        return ResponseDTO.ok(authUrl);
+        // TODO listen
+        return ResponseDTO.ok(Collections.emptyList());
     }
 
 }

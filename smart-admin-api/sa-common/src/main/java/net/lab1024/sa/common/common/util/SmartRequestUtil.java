@@ -14,9 +14,15 @@ import net.lab1024.sa.common.common.domain.RequestUser;
  */
 @Slf4j
 public class SmartRequestUtil {
+
+    private static final ThreadLocal<RequestUser> LOCAL = new ThreadLocal<>();
+
+    public static void setUser(RequestUser requestUser) {
+        LOCAL.set(requestUser);
+    }
+
     public static RequestUser getUser() {
-        // TODO listen
-        return null;
+        return LOCAL.get();
     }
 
     public static Long getUserId() {
@@ -25,7 +31,7 @@ public class SmartRequestUtil {
     }
 
     public static void remove() {
-        // TODO listen
+        LOCAL.remove();
     }
 
 

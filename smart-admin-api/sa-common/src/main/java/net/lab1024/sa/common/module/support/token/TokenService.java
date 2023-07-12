@@ -2,6 +2,7 @@ package net.lab1024.sa.common.module.support.token;
 
 import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.StpUtil;
+import net.lab1024.sa.common.common.constant.StringConst;
 import net.lab1024.sa.common.common.enumeration.UserTypeEnum;
 import org.springframework.stereotype.Component;
 
@@ -19,9 +20,9 @@ import java.util.List;
 @Component
 public class TokenService {
 
-    private static final String EXTRA_KEY_USER_NAME = "userName";
+    public static final String EXTRA_KEY_USER_NAME = "userName";
 
-    private static final String EXTRA_KEY_USER_TYPE = "userType";
+    public static final String EXTRA_KEY_USER_TYPE = "userType";
 
     /**
      * 生成Token
@@ -55,7 +56,11 @@ public class TokenService {
     }
 
     public static String generateLoginId(Long userId, UserTypeEnum userType) {
-        return userType.getValue() + "_" + userId;
+        return userType.getValue() + StringConst.UNDERLINE + userId;
+    }
+
+    public static Long getUserId(String loginId) {
+        return Long.valueOf(loginId.substring(loginId.indexOf(StringConst.UNDERLINE) + 1));
     }
 
     /**

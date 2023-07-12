@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import net.lab1024.sa.admin.module.system.menu.domain.vo.MenuVO;
-import net.lab1024.sa.common.common.domain.RequestUser;
 import net.lab1024.sa.common.common.enumeration.GenderEnum;
 import net.lab1024.sa.common.common.enumeration.UserTypeEnum;
 import net.lab1024.sa.common.common.swagger.ApiModelPropertyEnum;
@@ -22,7 +21,7 @@ import java.util.List;
  * @Copyright 1024创新实验室 （ https://1024lab.net ），2012-2022
  */
 @Data
-public class LoginEmployeeDetail implements RequestUser {
+public class LoginEmployeeDetail {
 
     @ApiModelProperty("token")
     private String token;
@@ -74,14 +73,4 @@ public class LoginEmployeeDetail implements RequestUser {
 
     @ApiModelProperty("请求user-agent")
     private String userAgent;
-
-    @Override
-    public Long getUserId() {
-        return employeeId;
-    }
-
-    @Override
-    public String getUserName() {
-        return actualName;
-    }
 }

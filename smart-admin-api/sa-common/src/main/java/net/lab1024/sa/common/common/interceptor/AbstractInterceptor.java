@@ -1,14 +1,15 @@
 package net.lab1024.sa.common.common.interceptor;
 
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.collect.Lists;
 import net.lab1024.sa.common.common.annoation.NoNeedLogin;
 import net.lab1024.sa.common.common.code.UserErrorCode;
 import net.lab1024.sa.common.common.constant.RequestHeaderConst;
+import net.lab1024.sa.common.common.constant.StringConst;
 import net.lab1024.sa.common.common.domain.RequestUser;
 import net.lab1024.sa.common.common.domain.ResponseDTO;
 import net.lab1024.sa.common.common.util.SmartRequestUtil;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.CollectionUtils;
@@ -19,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-import java.util.function.Function;
 
 /**
  * 抽象拦截器
@@ -32,16 +32,12 @@ import java.util.function.Function;
  */
 public abstract class AbstractInterceptor implements HandlerInterceptor {
 
-    @Autowired
-    private List<String> ignoreUrlList;
-
-
     /**
      * Token获取用户信息
      *
      * @return
      */
-    protected abstract Function<String, RequestUser> userFunction();
+    public abstract RequestUser checkTokenAndGetUser();
 
     /**
      * 拦截路径
@@ -56,6 +52,12 @@ public abstract class AbstractInterceptor implements HandlerInterceptor {
      * @return
      */
     protected List<String> getIgnoreUrlList() {
+        List<String> ignoreUrlList = Lists.newArrayList();
+        ignoreUrlList.add("/swagger-ui.html");
+        ignoreUrlList.add("/swagger-resources/**");
+        ignoreUrlList.add("/webjars/**");
+        ignoreUrlList.add("/druid/**");
+        ignoreUrlList.add("/*/api-docs");
         return ignoreUrlList;
     }
 
@@ -83,7 +85,7 @@ public abstract class AbstractInterceptor implements HandlerInterceptor {
         //放行的Uri前缀
         String uri = request.getRequestURI();
         String contextPath = request.getContextPath();
-        String target = uri.replaceFirst(contextPath, "");
+        String target = uri.replaceFirst(contextPath, StringConst.EMPTY);
         if (this.contain(this.getIgnoreUrlList(), target)) {
             return true;
         }
@@ -95,9 +97,9 @@ public abstract class AbstractInterceptor implements HandlerInterceptor {
         String xAccessToken = StringUtils.isNotBlank(xRequestToken) ? xRequestToken : xHeaderToken;
         // 包含token 则获取用户信息 并保存
         if (StringUtils.isNotBlank(xAccessToken)) {
-            RequestUser requestUser = userFunction().apply(xAccessToken);
+            RequestUser requestUser = this.checkTokenAndGetUser();
             if (requestUser != null) {
-                // SmartRequestUtil.setRequestUser(requestUser);
+                SmartRequestUtil.setUser(requestUser);
             }
             // 有token 无需登录
             if (null != noNeedLogin) {

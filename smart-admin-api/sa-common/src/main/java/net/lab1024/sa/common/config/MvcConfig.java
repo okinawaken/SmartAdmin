@@ -4,7 +4,6 @@ import net.lab1024.sa.common.common.interceptor.AbstractInterceptor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -25,7 +24,7 @@ import java.util.List;
 public class MvcConfig implements WebMvcConfigurer {
 
     @Autowired(required = false)
-    private List<HandlerInterceptor> interceptorList;
+    private List<AbstractInterceptor> interceptorList;
 
     @Override
     public void addInterceptors (InterceptorRegistry registry) {
@@ -33,7 +32,7 @@ public class MvcConfig implements WebMvcConfigurer {
             return;
         }
         interceptorList.forEach(e->{
-            registry.addInterceptor(e).addPathPatterns("/**");
+            registry.addInterceptor(e).addPathPatterns(e.pathPatterns());
         });
     }
 

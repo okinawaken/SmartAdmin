@@ -1,5 +1,6 @@
 package net.lab1024.sa.common.handler;
 
+import cn.dev33.satoken.exception.NotLoginException;
 import lombok.extern.slf4j.Slf4j;
 import net.lab1024.sa.common.common.code.SystemErrorCode;
 import net.lab1024.sa.common.common.code.UserErrorCode;
@@ -86,6 +87,34 @@ public class GlobalExceptionHandler {
             log.error("全局业务异常,URL:{}", getCurrentRequestUrl(), e);
         }
         return ResponseDTO.error(SystemErrorCode.SYSTEM_ERROR, e.getMessage());
+    }
+
+    /**
+     * sa-token 登录异常处理
+     *
+     * @param nle
+     * @return
+     * @throws Exception
+     */
+    @ResponseBody
+    @ExceptionHandler(NotLoginException.class)
+    public ResponseDTO<String> handlerNotLoginException(NotLoginException nle) {
+        /**
+         * 判断场景值 自己根据业务在下面 switch 添加分支判断
+         * NotLoginException.NOT_TOKEN 无token
+         * NotLoginException.INVALID_TOKEN token无效
+         * NotLoginException.TOKEN_TIMEOUT token过期
+         * NotLoginException.NO_PREFIX token缺少前缀
+         * NotLoginException.KICK_OUT 已被踢下线
+         * NotLoginException.TOKEN_FREEZE 已被冻结
+         */
+        switch (nle.getType()) {
+            case NotLoginException.BE_REPLACED:
+                // token 已被顶下线
+                return ResponseDTO.error(UserErrorCode.LOGIN_FROM_OTHER);
+            default:
+                return ResponseDTO.error(UserErrorCode.LOGIN_STATE_INVALID);
+        }
     }
 
     /**
