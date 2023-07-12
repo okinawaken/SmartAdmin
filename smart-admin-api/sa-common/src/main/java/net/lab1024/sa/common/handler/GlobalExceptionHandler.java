@@ -9,7 +9,6 @@ import net.lab1024.sa.common.common.exception.BusinessException;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -75,15 +74,6 @@ public class GlobalExceptionHandler {
         }
 
         return ResponseDTO.error(UserErrorCode.PARAM_ERROR);
-    }
-
-    /**
-     * 权限异常
-     */
-    @ResponseBody
-    @ExceptionHandler({AccessDeniedException.class})
-    public ResponseDTO<?> permissionExceptionHandler(AccessDeniedException e) {
-        return ResponseDTO.error(UserErrorCode.NO_PERMISSION);
     }
 
     /**

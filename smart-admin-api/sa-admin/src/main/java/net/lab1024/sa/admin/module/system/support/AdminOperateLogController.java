@@ -1,5 +1,6 @@
 package net.lab1024.sa.admin.module.system.support;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.lab1024.sa.common.common.controller.SupportBaseController;
@@ -10,7 +11,6 @@ import net.lab1024.sa.common.module.support.operatelog.OperateLogService;
 import net.lab1024.sa.common.module.support.operatelog.domain.OperateLogQueryForm;
 import net.lab1024.sa.common.module.support.operatelog.domain.OperateLogVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -30,14 +30,14 @@ public class AdminOperateLogController extends SupportBaseController {
     private OperateLogService operateLogService;
 
     @ApiOperation(value = "分页查询 @author 罗伊")
-    @PreAuthorize("@saAuth.checkPermission('operateLog:query')")
+    @SaCheckPermission("@saAuth.checkPermission('operateLog:query')")
     @PostMapping("/operateLog/page/query")
     public ResponseDTO<PageResult<OperateLogVO>> queryByPage(@RequestBody OperateLogQueryForm queryForm) {
         return operateLogService.queryByPage(queryForm);
     }
 
     @ApiOperation(value = "详情 @author 罗伊")
-    @PreAuthorize("@saAuth.checkPermission('operateLog:detail')")
+    @SaCheckPermission("@saAuth.checkPermission('operateLog:detail')")
     @GetMapping("/operateLog/detail/{operateLogId}")
     public ResponseDTO<OperateLogVO> detail(@PathVariable Long operateLogId) {
         return operateLogService.detail(operateLogId);

@@ -1,5 +1,6 @@
 package net.lab1024.sa.admin.module.system.role.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.lab1024.sa.admin.common.AdminBaseController;
@@ -11,7 +12,6 @@ import net.lab1024.sa.admin.module.system.role.service.RoleService;
 import net.lab1024.sa.common.common.domain.ResponseDTO;
 import net.lab1024.sa.common.module.support.operatelog.annoation.OperateLog;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -36,21 +36,21 @@ public class RoleController extends AdminBaseController {
 
     @ApiOperation("添加角色 @author 卓大")
     @PostMapping("/role/add")
-    @PreAuthorize("@saAuth.checkPermission('system:role:add')")
+    @SaCheckPermission("@saAuth.checkPermission('system:role:add')")
     public ResponseDTO addRole(@Valid @RequestBody RoleAddForm roleAddForm) {
         return roleService.addRole(roleAddForm);
     }
 
     @ApiOperation("删除角色 @author 卓大")
     @GetMapping("/role/delete/{roleId}")
-    @PreAuthorize("@saAuth.checkPermission('system:role:delete')")
+    @SaCheckPermission("@saAuth.checkPermission('system:role:delete')")
     public ResponseDTO<String> deleteRole(@PathVariable Long roleId) {
         return roleService.deleteRole(roleId);
     }
 
     @ApiOperation("更新角色 @author 卓大")
     @PostMapping("/role/update")
-    @PreAuthorize("@saAuth.checkPermission('system:role:update')")
+    @SaCheckPermission("@saAuth.checkPermission('system:role:update')")
     public ResponseDTO<String> updateRole(@Valid @RequestBody RoleUpdateForm roleUpdateDTO) {
         return roleService.updateRole(roleUpdateDTO);
     }

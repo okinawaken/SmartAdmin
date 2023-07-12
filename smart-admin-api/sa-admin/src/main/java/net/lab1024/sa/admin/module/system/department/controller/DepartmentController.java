@@ -1,5 +1,6 @@
 package net.lab1024.sa.admin.module.system.department.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.lab1024.sa.admin.common.AdminBaseController;
@@ -12,7 +13,6 @@ import net.lab1024.sa.admin.module.system.department.service.DepartmentService;
 import net.lab1024.sa.common.common.domain.ResponseDTO;
 import net.lab1024.sa.common.module.support.operatelog.annoation.OperateLog;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -43,21 +43,21 @@ public class DepartmentController extends AdminBaseController {
 
     @ApiOperation(value = "添加部门 @author 卓大")
     @PostMapping("/department/add")
-    @PreAuthorize("@saAuth.checkPermission('system:department:add')")
+    @SaCheckPermission("@saAuth.checkPermission('system:department:add')")
     public ResponseDTO<String> addDepartment(@Valid @RequestBody DepartmentAddForm createDTO) {
         return departmentService.addDepartment(createDTO);
     }
 
     @ApiOperation(value = "更新部门 @author 卓大")
     @PostMapping("/department/update")
-    @PreAuthorize("@saAuth.checkPermission('system:department:update')")
+    @SaCheckPermission("@saAuth.checkPermission('system:department:update')")
     public ResponseDTO<String> updateDepartment(@Valid @RequestBody DepartmentUpdateForm updateDTO) {
         return departmentService.updateDepartment(updateDTO);
     }
 
     @ApiOperation(value = "删除部门 @author 卓大")
     @GetMapping("/department/delete/{departmentId}")
-    @PreAuthorize("@saAuth.checkPermission('system:department:delete')")
+    @SaCheckPermission("@saAuth.checkPermission('system:department:delete')")
     public ResponseDTO<String> deleteDepartment(@PathVariable Long departmentId) {
         return departmentService.deleteDepartment(departmentId);
     }

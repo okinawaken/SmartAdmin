@@ -83,7 +83,7 @@ public class NoticeController {
     @RepeatSubmit
     @SaAuth
     public ResponseDTO<String> add(@RequestBody @Valid NoticeAddForm addForm) {
-        addForm.setCreateUserId(SmartRequestUtil.getRequestUserId());
+        addForm.setCreateUserId(SmartRequestUtil.getUserId());
         return noticeService.add(addForm);
     }
 
@@ -114,7 +114,7 @@ public class NoticeController {
     @GetMapping("/oa/notice/employee/view/{noticeId}")
     public ResponseDTO<NoticeDetailVO> view(@PathVariable Long noticeId, HttpServletRequest request) {
         return noticeEmployeeService.view(
-                SmartRequestUtil.getRequestUserId(),
+                SmartRequestUtil.getUserId(),
                 noticeId,
                 ServletUtil.getClientIP(request),
                 request.getHeader("User-Agent")
@@ -124,7 +124,7 @@ public class NoticeController {
     @ApiOperation("【员工】通知公告-查询全部 @author 卓大")
     @PostMapping("/oa/notice/employee/query")
     public ResponseDTO<PageResult<NoticeEmployeeVO>> queryEmployeeNotice(@RequestBody @Valid NoticeEmployeeQueryForm noticeEmployeeQueryForm) {
-        return noticeEmployeeService.queryList(SmartRequestUtil.getRequestUserId(), noticeEmployeeQueryForm);
+        return noticeEmployeeService.queryList(SmartRequestUtil.getUserId(), noticeEmployeeQueryForm);
     }
 
     @ApiOperation("【员工】通知公告-查询 查看记录 @author 卓大")

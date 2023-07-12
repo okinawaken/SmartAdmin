@@ -1,5 +1,6 @@
 package net.lab1024.sa.admin.module.system.support;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.lab1024.sa.common.common.controller.SupportBaseController;
@@ -16,7 +17,6 @@ import net.lab1024.sa.common.module.support.serialnumber.domain.SerialNumberReco
 import net.lab1024.sa.common.module.support.serialnumber.service.SerialNumberRecordService;
 import net.lab1024.sa.common.module.support.serialnumber.service.SerialNumberService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -48,7 +48,7 @@ public class AdminSerialNumberController extends SupportBaseController {
     private SerialNumberRecordService serialNumberRecordService;
 
     @ApiOperation("生成单号 @author 卓大")
-    @PreAuthorize("@saAuth.checkPermission('support:serial:number:generate')")
+    @SaCheckPermission("@saAuth.checkPermission('support:serial:number:generate')")
     @PostMapping("/serialNumber/generate")
     public ResponseDTO<List<String>> generate(@RequestBody @Valid SerialNumberGenerateForm generateForm) {
         SerialNumberIdEnum serialNumberIdEnum = SmartEnumUtil.getEnumByValue(generateForm.getSerialNumberId(), SerialNumberIdEnum.class);
@@ -65,7 +65,7 @@ public class AdminSerialNumberController extends SupportBaseController {
     }
 
     @ApiOperation("获取生成记录 @author 卓大")
-    @PreAuthorize("@saAuth.checkPermission('support:serial:number:record')")
+    @SaCheckPermission("@saAuth.checkPermission('support:serial:number:record')")
     @PostMapping("/serialNumber/queryRecord")
     public ResponseDTO<PageResult<SerialNumberRecordEntity>> queryRecord(@RequestBody @Valid SerialNumberRecordQueryForm queryForm) {
         return ResponseDTO.ok(serialNumberRecordService.query(queryForm));

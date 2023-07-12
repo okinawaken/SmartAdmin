@@ -1,5 +1,6 @@
 package net.lab1024.sa.admin.module.system.support;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.lab1024.sa.common.common.controller.SupportBaseController;
@@ -10,7 +11,6 @@ import net.lab1024.sa.common.module.support.reload.domain.ReloadForm;
 import net.lab1024.sa.common.module.support.reload.domain.ReloadItemVO;
 import net.lab1024.sa.common.module.support.reload.domain.ReloadResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -39,14 +39,14 @@ public class AdminReloadController extends SupportBaseController {
     }
 
     @ApiOperation(value = "获取reload result @author 开云")
-    @PreAuthorize("@saAuth.checkPermission('support:reload:result')")
+    @SaCheckPermission("@saAuth.checkPermission('support:reload:result')")
     @GetMapping("/reload/result/{tag}")
     public ResponseDTO<List<ReloadResultVO>> queryReloadResult(@PathVariable("tag") String tag) {
         return reloadService.queryReloadItemResult(tag);
     }
 
     @ApiOperation(value = "通过tag更新标识 @author 开云")
-    @PreAuthorize("@saAuth.checkPermission('support:reload:execute')")
+    @SaCheckPermission("@saAuth.checkPermission('support:reload:execute')")
     @PostMapping("/reload/update")
     public ResponseDTO<String> updateByTag(@RequestBody @Valid ReloadForm reloadForm) {
         return reloadService.updateByTag(reloadForm);

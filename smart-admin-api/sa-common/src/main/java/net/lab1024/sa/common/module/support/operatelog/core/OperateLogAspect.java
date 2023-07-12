@@ -179,7 +179,7 @@ public abstract class OperateLogAspect {
             return;
         }
         //设置用户信息
-        RequestUser user = SmartRequestUtil.getRequestUser();
+        RequestUser user = SmartRequestUtil.getUser();
         if (user == null) {
             return;
         }

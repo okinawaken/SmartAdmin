@@ -97,7 +97,7 @@ public abstract class AbstractInterceptor implements HandlerInterceptor {
         if (StringUtils.isNotBlank(xAccessToken)) {
             RequestUser requestUser = userFunction().apply(xAccessToken);
             if (requestUser != null) {
-                SmartRequestUtil.setRequestUser(requestUser);
+                // SmartRequestUtil.setRequestUser(requestUser);
             }
             // 有token 无需登录
             if (null != noNeedLogin) {

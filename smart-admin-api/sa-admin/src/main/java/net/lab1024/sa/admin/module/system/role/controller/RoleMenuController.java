@@ -1,5 +1,6 @@
 package net.lab1024.sa.admin.module.system.role.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.lab1024.sa.admin.common.AdminBaseController;
@@ -10,7 +11,6 @@ import net.lab1024.sa.admin.module.system.role.service.RoleMenuService;
 import net.lab1024.sa.common.common.domain.ResponseDTO;
 import net.lab1024.sa.common.module.support.operatelog.annoation.OperateLog;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -34,7 +34,7 @@ public class RoleMenuController extends AdminBaseController {
 
     @ApiOperation("更新角色权限 @author 卓大")
     @PostMapping("/role/menu/updateRoleMenu")
-    @PreAuthorize("@saAuth.checkPermission('system:role:menu:update')")
+    @SaCheckPermission("@saAuth.checkPermission('system:role:menu:update')")
     public ResponseDTO<String> updateRoleMenu(@Valid @RequestBody RoleMenuUpdateForm updateDTO) {
         return roleMenuService.updateRoleMenu(updateDTO);
     }

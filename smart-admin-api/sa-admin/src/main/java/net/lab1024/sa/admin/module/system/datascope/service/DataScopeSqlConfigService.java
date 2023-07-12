@@ -1,11 +1,11 @@
 package net.lab1024.sa.admin.module.system.datascope.service;
 
 import lombok.extern.slf4j.Slf4j;
+import net.lab1024.sa.admin.module.system.datascope.DataScope;
 import net.lab1024.sa.admin.module.system.datascope.constant.DataScopeTypeEnum;
 import net.lab1024.sa.admin.module.system.datascope.constant.DataScopeViewTypeEnum;
 import net.lab1024.sa.admin.module.system.datascope.constant.DataScopeWhereInTypeEnum;
 import net.lab1024.sa.admin.module.system.datascope.domain.DataScopeSqlConfig;
-import net.lab1024.sa.admin.module.system.datascope.DataScope;
 import net.lab1024.sa.admin.module.system.datascope.strategy.DataScopePowerStrategy;
 import net.lab1024.sa.common.common.util.SmartRequestUtil;
 import org.apache.commons.collections4.CollectionUtils;
@@ -108,7 +108,7 @@ public class DataScopeSqlConfigService {
     public String getJoinSql(Map<String, Object> paramMap, DataScopeSqlConfig sqlConfigDTO) {
         DataScopeTypeEnum dataScopeTypeEnum = sqlConfigDTO.getDataScopeType();
         String joinSql = sqlConfigDTO.getJoinSql();
-        Long employeeId = SmartRequestUtil.getRequestUserId();
+        Long employeeId = SmartRequestUtil.getUserId();
         if (employeeId == null) {
             return "";
         }

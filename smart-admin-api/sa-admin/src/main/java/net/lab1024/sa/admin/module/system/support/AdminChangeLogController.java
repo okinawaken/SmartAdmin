@@ -1,5 +1,6 @@
 package net.lab1024.sa.admin.module.system.support;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.lab1024.sa.common.common.domain.ResponseDTO;
@@ -9,7 +10,6 @@ import net.lab1024.sa.common.module.support.changelog.domain.form.ChangeLogAddFo
 import net.lab1024.sa.common.module.support.changelog.domain.form.ChangeLogUpdateForm;
 import net.lab1024.sa.common.module.support.changelog.service.ChangeLogService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -31,27 +31,27 @@ public class AdminChangeLogController {
 
     @ApiOperation("添加 @author 卓大")
     @PostMapping("/changeLog/add")
-    @PreAuthorize("@saAuth.checkPermission('changeLog:add')")
+    @SaCheckPermission("@saAuth.checkPermission('changeLog:add')")
     public ResponseDTO<String> add(@RequestBody @Valid ChangeLogAddForm addForm) {
         return changeLogService.add(addForm);
     }
 
     @ApiOperation("更新 @author 卓大")
-    @PreAuthorize("@saAuth.checkPermission('changeLog:update')")
+    @SaCheckPermission("@saAuth.checkPermission('changeLog:update')")
     @PostMapping("/changeLog/update")
     public ResponseDTO<String> update(@RequestBody @Valid ChangeLogUpdateForm updateForm) {
         return changeLogService.update(updateForm);
     }
 
     @ApiOperation("批量删除 @author 卓大")
-    @PreAuthorize("@saAuth.checkPermission('changeLog:batchDelete')")
+    @SaCheckPermission("@saAuth.checkPermission('changeLog:batchDelete')")
     @PostMapping("/changeLog/batchDelete")
     public ResponseDTO<String> batchDelete(@RequestBody ValidateList<Long> idList) {
         return changeLogService.batchDelete(idList);
     }
 
     @ApiOperation("单个删除 @author 卓大")
-    @PreAuthorize("@saAuth.checkPermission('changeLog:delete')")
+    @SaCheckPermission("@saAuth.checkPermission('changeLog:delete')")
     @GetMapping("/changeLog/delete/{changeLogId}")
     public ResponseDTO<String> batchDelete(@PathVariable Long changeLogId) {
         return changeLogService.delete(changeLogId);

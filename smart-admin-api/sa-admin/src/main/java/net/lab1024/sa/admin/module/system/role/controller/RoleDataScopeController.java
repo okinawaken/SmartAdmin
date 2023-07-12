@@ -1,5 +1,6 @@
 package net.lab1024.sa.admin.module.system.role.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.lab1024.sa.admin.common.AdminBaseController;
@@ -10,7 +11,6 @@ import net.lab1024.sa.admin.module.system.role.service.RoleDataScopeService;
 import net.lab1024.sa.common.common.domain.ResponseDTO;
 import net.lab1024.sa.common.module.support.operatelog.annoation.OperateLog;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -41,7 +41,7 @@ public class RoleDataScopeController extends AdminBaseController {
 
     @ApiOperation(value = "批量设置某角色数据范围 @author 卓大")
     @PostMapping("/role/dataScope/updateRoleDataScopeList")
-    @PreAuthorize("@saAuth.checkPermission('system:role:dataScope:update')")
+    @SaCheckPermission("@saAuth.checkPermission('system:role:dataScope:update')")
     public ResponseDTO<String> updateRoleDataScopeList(@RequestBody @Valid RoleDataScopeUpdateForm roleDataScopeUpdateForm) {
         return roleDataScopeService.updateRoleDataScopeList(roleDataScopeUpdateForm);
     }

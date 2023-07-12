@@ -8,13 +8,9 @@ import net.lab1024.sa.common.common.domain.RequestUser;
 import net.lab1024.sa.common.common.enumeration.GenderEnum;
 import net.lab1024.sa.common.common.enumeration.UserTypeEnum;
 import net.lab1024.sa.common.common.swagger.ApiModelPropertyEnum;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 /**
  * 员工登录
@@ -26,7 +22,7 @@ import java.util.Set;
  * @Copyright 1024创新实验室 （ https://1024lab.net ），2012-2022
  */
 @Data
-public class LoginEmployeeDetail implements UserDetails, RequestUser {
+public class LoginEmployeeDetail implements RequestUser {
 
     @ApiModelProperty("token")
     private String token;
@@ -79,65 +75,6 @@ public class LoginEmployeeDetail implements UserDetails, RequestUser {
     @ApiModelProperty("请求user-agent")
     private String userAgent;
 
-    /**
-     * security 权限串
-     */
-    private Set<? extends GrantedAuthority> authorities;
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
-    }
-
-    @Override
-    @JsonIgnore
-    public String getPassword() {
-        return this.loginPassword;
-    }
-
-    @Override
-    public String getUsername() {
-        return this.getLoginName();
-    }
-
-    /**
-     * 账户是否未过期,过期无法验证
-     */
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    /**
-     * 指定用户是否解锁,锁定的用户无法进行身份验证
-     *
-     * @return
-     */
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    /**
-     * 指示是否已过期的用户的凭据(密码),过期的凭据防止认证
-     *
-     * @return
-     */
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    /**
-     * 是否可用 ,禁用的用户不能身份验证
-     *
-     * @return
-     */
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-
     @Override
     public Long getUserId() {
         return employeeId;
@@ -146,20 +83,5 @@ public class LoginEmployeeDetail implements UserDetails, RequestUser {
     @Override
     public String getUserName() {
         return actualName;
-    }
-
-    @Override
-    public UserTypeEnum getUserType() {
-        return userType;
-    }
-
-    @Override
-    public String getIp() {
-        return this.ip;
-    }
-
-    @Override
-    public String getUserAgent() {
-        return this.userAgent;
     }
 }

@@ -49,10 +49,15 @@
             </exclusions>
         </dependency>
 
-        <!-- spring security -->
+        <!-- sa-token -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-redis-jackson</artifactId>
         </dependency>
 
         <dependency>

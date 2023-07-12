@@ -1,5 +1,6 @@
 package net.lab1024.sa.admin.module.system.role.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.lab1024.sa.admin.common.AdminBaseController;
@@ -13,7 +14,6 @@ import net.lab1024.sa.common.common.domain.PageResult;
 import net.lab1024.sa.common.common.domain.ResponseDTO;
 import net.lab1024.sa.common.module.support.operatelog.annoation.OperateLog;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -50,21 +50,21 @@ public class RoleEmployeeController extends AdminBaseController {
 
     @ApiOperation(value = "从角色成员列表中移除员工 @author 卓大")
     @GetMapping("/role/employee/removeEmployee")
-    @PreAuthorize("@saAuth.checkPermission('system:role:employee:delete')")
+    @SaCheckPermission("@saAuth.checkPermission('system:role:employee:delete')")
     public ResponseDTO<String> removeEmployee(Long employeeId, Long roleId) {
         return roleEmployeeService.removeRoleEmployee(employeeId, roleId);
     }
 
     @ApiOperation(value = "从角色成员列表中批量移除员工 @author 卓大")
     @PostMapping("/role/employee/batchRemoveRoleEmployee")
-    @PreAuthorize("@saAuth.checkPermission('system:role:employee:batch:delete')")
+    @SaCheckPermission("@saAuth.checkPermission('system:role:employee:batch:delete')")
     public ResponseDTO<String> batchRemoveEmployee(@Valid @RequestBody RoleEmployeeUpdateForm updateForm) {
         return roleEmployeeService.batchRemoveRoleEmployee(updateForm);
     }
 
     @ApiOperation(value = "角色成员列表中批量添加员工 @author 卓大")
     @PostMapping("/role/employee/batchAddRoleEmployee")
-    @PreAuthorize("@saAuth.checkPermission('system:role:employee:add')")
+    @SaCheckPermission("@saAuth.checkPermission('system:role:employee:add')")
     public ResponseDTO<String> addEmployeeList(@Valid @RequestBody RoleEmployeeUpdateForm addForm) {
         return roleEmployeeService.batchAddRoleEmployee(addForm);
     }
