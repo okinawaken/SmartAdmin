@@ -56,11 +56,11 @@ public class TokenService {
     }
 
     public static String generateLoginId(Long userId, UserTypeEnum userType) {
-        return userType.getValue() + StringConst.UNDERLINE + userId;
+        return userType.getValue() + StringConst.HORIZONTAL + userId;
     }
 
     public static Long getUserId(String loginId) {
-        return Long.valueOf(loginId.substring(loginId.indexOf(StringConst.UNDERLINE) + 1));
+        return Long.valueOf(loginId.substring(loginId.indexOf(StringConst.HORIZONTAL) + 1));
     }
 
     /**

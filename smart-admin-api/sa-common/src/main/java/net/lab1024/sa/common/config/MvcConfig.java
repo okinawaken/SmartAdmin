@@ -27,12 +27,12 @@ public class MvcConfig implements WebMvcConfigurer {
     private List<AbstractInterceptor> interceptorList;
 
     @Override
-    public void addInterceptors (InterceptorRegistry registry) {
+    public void addInterceptors(InterceptorRegistry registry) {
         if (CollectionUtils.isEmpty(interceptorList)) {
             return;
         }
-        interceptorList.forEach(e->{
-            registry.addInterceptor(e).addPathPatterns(e.pathPatterns());
+        interceptorList.forEach(e -> {
+            registry.addInterceptor(e).addPathPatterns(e.pathPatterns()).excludePathPatterns(e.getIgnoreUrlList());
         });
     }
 

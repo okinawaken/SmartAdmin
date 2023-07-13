@@ -1,5 +1,6 @@
 package net.lab1024.sa.admin.module.system.login.controller;
 
+import cn.dev33.satoken.annotation.SaIgnore;
 import cn.hutool.extra.servlet.ServletUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -12,6 +13,7 @@ import net.lab1024.sa.common.common.constant.RequestHeaderConst;
 import net.lab1024.sa.common.common.domain.ResponseDTO;
 import net.lab1024.sa.common.common.util.SmartRequestUtil;
 import net.lab1024.sa.common.module.support.captcha.domain.CaptchaVO;
+import org.checkerframework.checker.units.qual.N;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -85,4 +87,11 @@ public class LoginController {
         return loginService.getCaptcha();
     }
 
+    // TODO listen
+    @NoNeedLogin
+    @ApiOperation("测试权限 @listen")
+    @GetMapping("/listen/test")
+    public ResponseDTO<String> test() {
+        return ResponseDTO.ok();
+    }
 }

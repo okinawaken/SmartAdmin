@@ -1,11 +1,12 @@
 package net.lab1024.sa.common.handler;
 
-import cn.dev33.satoken.exception.NotLoginException;
+import cn.dev33.satoken.exception.NotPermissionException;
 import lombok.extern.slf4j.Slf4j;
 import net.lab1024.sa.common.common.code.SystemErrorCode;
 import net.lab1024.sa.common.common.code.UserErrorCode;
 import net.lab1024.sa.common.common.domain.ResponseDTO;
 import net.lab1024.sa.common.common.domain.SystemEnv;
+import net.lab1024.sa.common.common.enumeration.SystemEnvEnum;
 import net.lab1024.sa.common.common.exception.BusinessException;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ import java.util.stream.Collectors;
 public class GlobalExceptionHandler {
 
     @Autowired
-    private SystemEnv systemEnvironment;
+    private SystemEnv systemEnv;
 
     /**
      * json 格式错误 缺少请求体
@@ -45,7 +46,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler({HttpMessageNotReadableException.class})
     public ResponseDTO<?> jsonFormatExceptionHandler(Exception e) {
-        if (!systemEnvironment.isProd()) {
+        if (!systemEnv.isProd()) {
             log.error("全局JSON格式错误异常,URL:{}", getCurrentRequestUrl(), e);
         }
         return ResponseDTO.error(UserErrorCode.PARAM_ERROR, "参数JSON格式错误");
@@ -57,7 +58,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler({TypeMismatchException.class, BindException.class})
     public ResponseDTO<?> paramExceptionHandler(Exception e) {
-        if (!systemEnvironment.isProd()) {
+        if (!systemEnv.isProd()) {
             log.error("全局参数异常,URL:{}", getCurrentRequestUrl(), e);
         }
 
@@ -83,38 +84,26 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler(BusinessException.class)
     public ResponseDTO<?> businessExceptionHandler(BusinessException e) {
-        if (!systemEnvironment.isProd()) {
+        if (!systemEnv.isProd()) {
             log.error("全局业务异常,URL:{}", getCurrentRequestUrl(), e);
         }
         return ResponseDTO.error(SystemErrorCode.SYSTEM_ERROR, e.getMessage());
     }
 
     /**
-     * sa-token 登录异常处理
+     * sa-token 权限异常处理
      *
-     * @param nle
+     * @param e
      * @return
-     * @throws Exception
      */
     @ResponseBody
-    @ExceptionHandler(NotLoginException.class)
-    public ResponseDTO<String> handlerNotLoginException(NotLoginException nle) {
-        /**
-         * 判断场景值 自己根据业务在下面 switch 添加分支判断
-         * NotLoginException.NOT_TOKEN 无token
-         * NotLoginException.INVALID_TOKEN token无效
-         * NotLoginException.TOKEN_TIMEOUT token过期
-         * NotLoginException.NO_PREFIX token缺少前缀
-         * NotLoginException.KICK_OUT 已被踢下线
-         * NotLoginException.TOKEN_FREEZE 已被冻结
-         */
-        switch (nle.getType()) {
-            case NotLoginException.BE_REPLACED:
-                // token 已被顶下线
-                return ResponseDTO.error(UserErrorCode.LOGIN_FROM_OTHER);
-            default:
-                return ResponseDTO.error(UserErrorCode.LOGIN_STATE_INVALID);
+    @ExceptionHandler(NotPermissionException.class)
+    public ResponseDTO<String> permissionException(NotPermissionException e) {
+        // 开发环境 方便调试
+        if (SystemEnvEnum.PROD != systemEnv.getCurrentEnv()) {
+            return ResponseDTO.error(UserErrorCode.NO_PERMISSION, e.getMessage());
         }
+        return ResponseDTO.error(UserErrorCode.NO_PERMISSION);
     }
 
     /**
@@ -127,7 +116,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Throwable.class)
     public ResponseDTO<?> errorHandler(Throwable e) {
         log.error("捕获全局异常,URL:{}", getCurrentRequestUrl(), e);
-        return ResponseDTO.error(SystemErrorCode.SYSTEM_ERROR, systemEnvironment.isProd() ? null : e.toString());
+        return ResponseDTO.error(SystemErrorCode.SYSTEM_ERROR, systemEnv.isProd() ? null : e.toString());
     }
 
     /**

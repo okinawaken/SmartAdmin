@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
  * @date: 2023/7/12 20:46
  */
 @Configuration
-public class SaTokenConfig {
+public class SaTokenCommonConfig {
 
     /**
      * 整合 jwt

@@ -2,17 +2,17 @@ package net.lab1024.sa.admin.interceptor;
 
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.convert.NumberWithFormat;
+import com.google.common.collect.Lists;
 import net.lab1024.sa.common.common.domain.RequestUser;
 import net.lab1024.sa.common.common.enumeration.UserTypeEnum;
 import net.lab1024.sa.common.common.interceptor.AbstractInterceptor;
 import net.lab1024.sa.common.common.util.SmartEnumUtil;
-import net.lab1024.sa.common.handler.GlobalExceptionHandler;
 import net.lab1024.sa.common.module.support.token.TokenService;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.context.annotation.Configuration;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * admin 拦截器
@@ -24,30 +24,22 @@ import javax.servlet.http.HttpServletResponse;
 public class AdminInterceptor extends AbstractInterceptor {
 
     /**
-     * 开发环境 方便调试 默认 user id 1
-     * 可以根据id 查询实际用户数据
+     * 配置拦截路径
      *
-     * @param token
+     * @return
      */
     @Override
-    public RequestUser getDevRequestUser(String token) {
-        long userId = NumberUtils.toLong(token, 1L);
-        RequestUser requestUser = new RequestUser();
-        requestUser.setUserId(userId);
-        requestUser.setUserName("dev");
-        requestUser.setUserType(UserTypeEnum.ADMIN_EMPLOYEE);
-        return requestUser;
+    public List<String> pathPatterns() {
+        return Lists.newArrayList("/**");
     }
 
     @Override
-    public RequestUser checkTokenAndGetUser() {
-        /**
-         * 检验当前会话是否已经登录, 如果未登录，则抛出异常：`NotLoginException`
-         * 已在全局异常处理
-         * @see GlobalExceptionHandler#handlerNotLoginException
-         */
+    public void checkSaToken() {
         StpUtil.checkLogin();
+    }
 
+    @Override
+    public RequestUser getRequestUser() {
         // 获取额外数据
         Integer userType = ((NumberWithFormat) StpUtil.getExtra(TokenService.EXTRA_KEY_USER_TYPE)).intValue();
         UserTypeEnum userTypeEnum = SmartEnumUtil.getEnumByValue(userType, UserTypeEnum.class);
@@ -62,25 +54,13 @@ public class AdminInterceptor extends AbstractInterceptor {
         return requestUser;
     }
 
-    /**
-     * 配置拦截路径
-     *
-     * @return
-     */
-    @Override
-    public String[] pathPatterns() {
-        return new String[]{"/**"};
-    }
-
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         boolean isHandle = super.preHandle(request, response, handler);
         if (!isHandle) {
             return false;
         }
-
-        // TODO listen 校验权限
-
+        // 如有业务需处理 写在此处
         return true;
     }
 }

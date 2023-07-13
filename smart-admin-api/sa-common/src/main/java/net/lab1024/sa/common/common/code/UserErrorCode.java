@@ -24,7 +24,7 @@ public enum UserErrorCode implements ErrorCode {
 
     REPEAT_SUBMIT(30004, "亲~您操作的太快了，请稍等下再操作~"),
 
-    NO_PERMISSION(30005, "对不起，您无法访问此资源哦~"),
+    NO_PERMISSION(30005, "对不起，您无法访问此内容哦~"),
 
     DEVELOPING(30006, "系統正在紧急开发中，敬请期待~"),
 

@@ -1,22 +1,17 @@
 package net.lab1024.sa.common.common.interceptor;
 
+import cn.dev33.satoken.exception.NotLoginException;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
 import net.lab1024.sa.common.common.annoation.NoNeedLogin;
 import net.lab1024.sa.common.common.code.UserErrorCode;
-import net.lab1024.sa.common.common.constant.RequestHeaderConst;
-import net.lab1024.sa.common.common.constant.StringConst;
 import net.lab1024.sa.common.common.domain.RequestUser;
 import net.lab1024.sa.common.common.domain.ResponseDTO;
-import net.lab1024.sa.common.common.domain.SystemEnv;
-import net.lab1024.sa.common.common.enumeration.SystemEnvEnum;
 import net.lab1024.sa.common.common.util.SmartRequestUtil;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.util.CollectionUtils;
+import org.springframework.http.MediaType;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -24,50 +19,42 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 抽象拦截器
- * 如果有额外的拦截处理 可以继承此类
+ * 只校验了登录处理
+ * 自定义的拦截器 可以继承此类
  *
- * @Author 1024创新实验室: 罗伊
- * @Date 2021-10-09 20:56:14
- * @Wechat zhuoda1024
- * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ）
+ * @author huke
+ * @date 2023-07-12 21:56:14
  */
 public abstract class AbstractInterceptor implements HandlerInterceptor {
-
-    @Autowired
-    private SystemEnv systemEnv;
+    /**
+     * 校验 token
+     */
+    public abstract void checkSaToken();
 
     /**
-     * Token获取用户信息
+     * Token 获取当前请求用户信息
      *
      * @return
      */
-    public abstract RequestUser checkTokenAndGetUser();
-
-    /**
-     * 获取 dev 开发用户
-     *
-     * @param token
-     * @return
-     */
-    public abstract RequestUser getDevRequestUser(String token);
+    public abstract RequestUser getRequestUser();
 
     /**
      * 拦截路径
      *
      * @return
      */
-    public abstract String[] pathPatterns();
+    public abstract List<String> pathPatterns();
 
     /**
      * 忽略的url集合
      *
      * @return
      */
-    protected List<String> getIgnoreUrlList() {
+    public List<String> getIgnoreUrlList() {
         List<String> ignoreUrlList = Lists.newArrayList();
         ignoreUrlList.add("/swagger-ui.html");
         ignoreUrlList.add("/swagger-resources/**");
@@ -78,7 +65,7 @@ public abstract class AbstractInterceptor implements HandlerInterceptor {
     }
 
     /**
-     * 拦截服务器端响应处理ajax请求返回结果
+     * 拦截处理登录 token
      *
      * @param request
      * @param response
@@ -89,61 +76,62 @@ public abstract class AbstractInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         // OPTIONS请求直接return
-        if (HttpMethod.OPTIONS.toString().equals(request.getMethod())) {
+        if (StringUtils.equalsIgnoreCase(HttpMethod.OPTIONS.name(), request.getMethod())) {
             response.setStatus(HttpStatus.NO_CONTENT.value());
             return false;
         }
-
         boolean isHandler = handler instanceof HandlerMethod;
         if (!isHandler) {
             return true;
         }
-        //放行的Uri前缀
-        String uri = request.getRequestURI();
-        String contextPath = request.getContextPath();
-        String target = uri.replaceFirst(contextPath, StringConst.EMPTY);
-        if (this.contain(this.getIgnoreUrlList(), target)) {
+        // 校验 token 获取当前请求用户信息
+        ResponseDTO<RequestUser> res = this.checkTokenAndGetUser();
+        if (res.getOk()) {
+            SmartRequestUtil.setUser(res.getData());
             return true;
         }
-        // 检查是否包含 token
-        String xRequestToken = request.getParameter(RequestHeaderConst.TOKEN);
-        String xHeaderToken = request.getHeader(RequestHeaderConst.TOKEN);
-        String xAccessToken = StringUtils.isNotBlank(xRequestToken) ? xRequestToken : xHeaderToken;
-        // 包含token 则获取用户信息 并保存
-        if (StringUtils.isNotBlank(xAccessToken)) {
-            // TODO listen 待处理有token 已失效的情况
-            RequestUser requestUser;
-            // 开发环境 token 处理 不需要的话 可以去掉
-            if (SystemEnvEnum.DEV == systemEnv.getCurrentEnv() && NumberUtils.isDigits(xAccessToken)) {
-                requestUser = this.getDevRequestUser(xAccessToken);
-            } else {
-                requestUser = this.checkTokenAndGetUser();
-            }
-            SmartRequestUtil.setUser(requestUser);
-        }
-
-        // 是否需要登录
+        // 不需要登录
         NoNeedLogin noNeedLogin = ((HandlerMethod) handler).getMethodAnnotation(NoNeedLogin.class);
         if (null != noNeedLogin) {
             return true;
         }
-        if (StringUtils.isBlank(xAccessToken)) {
-            this.outputResult(response, ResponseDTO.error(UserErrorCode.LOGIN_STATE_INVALID));
-            return false;
-        }
-        return true;
+        this.outputResult(response, res);
+        return false;
     }
 
-    public Boolean contain(List<String> ignores, String uri) {
-        if (CollectionUtils.isEmpty(ignores)) {
-            return false;
-        }
-        for (String ignoreUrl : ignores) {
-            if (uri.startsWith(ignoreUrl)) {
-                return true;
+    /**
+     * 校验 sa token
+     * 判断 sa-token 未登录场景值
+     * 自己根据业务在下面 switch 添加分支判断
+     * NotLoginException.NOT_TOKEN 无token
+     * NotLoginException.INVALID_TOKEN token无效
+     * NotLoginException.TOKEN_TIMEOUT token过期
+     * NotLoginException.NO_PREFIX token缺少前缀
+     * NotLoginException.KICK_OUT 已被踢下线
+     * NotLoginException.TOKEN_FREEZE 已被冻结
+     * <p>
+     * ps :之所以没有在全局异常里处理 是因为后续还有操作
+     */
+    public ResponseDTO<RequestUser> checkTokenAndGetUser() {
+        try {
+            /**
+             * sa-token 会从当前请求header or body 中获取token
+             * 检验当前会话是否已经登录, 如果未登录，则抛出异常：`NotLoginException`
+             */
+            this.checkSaToken();
+        } catch (NotLoginException e) {
+            switch (e.getType()) {
+                case NotLoginException.BE_REPLACED:
+                    // token 已被顶下线
+                    return ResponseDTO.error(UserErrorCode.LOGIN_FROM_OTHER);
+                // case NotLoginException.TOKEN_FREEZE:
+                // case NotLoginException.KICK_OUT:
+                default:
+                    return ResponseDTO.error(UserErrorCode.LOGIN_STATE_INVALID);
             }
         }
-        return false;
+        RequestUser requestUser = this.getRequestUser();
+        return ResponseDTO.ok(requestUser);
     }
 
     /**
@@ -155,13 +143,13 @@ public abstract class AbstractInterceptor implements HandlerInterceptor {
      */
     private void outputResult(HttpServletResponse response, ResponseDTO responseDTO) throws IOException {
         String msg = JSONObject.toJSONString(responseDTO);
-        response.setContentType("application/json;charset=UTF-8");
+        response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         response.getWriter().write(msg);
         response.flushBuffer();
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         SmartRequestUtil.remove();
     }
 }
