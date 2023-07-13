@@ -1,5 +1,6 @@
 package net.lab1024.sa.common.config;
 
+import cn.dev33.satoken.interceptor.SaInterceptor;
 import net.lab1024.sa.common.common.interceptor.AbstractInterceptor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,14 +27,24 @@ public class MvcConfig implements WebMvcConfigurer {
     @Autowired(required = false)
     private List<AbstractInterceptor> interceptorList;
 
+    @Autowired(required = false)
+    private List<SaInterceptor> saInterceptorList;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        if (CollectionUtils.isEmpty(interceptorList)) {
-            return;
+        // 先注册 登录拦截器
+        if (CollectionUtils.isNotEmpty(interceptorList)) {
+            interceptorList.forEach(e -> {
+                registry.addInterceptor(e).addPathPatterns(e.pathPatterns()).excludePathPatterns(e.getIgnoreUrlList());
+            });
         }
-        interceptorList.forEach(e -> {
-            registry.addInterceptor(e).addPathPatterns(e.pathPatterns()).excludePathPatterns(e.getIgnoreUrlList());
-        });
+
+        // 后注册 sa-token 权限拦截器 不需要可以删除
+        if (CollectionUtils.isNotEmpty(saInterceptorList)) {
+            saInterceptorList.forEach(i -> {
+                registry.addInterceptor(i).addPathPatterns("/**");
+            });
+        }
     }
 
     @Override

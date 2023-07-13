@@ -34,7 +34,7 @@ public class UrlConfig {
     @Autowired
     private RequestMappingHandlerMapping requestMappingHandlerMapping;
 
-    public static List<String> URL_LIST = Lists.newArrayList();
+    public static List<String> AUTH_URL_LIST = Lists.newArrayList();
 
     /**
      * 获取每个方法的请求路径
@@ -74,8 +74,15 @@ public class UrlConfig {
             if (null != ignore) {
                 continue;
             }
-            List<RequestUrlVO> requestUrlList = this.buildRequestUrl(method, entry.getValue());
+            NoNeedLogin noNeedLogin = method.getAnnotation(NoNeedLogin.class);
+            if (null != noNeedLogin) {
+                continue;
+            }
+            Set<String> urlSet = entry.getValue();
+            List<RequestUrlVO> requestUrlList = this.buildRequestUrl(method, urlSet);
             authUrlList.addAll(requestUrlList);
+
+            AUTH_URL_LIST.addAll(urlSet);
         }
         log.info("需要权限校验的URL：{}", authUrlList.stream().map(RequestUrlVO::getUrl).collect(Collectors.toList()));
         return authUrlList;
@@ -98,8 +105,6 @@ public class UrlConfig {
             requestUrlVO.setUrl(url);
             requestUrlVO.setComment(methodComment);
             requestUrlList.add(requestUrlVO);
-
-            URL_LIST.add(url);
         }
         return requestUrlList;
     }

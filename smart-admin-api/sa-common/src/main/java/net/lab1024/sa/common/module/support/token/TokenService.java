@@ -9,13 +9,10 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * 与用户token的相关的服务
+ * 用户token 相关服务
  *
- * @Author 1024创新实验室-主任: 卓大
- * @Date 2021-11-29 19:48:35
- * @Wechat zhuoda1024
- * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ）
+ * @author listen
+ * @date 2023-07-12 22:48:35
  */
 @Component
 public class TokenService {
@@ -61,6 +58,10 @@ public class TokenService {
 
     public static Long getUserId(String loginId) {
         return Long.valueOf(loginId.substring(loginId.indexOf(StringConst.HORIZONTAL) + 1));
+    }
+
+    public static Integer getUserType(String loginId) {
+        return Integer.valueOf(loginId.substring(0, loginId.indexOf(StringConst.HORIZONTAL)));
     }
 
     /**
