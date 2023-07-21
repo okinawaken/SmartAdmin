@@ -198,7 +198,7 @@ public class SwaggerConfig implements EnvironmentAware, BeanDefinitionRegistryPo
         Parameter token = new ParameterBuilder().name(RequestHeaderConst.TOKEN)
                 .description("token")
                 .modelRef(new ModelRef("string"))
-                .parameterType("header").defaultValue("1")
+                .parameterType("header").defaultValue("0")
                 .required(false)
                 .build();
         return Lists.newArrayList(token);

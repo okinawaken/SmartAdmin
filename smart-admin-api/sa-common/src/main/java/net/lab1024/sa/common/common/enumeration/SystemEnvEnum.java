@@ -19,28 +19,28 @@ public enum SystemEnvEnum implements BaseEnum {
     /**
      * dev
      */
-    DEV(SystemEnvironmentNameConst.DEV, "开发环境"),
+    DEV(EnvConst.DEV, "开发环境"),
 
     /**
      * test
      */
-    TEST(SystemEnvironmentNameConst.TEST, "测试环境"),
+    TEST(EnvConst.TEST, "测试环境"),
 
     /**
      * pre
      */
-    PRE(SystemEnvironmentNameConst.PRE, "预发布环境"),
+    PRE(EnvConst.PRE, "预发布环境"),
 
     /**
      * prod
      */
-    PROD(SystemEnvironmentNameConst.PROD, "生产环境");
+    PROD(EnvConst.PROD, "生产环境");
 
     private final String value;
 
     private final String desc;
 
-    public static final class SystemEnvironmentNameConst {
+    public static final class EnvConst {
         public static final String DEV = "dev";
         public static final String TEST = "test";
         public static final String PRE = "pre";

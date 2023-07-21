@@ -31,13 +31,7 @@ public class RequestUser {
      */
     private UserTypeEnum userType;
 
-    /**
-     * TODO listen 准备移除
-     * 为了其他地方不报错
-     */
-    @Deprecated
     private String ip;
 
-    @Deprecated
     private String userAgent;
 }

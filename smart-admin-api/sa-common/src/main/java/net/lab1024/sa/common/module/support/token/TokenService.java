@@ -1,5 +1,6 @@
 package net.lab1024.sa.common.module.support.token;
 
+import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.StpUtil;
 import net.lab1024.sa.common.common.constant.StringConst;
@@ -37,31 +38,34 @@ public class TokenService {
 
         /**
          * 设置登录模式参数
-         * 具体参数 @see SaLoginModel 属性
+         * 具体参数 {@link SaLoginModel }  属性
          * 已经写的挺清楚的了
          */
         SaLoginModel loginModel = new SaLoginModel();
         // 此次登录的客户端设备类型, 用于[同端互斥登录]时指定此次登录的设备类型
         loginModel.setDevice(String.valueOf(loginDeviceEnum.getDesc()));
-        // 扩展参数 只在 jwt 模式下 有效
-        loginModel.setExtra(EXTRA_KEY_USER_NAME, userName);
-        loginModel.setExtra(EXTRA_KEY_USER_TYPE, userTypeEnum.getValue());
 
+        // 登录
         String loginId = generateLoginId(userId, userTypeEnum);
         StpUtil.login(loginId, loginModel);
+
+        // 扩展参数 放入会话中 redis session
+        SaSession session = StpUtil.getSession();
+        session.set(EXTRA_KEY_USER_NAME, userName);
+        session.set(EXTRA_KEY_USER_TYPE, userTypeEnum);
         return StpUtil.getTokenValue();
     }
 
     public static String generateLoginId(Long userId, UserTypeEnum userType) {
-        return userType.getValue() + StringConst.HORIZONTAL + userId;
+        return userType.getValue() + StringConst.COLON + userId;
     }
 
     public static Long getUserId(String loginId) {
-        return Long.valueOf(loginId.substring(loginId.indexOf(StringConst.HORIZONTAL) + 1));
+        return Long.valueOf(loginId.substring(loginId.indexOf(StringConst.COLON) + 1));
     }
 
     public static Integer getUserType(String loginId) {
-        return Integer.valueOf(loginId.substring(0, loginId.indexOf(StringConst.HORIZONTAL)));
+        return Integer.valueOf(loginId.substring(0, loginId.indexOf(StringConst.COLON)));
     }
 
     /**

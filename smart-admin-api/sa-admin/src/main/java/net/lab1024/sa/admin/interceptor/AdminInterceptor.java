@@ -1,13 +1,9 @@
 package net.lab1024.sa.admin.interceptor;
 
-import cn.dev33.satoken.stp.StpUtil;
-import cn.hutool.core.convert.NumberWithFormat;
 import com.google.common.collect.Lists;
 import net.lab1024.sa.common.common.domain.RequestUser;
 import net.lab1024.sa.common.common.enumeration.UserTypeEnum;
 import net.lab1024.sa.common.common.interceptor.AbstractInterceptor;
-import net.lab1024.sa.common.common.util.SmartEnumUtil;
-import net.lab1024.sa.common.module.support.token.TokenService;
 import org.springframework.context.annotation.Configuration;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +20,24 @@ import java.util.List;
 public class AdminInterceptor extends AbstractInterceptor {
 
     /**
+     * 此处可根据需要
+     * 自行查询用户信息
+     */
+    @Override
+    public RequestUser getDevUser(Long userId) {
+        RequestUser requestUser = new RequestUser();
+        requestUser.setUserId(userId);
+        requestUser.setUserName("dev");
+        requestUser.setUserType(this.getUserType());
+        return requestUser;
+    }
+
+    @Override
+    public UserTypeEnum getUserType() {
+        return UserTypeEnum.ADMIN_EMPLOYEE;
+    }
+
+    /**
      * 配置拦截路径
      *
      * @return
@@ -33,27 +47,16 @@ public class AdminInterceptor extends AbstractInterceptor {
         return Lists.newArrayList("/**");
     }
 
-    @Override
-    public void checkSaToken() {
-        StpUtil.checkLogin();
-    }
-
-    @Override
-    public RequestUser getRequestUser() {
-        // 获取额外数据
-        Integer userType = ((NumberWithFormat) StpUtil.getExtra(TokenService.EXTRA_KEY_USER_TYPE)).intValue();
-        UserTypeEnum userTypeEnum = SmartEnumUtil.getEnumByValue(userType, UserTypeEnum.class);
-        String userName = (String) StpUtil.getExtra(TokenService.EXTRA_KEY_USER_NAME);
-        String loginId = (String) StpUtil.getLoginId();
-
-        // 当前请求对象
-        RequestUser requestUser = new RequestUser();
-        requestUser.setUserId(TokenService.getUserId(loginId));
-        requestUser.setUserName(userName);
-        requestUser.setUserType(userTypeEnum);
-        return requestUser;
-    }
-
+    /**
+     * 如果没有需要处理的业务
+     * 那就没有必要重写了 可以删除这个方法
+     *
+     * @param request
+     * @param response
+     * @param handler
+     * @return
+     * @throws Exception
+     */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         boolean isHandle = super.preHandle(request, response, handler);

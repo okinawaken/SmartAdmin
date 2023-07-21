@@ -73,7 +73,7 @@ public class LoginController {
         return loginService.getCaptcha();
     }
 
-    // TODO listen
+    // TODO listen 测试待删除
     @NoNeedLogin
     @ApiOperation("测试权限 @listen")
     @GetMapping("/listen/test")
