@@ -1,6 +1,5 @@
 package net.lab1024.sa.admin.module.system.support;
 
-import cn.dev33.satoken.annotation.SaCheckPermission;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.lab1024.sa.common.common.controller.SupportBaseController;
@@ -36,21 +35,18 @@ public class AdminConfigController extends SupportBaseController {
     private ConfigService configService;
 
     @ApiOperation("分页查询系统配置 @author 卓大")
-    @SaCheckPermission("@saAuth.checkPermission('support:config:query')")
     @PostMapping("/config/query")
     public ResponseDTO<PageResult<ConfigVO>> querySystemConfigPage(@RequestBody @Valid ConfigQueryForm queryForm) {
         return configService.queryConfigPage(queryForm);
     }
 
     @ApiOperation("添加配置参数 @author 卓大")
-    @SaCheckPermission("@saAuth.checkPermission('support:config:add')")
     @PostMapping("/config/add")
     public ResponseDTO<String> addSystemConfig(@RequestBody @Valid ConfigAddForm configAddForm) {
         return configService.add(configAddForm);
     }
 
     @ApiOperation("修改配置参数 @author 卓大")
-    @SaCheckPermission("@saAuth.checkPermission('support:config:update')")
     @PostMapping("/config/update")
     public ResponseDTO<String> updateSystemConfig(@RequestBody @Valid ConfigUpdateForm updateForm) {
         return configService.updateSystemConfig(updateForm);

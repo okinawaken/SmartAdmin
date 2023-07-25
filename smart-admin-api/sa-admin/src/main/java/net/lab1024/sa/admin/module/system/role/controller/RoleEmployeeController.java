@@ -1,6 +1,5 @@
 package net.lab1024.sa.admin.module.system.role.controller;
 
-import cn.dev33.satoken.annotation.SaCheckPermission;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.lab1024.sa.admin.common.AdminBaseController;
@@ -50,21 +49,18 @@ public class RoleEmployeeController extends AdminBaseController {
 
     @ApiOperation(value = "从角色成员列表中移除员工 @author 卓大")
     @GetMapping("/role/employee/removeEmployee")
-    @SaCheckPermission("@saAuth.checkPermission('system:role:employee:delete')")
     public ResponseDTO<String> removeEmployee(Long employeeId, Long roleId) {
         return roleEmployeeService.removeRoleEmployee(employeeId, roleId);
     }
 
     @ApiOperation(value = "从角色成员列表中批量移除员工 @author 卓大")
     @PostMapping("/role/employee/batchRemoveRoleEmployee")
-    @SaCheckPermission("@saAuth.checkPermission('system:role:employee:batch:delete')")
     public ResponseDTO<String> batchRemoveEmployee(@Valid @RequestBody RoleEmployeeUpdateForm updateForm) {
         return roleEmployeeService.batchRemoveRoleEmployee(updateForm);
     }
 
     @ApiOperation(value = "角色成员列表中批量添加员工 @author 卓大")
     @PostMapping("/role/employee/batchAddRoleEmployee")
-    @SaCheckPermission("@saAuth.checkPermission('system:role:employee:add')")
     public ResponseDTO<String> addEmployeeList(@Valid @RequestBody RoleEmployeeUpdateForm addForm) {
         return roleEmployeeService.batchAddRoleEmployee(addForm);
     }

@@ -1,6 +1,5 @@
 package net.lab1024.sa.admin.module.system.support;
 
-import cn.dev33.satoken.annotation.SaCheckPermission;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.lab1024.sa.common.common.domain.ResponseDTO;
@@ -31,27 +30,23 @@ public class AdminChangeLogController {
 
     @ApiOperation("添加 @author 卓大")
     @PostMapping("/changeLog/add")
-    @SaCheckPermission("@saAuth.checkPermission('changeLog:add')")
     public ResponseDTO<String> add(@RequestBody @Valid ChangeLogAddForm addForm) {
         return changeLogService.add(addForm);
     }
 
     @ApiOperation("更新 @author 卓大")
-    @SaCheckPermission("@saAuth.checkPermission('changeLog:update')")
     @PostMapping("/changeLog/update")
     public ResponseDTO<String> update(@RequestBody @Valid ChangeLogUpdateForm updateForm) {
         return changeLogService.update(updateForm);
     }
 
     @ApiOperation("批量删除 @author 卓大")
-    @SaCheckPermission("@saAuth.checkPermission('changeLog:batchDelete')")
     @PostMapping("/changeLog/batchDelete")
     public ResponseDTO<String> batchDelete(@RequestBody ValidateList<Long> idList) {
         return changeLogService.batchDelete(idList);
     }
 
     @ApiOperation("单个删除 @author 卓大")
-    @SaCheckPermission("@saAuth.checkPermission('changeLog:delete')")
     @GetMapping("/changeLog/delete/{changeLogId}")
     public ResponseDTO<String> batchDelete(@PathVariable Long changeLogId) {
         return changeLogService.delete(changeLogId);

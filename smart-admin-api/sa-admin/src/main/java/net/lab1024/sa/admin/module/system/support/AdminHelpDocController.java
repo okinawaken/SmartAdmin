@@ -1,6 +1,5 @@
 package net.lab1024.sa.admin.module.system.support;
 
-import cn.dev33.satoken.annotation.SaCheckPermission;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.lab1024.sa.common.common.controller.SupportBaseController;
@@ -42,14 +41,12 @@ public class AdminHelpDocController extends SupportBaseController {
 
 
     @ApiOperation("帮助文档目录-添加 @author 卓大")
-    @SaCheckPermission("@saAuth.checkPermission('helpDocCatalog:addCategory')")
     @PostMapping("/helpDoc/helpDocCatalog/add")
     public ResponseDTO<String> addHelpDocCatalog(@RequestBody @Valid HelpDocCatalogAddForm helpDocCatalogAddForm) {
         return helpDocCatalogService.add(helpDocCatalogAddForm);
     }
 
     @ApiOperation("帮助文档目录-更新 @author 卓大")
-    @SaCheckPermission("@saAuth.checkPermission('helpDocCatalog:edit')")
     @PostMapping("/helpDoc/helpDocCatalog/update")
     public ResponseDTO<String> updateHelpDocCatalog(@RequestBody @Valid HelpDocCatalogUpdateForm helpDocCatalogUpdateForm) {
         return helpDocCatalogService.update(helpDocCatalogUpdateForm);
@@ -64,7 +61,6 @@ public class AdminHelpDocController extends SupportBaseController {
     // --------------------- 帮助文档 【管理:增、删、查、改】-------------------------
 
     @ApiOperation("【管理】帮助文档-分页查询 @author 卓大")
-    @SaCheckPermission("@saAuth.checkPermission('helpDoc:query')")
     @PostMapping("/helpDoc/query")
     public ResponseDTO<PageResult<HelpDocVO>> query(@RequestBody @Valid HelpDocQueryForm queryForm) {
         return ResponseDTO.ok(helpDocService.query(queryForm));
@@ -77,7 +73,6 @@ public class AdminHelpDocController extends SupportBaseController {
     }
 
     @ApiOperation("【管理】帮助文档-添加 @author 卓大")
-    @SaCheckPermission("@saAuth.checkPermission('helpDoc:add')")
     @PostMapping("/helpDoc/add")
     @RepeatSubmit
     public ResponseDTO<String> add(@RequestBody @Valid HelpDocAddForm addForm) {
@@ -85,7 +80,6 @@ public class AdminHelpDocController extends SupportBaseController {
     }
 
     @ApiOperation("【管理】帮助文档-更新 @author 卓大")
-    @SaCheckPermission("@saAuth.checkPermission('helpDoc:update')")
     @PostMapping("/helpDoc/update")
     @RepeatSubmit
     public ResponseDTO<String> update(@RequestBody @Valid HelpDocUpdateForm updateForm) {
@@ -93,7 +87,6 @@ public class AdminHelpDocController extends SupportBaseController {
     }
 
     @ApiOperation("【管理】帮助文档-删除 @author 卓大")
-    @SaCheckPermission("@saAuth.checkPermission('helpDoc:delete')")
     @GetMapping("/helpDoc/delete/{helpDocId}")
     public ResponseDTO<String> delete(@PathVariable Long helpDocId) {
         return helpDocService.delete(helpDocId);

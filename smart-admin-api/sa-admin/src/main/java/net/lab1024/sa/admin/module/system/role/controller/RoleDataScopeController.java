@@ -1,6 +1,5 @@
 package net.lab1024.sa.admin.module.system.role.controller;
 
-import cn.dev33.satoken.annotation.SaCheckPermission;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.lab1024.sa.admin.common.AdminBaseController;
@@ -41,7 +40,6 @@ public class RoleDataScopeController extends AdminBaseController {
 
     @ApiOperation(value = "批量设置某角色数据范围 @author 卓大")
     @PostMapping("/role/dataScope/updateRoleDataScopeList")
-    @SaCheckPermission("@saAuth.checkPermission('system:role:dataScope:update')")
     public ResponseDTO<String> updateRoleDataScopeList(@RequestBody @Valid RoleDataScopeUpdateForm roleDataScopeUpdateForm) {
         return roleDataScopeService.updateRoleDataScopeList(roleDataScopeUpdateForm);
     }

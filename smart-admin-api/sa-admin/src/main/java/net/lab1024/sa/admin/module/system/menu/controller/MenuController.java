@@ -1,6 +1,5 @@
 package net.lab1024.sa.admin.module.system.menu.controller;
 
-import cn.dev33.satoken.annotation.SaCheckPermission;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.lab1024.sa.admin.common.AdminBaseController;
@@ -39,7 +38,6 @@ public class MenuController extends AdminBaseController {
 
     @ApiOperation(value = "添加菜单 @author 卓大")
     @PostMapping("/menu/add")
-    @SaCheckPermission("@saAuth.checkPermission('system:menu:add')")
     public ResponseDTO<String> addMenu(@RequestBody @Valid MenuAddForm menuAddForm) {
         menuAddForm.setCreateUserId(SmartRequestUtil.getUserId());
         return menuService.addMenu(menuAddForm);
@@ -47,7 +45,6 @@ public class MenuController extends AdminBaseController {
 
     @ApiOperation(value = "更新菜单 @author 卓大")
     @PostMapping("/menu/update")
-    @SaCheckPermission("@saAuth.checkPermission('system:menu:update')")
     public ResponseDTO<String> updateMenu(@RequestBody @Valid MenuUpdateForm menuUpdateForm) {
         menuUpdateForm.setUpdateUserId(SmartRequestUtil.getUserId());
         return menuService.updateMenu(menuUpdateForm);
@@ -55,7 +52,6 @@ public class MenuController extends AdminBaseController {
 
     @ApiOperation(value = "批量删除菜单 @author 卓大")
     @GetMapping("/menu/batchDelete")
-    @SaCheckPermission("@saAuth.checkPermission('system:menu:delete,system:menu:batch:delete')")
     public ResponseDTO<String> batchDeleteMenu(@RequestParam("menuIdList") List<Long> menuIdList) {
         return menuService.batchDeleteMenu(menuIdList, SmartRequestUtil.getUserId());
     }

@@ -1,6 +1,5 @@
 package net.lab1024.sa.admin.module.system.role.controller;
 
-import cn.dev33.satoken.annotation.SaCheckPermission;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.lab1024.sa.admin.common.AdminBaseController;
@@ -36,21 +35,18 @@ public class RoleController extends AdminBaseController {
 
     @ApiOperation("添加角色 @author 卓大")
     @PostMapping("/role/add")
-    @SaCheckPermission("@saAuth.checkPermission('system:role:add')")
     public ResponseDTO addRole(@Valid @RequestBody RoleAddForm roleAddForm) {
         return roleService.addRole(roleAddForm);
     }
 
     @ApiOperation("删除角色 @author 卓大")
     @GetMapping("/role/delete/{roleId}")
-    @SaCheckPermission("@saAuth.checkPermission('system:role:delete')")
     public ResponseDTO<String> deleteRole(@PathVariable Long roleId) {
         return roleService.deleteRole(roleId);
     }
 
     @ApiOperation("更新角色 @author 卓大")
     @PostMapping("/role/update")
-    @SaCheckPermission("@saAuth.checkPermission('system:role:update')")
     public ResponseDTO<String> updateRole(@Valid @RequestBody RoleUpdateForm roleUpdateDTO) {
         return roleService.updateRole(roleUpdateDTO);
     }

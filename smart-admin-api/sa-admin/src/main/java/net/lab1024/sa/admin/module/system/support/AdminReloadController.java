@@ -1,6 +1,5 @@
 package net.lab1024.sa.admin.module.system.support;
 
-import cn.dev33.satoken.annotation.SaCheckPermission;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.lab1024.sa.common.common.controller.SupportBaseController;
@@ -39,14 +38,12 @@ public class AdminReloadController extends SupportBaseController {
     }
 
     @ApiOperation(value = "获取reload result @author 开云")
-    @SaCheckPermission("@saAuth.checkPermission('support:reload:result')")
     @GetMapping("/reload/result/{tag}")
     public ResponseDTO<List<ReloadResultVO>> queryReloadResult(@PathVariable("tag") String tag) {
         return reloadService.queryReloadItemResult(tag);
     }
 
     @ApiOperation(value = "通过tag更新标识 @author 开云")
-    @SaCheckPermission("@saAuth.checkPermission('support:reload:execute')")
     @PostMapping("/reload/update")
     public ResponseDTO<String> updateByTag(@RequestBody @Valid ReloadForm reloadForm) {
         return reloadService.updateByTag(reloadForm);

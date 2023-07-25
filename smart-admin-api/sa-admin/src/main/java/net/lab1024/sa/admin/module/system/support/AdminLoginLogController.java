@@ -1,6 +1,5 @@
 package net.lab1024.sa.admin.module.system.support;
 
-import cn.dev33.satoken.annotation.SaCheckPermission;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.lab1024.sa.common.common.controller.SupportBaseController;
@@ -32,7 +31,6 @@ public class AdminLoginLogController extends SupportBaseController {
     private LoginLogService loginLogService;
 
     @ApiOperation(value = "分页查询 @author 卓大")
-    @SaCheckPermission("@saAuth.checkPermission('loginLog:query')")
     @PostMapping("/loginLog/page/query")
     public ResponseDTO<PageResult<LoginLogVO>> queryByPage(@RequestBody LoginLogQueryForm queryForm) {
         return loginLogService.queryByPage(queryForm);

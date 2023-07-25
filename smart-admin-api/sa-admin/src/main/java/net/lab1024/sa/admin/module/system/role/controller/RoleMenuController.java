@@ -1,6 +1,5 @@
 package net.lab1024.sa.admin.module.system.role.controller;
 
-import cn.dev33.satoken.annotation.SaCheckPermission;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.lab1024.sa.admin.common.AdminBaseController;
@@ -34,7 +33,6 @@ public class RoleMenuController extends AdminBaseController {
 
     @ApiOperation("更新角色权限 @author 卓大")
     @PostMapping("/role/menu/updateRoleMenu")
-    @SaCheckPermission("@saAuth.checkPermission('system:role:menu:update')")
     public ResponseDTO<String> updateRoleMenu(@Valid @RequestBody RoleMenuUpdateForm updateDTO) {
         return roleMenuService.updateRoleMenu(updateDTO);
     }

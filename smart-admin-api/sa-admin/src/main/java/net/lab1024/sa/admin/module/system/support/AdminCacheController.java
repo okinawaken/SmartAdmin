@@ -1,6 +1,5 @@
 package net.lab1024.sa.admin.module.system.support;
 
-import cn.dev33.satoken.annotation.SaCheckPermission;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.lab1024.sa.common.common.controller.SupportBaseController;
@@ -38,7 +37,6 @@ public class AdminCacheController extends SupportBaseController {
 
 
     @ApiOperation(value = "移除某个缓存 @author 罗伊")
-    @SaCheckPermission("@saAuth.checkPermission('support:cache:delete')")
     @GetMapping("/cache/remove/{cacheName}")
     public ResponseDTO<String> removeCache(@PathVariable String cacheName) {
         cacheService.removeCache(cacheName);
@@ -47,7 +45,6 @@ public class AdminCacheController extends SupportBaseController {
 
 
     @ApiOperation(value = "获取某个缓存的所有key @author 罗伊")
-    @SaCheckPermission("@saAuth.checkPermission('support:cache:keys')")
     @GetMapping("/cache/keys/{cacheName}")
     public ResponseDTO<List<String>> cacheKeys(@PathVariable String cacheName) {
         return ResponseDTO.ok(cacheService.cacheKey(cacheName));

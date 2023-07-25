@@ -1,6 +1,5 @@
 package net.lab1024.sa.admin.module.system.support;
 
-import cn.dev33.satoken.annotation.SaCheckPermission;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.lab1024.sa.common.common.controller.SupportBaseController;
@@ -34,7 +33,6 @@ public class AdminFileController extends SupportBaseController {
     private FileService fileService;
 
     @ApiOperation("分页查询 @author 1024创新实验室-主任-卓大")
-    @SaCheckPermission("@saAuth.checkPermission('support:file:query')")
     @PostMapping("/file/queryPage")
     public ResponseDTO<PageResult<FileVO>> queryPage(@RequestBody @Valid FileQueryForm queryForm) {
         return ResponseDTO.ok(fileService.queryPage(queryForm));
