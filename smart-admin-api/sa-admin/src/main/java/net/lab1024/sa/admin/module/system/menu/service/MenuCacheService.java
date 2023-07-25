@@ -1,8 +1,5 @@
 package net.lab1024.sa.admin.module.system.menu.service;
 
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
-import lombok.SneakyThrows;
 import net.lab1024.sa.admin.module.system.menu.constant.MenuTypeEnum;
 import net.lab1024.sa.admin.module.system.menu.dao.MenuDao;
 import net.lab1024.sa.admin.module.system.menu.domain.entity.MenuEntity;
@@ -25,28 +22,34 @@ public class MenuCacheService {
     @Autowired
     private MenuDao menuDao;
 
-    private static final Cache<String, List<String>> MENU_URL_CACHE = CacheBuilder.newBuilder().build();
+    private static List<String> MENU_URL_CACHE = null;
 
     /**
-     * 查询数据表中 需要校验权限的url
+     * 查询 需要校验权限的url
      *
      * @return
      */
-    @SneakyThrows
     public List<String> queryNeedCheckPermissionsUrl() {
-        return MENU_URL_CACHE.get("MENU_URL_CACHE", () -> {
-            //  TODO listen 待确定哪个字段做为url
-            return menuDao.queryMenuByType(MenuTypeEnum.POINTS.getValue(), false, false)
+        if (null != MENU_URL_CACHE) {
+            return MENU_URL_CACHE;
+        }
+        synchronized (MenuCacheService.class) {
+            if (null != MENU_URL_CACHE) {
+                return MENU_URL_CACHE;
+            }
+            // TODO listen 待确定哪个字段做为url
+            MENU_URL_CACHE = menuDao.queryMenuByType(MenuTypeEnum.POINTS.getValue(), false, false)
                     .stream()
                     .map(MenuEntity::getApiPerms)
                     .filter(Objects::nonNull)
                     .distinct()
                     .collect(Collectors.toList());
-        });
+            return MENU_URL_CACHE;
+        }
     }
 
     public static void clearCache() {
-        MENU_URL_CACHE.invalidateAll();
+        MENU_URL_CACHE = null;
     }
 
 }
