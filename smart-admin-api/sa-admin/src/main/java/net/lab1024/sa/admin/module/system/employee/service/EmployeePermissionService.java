@@ -105,7 +105,6 @@ public class EmployeePermissionService implements StpInterface {
 
     /**
      * 清理角色关联权限 缓存
-     * TODO listen 待调用
      *
      * @param roleId
      */
@@ -115,7 +114,6 @@ public class EmployeePermissionService implements StpInterface {
 
     /**
      * 清理 员工关联角色 缓存
-     * TODO listen 待调用
      *
      * @param employeeId
      */

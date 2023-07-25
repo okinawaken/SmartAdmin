@@ -72,12 +72,4 @@ public class LoginController {
     public ResponseDTO<CaptchaVO> getCaptcha() {
         return loginService.getCaptcha();
     }
-
-    // TODO listen 测试待删除
-    @NoNeedLogin
-    @ApiOperation("测试权限 @listen")
-    @GetMapping("/listen/test")
-    public ResponseDTO<String> test() {
-        return ResponseDTO.ok();
-    }
 }

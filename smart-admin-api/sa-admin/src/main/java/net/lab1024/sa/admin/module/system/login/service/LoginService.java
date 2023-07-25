@@ -93,7 +93,7 @@ public class LoginService {
         // 校验 图形验证码
         ResponseDTO<String> checkCaptcha = captchaService.checkCaptcha(loginForm);
         if (!checkCaptcha.getOk()) {
-            // TODO listen 待放开 return ResponseDTO.error(checkCaptcha);
+           return ResponseDTO.error(checkCaptcha);
         }
 
         /**
@@ -160,8 +160,6 @@ public class LoginService {
         List<MenuVO> menuAndPointsList = employeePermissionService.getEmployeeMenuAndPointsList(employeeEntity.getEmployeeId(), employeeEntity.getAdministratorFlag());
         //前端菜单
         loginEmployeeDetail.setMenuList(menuAndPointsList);
-        // TODO listen 原先为什么返回权限
-        // loginEmployeeDetail.setAuthorities(employeePermissionService.buildAuthorities(menuAndPointsList));
 
         //上次登录信息
         LoginLogVO loginLogVO = loginLogService.queryLastByUserId(employeeEntity.getEmployeeId(), UserTypeEnum.ADMIN_EMPLOYEE);
