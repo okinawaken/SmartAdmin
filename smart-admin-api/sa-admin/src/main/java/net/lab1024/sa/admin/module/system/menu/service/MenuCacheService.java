@@ -22,7 +22,7 @@ public class MenuCacheService {
     @Autowired
     private MenuDao menuDao;
 
-    private static List<String> MENU_URL_CACHE = null;
+    private static volatile List<String> MENU_URL_CACHE = null;
 
     /**
      * 查询 需要校验权限的url
