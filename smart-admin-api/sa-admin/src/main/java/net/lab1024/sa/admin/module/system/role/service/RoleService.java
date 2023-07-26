@@ -1,5 +1,6 @@
 package net.lab1024.sa.admin.module.system.role.service;
 
+import net.lab1024.sa.admin.module.system.employee.service.EmployeePermissionService;
 import net.lab1024.sa.admin.module.system.role.dao.RoleDao;
 import net.lab1024.sa.admin.module.system.role.dao.RoleEmployeeDao;
 import net.lab1024.sa.admin.module.system.role.dao.RoleMenuDao;
@@ -68,6 +69,9 @@ public class RoleService {
         roleDao.deleteById(roleId);
         roleMenuDao.deleteByRoleId(roleId);
         roleEmployeeDao.deleteByRoleId(roleId);
+
+        // 清理角色缓存
+        EmployeePermissionService.clearRoleCache(roleId);
         return ResponseDTO.ok();
     }
 

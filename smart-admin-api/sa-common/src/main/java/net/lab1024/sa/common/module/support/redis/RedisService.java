@@ -1,8 +1,8 @@
 package net.lab1024.sa.common.module.support.redis;
 
 import com.alibaba.fastjson.JSON;
-import net.lab1024.sa.common.common.domain.SystemEnvironment;
-import net.lab1024.sa.common.common.enumeration.SystemEnvironmentEnum;
+import net.lab1024.sa.common.common.domain.SystemEnv;
+import net.lab1024.sa.common.common.enumeration.SystemEnvEnum;
 import net.lab1024.sa.common.common.util.SmartStringUtil;
 import net.lab1024.sa.common.constant.RedisKeyConst;
 import org.slf4j.Logger;
@@ -52,7 +52,7 @@ public class RedisService {
     private SetOperations<String, Object> redisSetOperations;
 
     @Autowired
-    private SystemEnvironment systemEnvironment;
+    private SystemEnv systemEnvironment;
 
 
     /**
@@ -62,7 +62,7 @@ public class RedisService {
      * @return
      */
     public String generateRedisKey(String prefix, String key) {
-        SystemEnvironmentEnum currentEnvironment = systemEnvironment.getCurrentEnvironment();
+        SystemEnvEnum currentEnvironment = systemEnvironment.getCurrentEnv();
         return systemEnvironment.getProjectName() + RedisKeyConst.SEPARATOR + currentEnvironment.getValue() +  RedisKeyConst.SEPARATOR + prefix + key;
     }
 

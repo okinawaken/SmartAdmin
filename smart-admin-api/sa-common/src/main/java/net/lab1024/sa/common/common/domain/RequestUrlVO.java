@@ -18,9 +18,6 @@ public class RequestUrlVO {
     @ApiModelProperty("注释说明")
     private String comment;
 
-    @ApiModelProperty("controller.method")
-    private String name;
-
     @ApiModelProperty("url")
     private String url;
 }

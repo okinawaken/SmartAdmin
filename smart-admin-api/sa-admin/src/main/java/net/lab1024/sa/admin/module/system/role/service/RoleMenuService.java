@@ -1,6 +1,7 @@
 package net.lab1024.sa.admin.module.system.role.service;
 
 import com.google.common.collect.Lists;
+import net.lab1024.sa.admin.module.system.employee.service.EmployeePermissionService;
 import net.lab1024.sa.admin.module.system.menu.dao.MenuDao;
 import net.lab1024.sa.admin.module.system.menu.domain.entity.MenuEntity;
 import net.lab1024.sa.admin.module.system.menu.domain.vo.MenuSimpleTreeVO;
@@ -67,7 +68,10 @@ public class RoleMenuService {
             roleMenuEntity.setMenuId(menuId);
             roleMenuEntityList.add(roleMenuEntity);
         }
-        roleMenuManager.updateRoleMenu(roleMenuUpdateForm.getRoleId(), roleMenuEntityList);
+        roleMenuManager.updateRoleMenu(roleId, roleMenuEntityList);
+
+        // 清理角色缓存
+        EmployeePermissionService.clearRoleCache(roleId);
         return ResponseDTO.ok();
     }
 
@@ -77,9 +81,9 @@ public class RoleMenuService {
      * @param roleIdList
      * @return
      */
-    public List<MenuVO> getMenuList(List<Long> roleIdList, Boolean administratorFlag) {
-        //管理员返回所有菜单
-        if(administratorFlag){
+    public List<MenuVO> getMenuList(List<Long> roleIdList, Boolean adminFlag) {
+        // 超管返回所有菜单
+        if(adminFlag){
             List<MenuEntity> menuEntityList = roleMenuDao.selectMenuListByRoleIdList(Lists.newArrayList(), false);
             return SmartBeanUtil.copyList(menuEntityList, MenuVO.class);
         }

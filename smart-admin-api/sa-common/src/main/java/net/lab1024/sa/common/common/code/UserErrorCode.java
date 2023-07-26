@@ -24,7 +24,7 @@ public enum UserErrorCode implements ErrorCode {
 
     REPEAT_SUBMIT(30004, "亲~您操作的太快了，请稍等下再操作~"),
 
-    NO_PERMISSION(30005, "对不起，您无法访问此资源哦~"),
+    NO_PERMISSION(30005, "对不起，您无法访问此内容哦~"),
 
     DEVELOPING(30006, "系統正在紧急开发中，敬请期待~"),
 
@@ -32,7 +32,11 @@ public enum UserErrorCode implements ErrorCode {
 
     USER_STATUS_ERROR(30008, "用户状态异常"),
 
-    FORM_REPEAT_SUBMIT(30009, "请勿重复提交");
+    FORM_REPEAT_SUBMIT(30009, "请勿重复提交"),
+
+    LOGIN_FROM_OTHER(30010, "您的账号已在其他地方登录"),
+
+    ;
 
     private final int code;
 

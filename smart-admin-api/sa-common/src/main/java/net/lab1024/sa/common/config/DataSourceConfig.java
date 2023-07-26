@@ -153,7 +153,7 @@ public class DataSourceConfig {
      *
      * @return
      */
-    @Conditional(SystemEnvironmentConfig.class)
+    @Conditional(SystemEnvConfig.class)
     @Bean
     public ServletRegistrationBean<StatViewServlet> druidServlet() {
         ServletRegistrationBean<StatViewServlet> servletRegistrationBean = new ServletRegistrationBean<>();

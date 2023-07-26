@@ -10,7 +10,6 @@ import net.lab1024.sa.common.module.support.file.domain.form.FileQueryForm;
 import net.lab1024.sa.common.module.support.file.domain.vo.FileVO;
 import net.lab1024.sa.common.module.support.file.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,7 +33,6 @@ public class AdminFileController extends SupportBaseController {
     private FileService fileService;
 
     @ApiOperation("分页查询 @author 1024创新实验室-主任-卓大")
-    @PreAuthorize("@saAuth.checkPermission('support:file:query')")
     @PostMapping("/file/queryPage")
     public ResponseDTO<PageResult<FileVO>> queryPage(@RequestBody @Valid FileQueryForm queryForm) {
         return ResponseDTO.ok(fileService.queryPage(queryForm));

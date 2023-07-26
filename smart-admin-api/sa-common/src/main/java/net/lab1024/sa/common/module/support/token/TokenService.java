@@ -1,220 +1,85 @@
 package net.lab1024.sa.common.module.support.token;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtBuilder;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import lombok.extern.slf4j.Slf4j;
+import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.stp.SaLoginModel;
+import cn.dev33.satoken.stp.StpUtil;
+import net.lab1024.sa.common.common.constant.StringConst;
 import net.lab1024.sa.common.common.enumeration.UserTypeEnum;
-import net.lab1024.sa.common.constant.RedisKeyConst;
-import net.lab1024.sa.common.module.support.redis.RedisService;
-import org.apache.commons.collections4.MapUtils;
-import org.apache.commons.lang3.math.NumberUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-import java.util.Map;
+import java.util.List;
 
 /**
- * 与用户token的相关的服务
+ * 用户token 相关服务
  *
- * @Author 1024创新实验室-主任: 卓大
- * @Date 2021-11-29 19:48:35
- * @Wechat zhuoda1024
- * @Email lab1024@163.com
- * @Copyright 1024创新实验室 （ https://1024lab.net ）
+ * @author listen
+ * @date 2023-07-12 22:48:35
  */
 @Component
-@Slf4j
 public class TokenService {
-    private static final long HOUR_TIME_MILLI = 60 * 60 * 1000;
 
-    @Value("${token.key}")
-    private String tokenKey;
+    public static final String EXTRA_KEY_USER_NAME = "userName";
 
-    @Value("${token.expire-day}")
-    private Integer tokenExpire;
-
-    @Autowired
-    private RedisService redisService;
+    public static final String EXTRA_KEY_USER_TYPE = "userType";
 
     /**
-     * 生成Token，并存入redis
+     * 生成Token
      *
      * @param userId
      * @param userName
      * @param userTypeEnum
      * @param loginDeviceEnum
-     * @param superPasswordFlag 特殊万能密码标识
      * @return
      */
-    public String generateToken(Long userId, String userName, UserTypeEnum userTypeEnum, LoginDeviceEnum loginDeviceEnum, Boolean superPasswordFlag) {
-        long nowTimeMilli = System.currentTimeMillis();
-        Claims jwtClaims = Jwts.claims();
-        jwtClaims.put(JwtConst.CLAIM_ID_KEY, userId);
-        jwtClaims.put(JwtConst.CLAIM_NAME_KEY, userName);
-        jwtClaims.put(JwtConst.CLAIM_USER_TYPE_KEY, userTypeEnum.getValue());
-        jwtClaims.put(JwtConst.CLAIM_DEVICE_KEY, loginDeviceEnum.getValue());
-        jwtClaims.put(JwtConst.CLAIM_SUPER_PASSWORD_FLAG, superPasswordFlag);
-        JwtBuilder jwtBuilder = Jwts.builder()
-                .setClaims(jwtClaims)
-                .setIssuedAt(new Date(nowTimeMilli))
-                .signWith(SignatureAlgorithm.HS512, tokenKey);
+    public String generateToken(Long userId,
+                                String userName,
+                                UserTypeEnum userTypeEnum,
+                                LoginDeviceEnum loginDeviceEnum) {
 
-        // 如果是万能密码，则不需要记录到redis中;万能密码最多半个小时有效期
-        if (superPasswordFlag) {
-            jwtBuilder.setExpiration(new Date(nowTimeMilli + (HOUR_TIME_MILLI / 2)));
-            return jwtBuilder.compact();
-        }
+        /**
+         * 设置登录模式参数
+         * 具体参数 {@link SaLoginModel }  属性
+         * 已经写的挺清楚的了
+         */
+        SaLoginModel loginModel = new SaLoginModel();
+        // 此次登录的客户端设备类型, 用于[同端互斥登录]时指定此次登录的设备类型
+        loginModel.setDevice(String.valueOf(loginDeviceEnum.getDesc()));
 
-        jwtBuilder.setExpiration(new Date(nowTimeMilli + tokenExpire * 24 * HOUR_TIME_MILLI));
-        String token = jwtBuilder.compact();
-        String redisKey = this.generateTokenRedisKey(userId, userTypeEnum.getValue(), loginDeviceEnum.getValue());
-        redisService.set(redisKey, token, tokenExpire * 24 * 3600);
-        return token;
+        // 登录
+        String loginId = generateLoginId(userId, userTypeEnum);
+        StpUtil.login(loginId, loginModel);
+
+        // 扩展参数 放入会话中 redis session
+        SaSession session = StpUtil.getSession();
+        session.set(EXTRA_KEY_USER_NAME, userName);
+        session.set(EXTRA_KEY_USER_TYPE, userTypeEnum);
+        return StpUtil.getTokenValue();
+    }
+
+    public static String generateLoginId(Long userId, UserTypeEnum userType) {
+        return userType.getValue() + StringConst.COLON + userId;
+    }
+
+    public static Long getUserId(String loginId) {
+        return Long.valueOf(loginId.substring(loginId.indexOf(StringConst.COLON) + 1));
+    }
+
+    public static Integer getUserType(String loginId) {
+        return Integer.valueOf(loginId.substring(0, loginId.indexOf(StringConst.COLON)));
     }
 
     /**
-     * 生成登录信息： 含设备信息
-     *
-     * @param userId
-     * @param device
-     * @return
+     * 退出登录 注销
      */
-    private String generateTokenRedisKey(Long userId, Integer userType, Integer device) {
-        String userKey = userType + "_" + userId + "_" + device;
-        return redisService.generateRedisKey(RedisKeyConst.Support.TOKEN, userKey);
+    public void removeToken() {
+        StpUtil.logout();
     }
 
-
-    /**
-     * 强制移除 此用户各端的登录信息
-     *
-     * @param token
-     */
-    public void removeToken(String token) {
-        Map<String, Object> tokenData = this.decryptTokenData(token);
-        if (MapUtils.isEmpty(tokenData)) {
-            return;
-        }
-
-        //特殊账号
-        if (tokenData.get(JwtConst.CLAIM_SUPER_PASSWORD_FLAG) != null) {
-            try {
-                Boolean superPasswordFlag = Boolean.valueOf(tokenData.get(JwtConst.CLAIM_SUPER_PASSWORD_FLAG).toString());
-                if (superPasswordFlag) {
-                    return;
-                }
-            } catch (Exception e) {
-                log.error(e.getMessage(), e);
-                return;
-            }
-        }
-
-        boolean isValid = this.checkRedisToken(tokenData, token);
-        if (!isValid) {
-            return;
-        }
-
-        Long userId = Long.valueOf(tokenData.get(JwtConst.CLAIM_ID_KEY).toString());
-        Integer userType = Integer.valueOf(tokenData.get(JwtConst.CLAIM_USER_TYPE_KEY).toString());
-        Integer device = Integer.valueOf(tokenData.get(JwtConst.CLAIM_DEVICE_KEY).toString());
-
-        String redisKey = this.generateTokenRedisKey(userId, userType, device);
-        redisService.delete(redisKey);
+    public void removeToken(Long userId, UserTypeEnum userType) {
+        StpUtil.logout(generateLoginId(userId, userType));
     }
 
-    /**
-     * 解析并校验token信息 获取 userId
-     *
-     * @param token
-     * @return
-     */
-    public Long getUserIdAndValidateToken(String token) {
-        Map<String, Object> parseJwtData = this.decryptTokenData(token);
-        boolean isValid = this.checkRedisToken(parseJwtData, token);
-        if (!isValid) {
-            return null;
-        }
-        Long userId = Long.valueOf(parseJwtData.get(JwtConst.CLAIM_ID_KEY).toString());
-        return userId;
-    }
-
-    /**
-     * 解密和解析token
-     *
-     * @param token
-     * @return
-     */
-    private Map<String, Object> decryptTokenData(String token) {
-        try {
-            return Jwts.parser()
-                    .setSigningKey(tokenKey)
-                    .parseClaimsJws(token)
-                    .getBody();
-        } catch (Exception e) {
-        }
-        return null;
-    }
-
-    /**
-     * 校验token是否有效
-     *
-     * @param token
-     * @return
-     */
-    private boolean checkRedisToken(Map<String, Object> parseJwtData, String token) {
-        if (MapUtils.isEmpty(parseJwtData)) {
-            return false;
-        }
-        //特殊账号
-        if (parseJwtData.get(JwtConst.CLAIM_SUPER_PASSWORD_FLAG) != null) {
-            try {
-                Boolean superPasswordFlag = Boolean.valueOf(parseJwtData.get(JwtConst.CLAIM_SUPER_PASSWORD_FLAG).toString());
-                if (superPasswordFlag) {
-                    return true;
-                }
-            } catch (Exception e) {
-                log.error(e.getMessage(), e);
-                return false;
-            }
-        }
-
-        Long userId = null;
-        Integer userType = null, device = null;
-
-        if (null != parseJwtData.get(JwtConst.CLAIM_ID_KEY)) {
-            userId = NumberUtils.toLong(parseJwtData.get(JwtConst.CLAIM_ID_KEY).toString(), -1);
-            userId = userId == -1 ? null : userId;
-        }
-
-        if (null != parseJwtData.get(JwtConst.CLAIM_USER_TYPE_KEY)) {
-            userType = NumberUtils.toInt(parseJwtData.get(JwtConst.CLAIM_USER_TYPE_KEY).toString(), -1);
-            userType = userType == -1 ? null : userType;
-        }
-
-        if (null != parseJwtData.get(JwtConst.CLAIM_DEVICE_KEY)) {
-            device = NumberUtils.toInt(parseJwtData.get(JwtConst.CLAIM_DEVICE_KEY).toString(), -1);
-            device = device == -1 ? null : device;
-        }
-
-        if (userId == null || userType == null || device == null) {
-            return false;
-        }
-
-        String redisKey = this.generateTokenRedisKey(userId, userType, device);
-        String redisToken = redisService.get(redisKey);
-        return token.equals(redisToken);
-    }
-
-    /**
-     * 批量移除用户所有设备的token
-     */
-    public void batchRemoveRedisToken(Long userId, UserTypeEnum userTypeEnum) {
-        for (LoginDeviceEnum device : LoginDeviceEnum.values()) {
-            redisService.delete(this.generateTokenRedisKey(userId, userTypeEnum.getValue(), device.getValue()));
-        }
+    public void removeToken(List<Long> userIdList, UserTypeEnum userType) {
+        userIdList.forEach(id -> StpUtil.logout(generateLoginId(id, userType)));
     }
 }

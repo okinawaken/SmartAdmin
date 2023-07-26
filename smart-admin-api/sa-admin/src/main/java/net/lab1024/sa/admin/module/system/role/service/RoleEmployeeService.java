@@ -1,23 +1,23 @@
 package net.lab1024.sa.admin.module.system.role.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import net.lab1024.sa.admin.module.system.department.dao.DepartmentDao;
+import net.lab1024.sa.admin.module.system.department.domain.entity.DepartmentEntity;
+import net.lab1024.sa.admin.module.system.employee.domain.vo.EmployeeVO;
+import net.lab1024.sa.admin.module.system.employee.service.EmployeePermissionService;
 import net.lab1024.sa.admin.module.system.role.dao.RoleDao;
 import net.lab1024.sa.admin.module.system.role.dao.RoleEmployeeDao;
+import net.lab1024.sa.admin.module.system.role.domain.entity.RoleEmployeeEntity;
 import net.lab1024.sa.admin.module.system.role.domain.entity.RoleEntity;
 import net.lab1024.sa.admin.module.system.role.domain.form.RoleEmployeeQueryForm;
 import net.lab1024.sa.admin.module.system.role.domain.form.RoleEmployeeUpdateForm;
 import net.lab1024.sa.admin.module.system.role.domain.vo.RoleSelectedVO;
-import net.lab1024.sa.common.common.code.UserErrorCode;
+import net.lab1024.sa.admin.module.system.role.manager.RoleEmployeeManager;
 import net.lab1024.sa.common.common.constant.StringConst;
 import net.lab1024.sa.common.common.domain.PageResult;
 import net.lab1024.sa.common.common.domain.ResponseDTO;
 import net.lab1024.sa.common.common.util.SmartBeanUtil;
 import net.lab1024.sa.common.common.util.SmartPageUtil;
-import net.lab1024.sa.admin.module.system.department.dao.DepartmentDao;
-import net.lab1024.sa.admin.module.system.department.domain.entity.DepartmentEntity;
-import net.lab1024.sa.admin.module.system.employee.domain.vo.EmployeeVO;
-import net.lab1024.sa.admin.module.system.role.domain.entity.RoleEmployeeEntity;
-import net.lab1024.sa.admin.module.system.role.manager.RoleEmployeeManager;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -90,6 +90,9 @@ public class RoleEmployeeService {
             return ResponseDTO.userErrorParam();
         }
         roleEmployeeDao.deleteByEmployeeIdRoleId(employeeId, roleId);
+
+        // 清理员工角色缓存
+        EmployeePermissionService.clearUserRoleCache(employeeId);
         return ResponseDTO.ok();
     }
 
@@ -100,7 +103,11 @@ public class RoleEmployeeService {
      * @return ResponseDTO<String>
      */
     public ResponseDTO<String> batchRemoveRoleEmployee(RoleEmployeeUpdateForm roleEmployeeUpdateForm) {
-        roleEmployeeDao.batchDeleteEmployeeRole(roleEmployeeUpdateForm.getRoleId(), roleEmployeeUpdateForm.getEmployeeIdList());
+        List<Long> employeeIdList = roleEmployeeUpdateForm.getEmployeeIdList();
+        roleEmployeeDao.batchDeleteEmployeeRole(roleEmployeeUpdateForm.getRoleId(), employeeIdList);
+
+        // 清理员工角色缓存
+        employeeIdList.forEach(EmployeePermissionService::clearUserRoleCache);
         return ResponseDTO.ok();
     }
 
@@ -122,6 +129,9 @@ public class RoleEmployeeService {
         }
         // 保存数据
         roleEmployeeManager.saveRoleEmployee(roleId, roleEmployeeList);
+
+        // 清理员工角色缓存
+        employeeIdList.forEach(EmployeePermissionService::clearUserRoleCache);
         return ResponseDTO.ok();
     }
 

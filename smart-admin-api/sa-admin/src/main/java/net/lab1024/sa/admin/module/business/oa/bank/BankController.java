@@ -54,7 +54,7 @@ public class BankController {
     @ApiOperation(value = "新建银行信息 @author 善逸")
     @PostMapping("/oa/bank/create")
     public ResponseDTO<String> createBank(@RequestBody @Valid BankCreateForm createVO) {
-        RequestUser requestUser = SmartRequestUtil.getRequestUser();
+        RequestUser requestUser = SmartRequestUtil.getUser();
         createVO.setCreateUserId(requestUser.getUserId());
         createVO.setCreateUserName(requestUser.getUserName());
         return bankService.createBank(createVO);

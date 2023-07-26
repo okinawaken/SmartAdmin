@@ -12,7 +12,6 @@ import net.lab1024.sa.common.module.support.config.domain.ConfigQueryForm;
 import net.lab1024.sa.common.module.support.config.domain.ConfigUpdateForm;
 import net.lab1024.sa.common.module.support.config.domain.ConfigVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,21 +35,18 @@ public class AdminConfigController extends SupportBaseController {
     private ConfigService configService;
 
     @ApiOperation("分页查询系统配置 @author 卓大")
-    @PreAuthorize("@saAuth.checkPermission('support:config:query')")
     @PostMapping("/config/query")
     public ResponseDTO<PageResult<ConfigVO>> querySystemConfigPage(@RequestBody @Valid ConfigQueryForm queryForm) {
         return configService.queryConfigPage(queryForm);
     }
 
     @ApiOperation("添加配置参数 @author 卓大")
-    @PreAuthorize("@saAuth.checkPermission('support:config:add')")
     @PostMapping("/config/add")
     public ResponseDTO<String> addSystemConfig(@RequestBody @Valid ConfigAddForm configAddForm) {
         return configService.add(configAddForm);
     }
 
     @ApiOperation("修改配置参数 @author 卓大")
-    @PreAuthorize("@saAuth.checkPermission('support:config:update')")
     @PostMapping("/config/update")
     public ResponseDTO<String> updateSystemConfig(@RequestBody @Valid ConfigUpdateForm updateForm) {
         return configService.updateSystemConfig(updateForm);

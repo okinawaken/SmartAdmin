@@ -1,5 +1,8 @@
 package net.lab1024.sa.common.common.enumeration;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 /**
  * 用户类型
  *
@@ -9,29 +12,16 @@ package net.lab1024.sa.common.common.enumeration;
  * @Email lab1024@163.com
  * @Copyright 1024创新实验室 （ https://1024lab.net ），2012-2022
  */
+@Getter
+@AllArgsConstructor
 public enum UserTypeEnum implements BaseEnum {
 
     /**
      * 管理端 员工用户
      */
-    ADMIN_EMPLOYEE(1, "员工");
+    ADMIN_EMPLOYEE(1, "管理端-员工");
 
-    private Integer type;
+    private final Integer value;
 
-    private String desc;
-
-    UserTypeEnum(Integer type, String desc) {
-        this.type = type;
-        this.desc = desc;
-    }
-
-    @Override
-    public Integer getValue() {
-        return type;
-    }
-
-    @Override
-    public String getDesc() {
-        return desc;
-    }
+    private final String desc;
 }
