@@ -10,7 +10,7 @@
 import * as antIcons from '@ant-design/icons-vue';
 import Antd, { message } from 'ant-design-vue';
 import lodash from 'lodash';
-import { createApp, nextTick } from 'vue';
+import { createApp } from 'vue';
 import JsonViewer from 'vue3-json-viewer';
 import 'vue3-json-viewer/dist/index.css';
 import App from './App.vue';
@@ -26,8 +26,6 @@ import { store } from '/@/store/index';
 import { useUserStore } from '/@/store/modules/system/user';
 import '/@/theme/index.less';
 import { getTokenFromCookie } from '/@/utils/cookie-util';
-import { useRouter } from 'vue-router';
-import { PAGE_PATH_LOGIN } from '/@/constants/common-const';
 
 /*
  * -------------------- ※ 着重 解释说明下main.js的初始化逻辑 begin ※ --------------------
@@ -45,8 +43,6 @@ import { PAGE_PATH_LOGIN } from '/@/constants/common-const';
 /**
  * 获取用户信息和用户权限对应的路由，构建动态路由
  */
-const realRouter = useRouter();
-
 async function getLoginInfo() {
   try {
     //获取登录用户信息
@@ -61,7 +57,6 @@ async function getLoginInfo() {
     message.error(e);
     smartSentry.captureError(e);
     initVue();
-    router.push({ path: PAGE_PATH_LOGIN });
   }
 }
 
