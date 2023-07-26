@@ -13,6 +13,7 @@ import net.lab1024.sa.common.module.support.feedback.domain.FeedbackAddForm;
 import net.lab1024.sa.common.module.support.feedback.domain.FeedbackQueryForm;
 import net.lab1024.sa.common.module.support.feedback.domain.FeedbackVO;
 import net.lab1024.sa.common.module.support.feedback.service.FeedbackService;
+import net.lab1024.sa.common.module.support.repeatsubmit.annoation.RepeatSubmit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -46,7 +47,7 @@ public class FeedbackController extends SupportBaseController {
     @ApiOperation("意见反馈-新增 @author 开云")
     @PostMapping("/feedback/add")
     public ResponseDTO<String> add(@RequestBody @Valid FeedbackAddForm addForm) {
-        RequestUser employee = SmartRequestUtil.getUser();
+        RequestUser employee = SmartRequestUtil.getRequestUser();
         return feedbackService.add(addForm, employee);
     }
 }

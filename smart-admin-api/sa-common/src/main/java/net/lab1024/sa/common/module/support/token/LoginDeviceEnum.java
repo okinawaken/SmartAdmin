@@ -1,7 +1,5 @@
 package net.lab1024.sa.common.module.support.token;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import net.lab1024.sa.common.common.enumeration.BaseEnum;
 
 /**
@@ -13,8 +11,6 @@ import net.lab1024.sa.common.common.enumeration.BaseEnum;
  * @Email lab1024@163.com
  * @Copyright 1024创新实验室 （ https://1024lab.net ）
  */
-@Getter
-@AllArgsConstructor
 public enum LoginDeviceEnum implements BaseEnum {
 
     PC(1, "电脑端"),
@@ -25,9 +21,23 @@ public enum LoginDeviceEnum implements BaseEnum {
 
     H5(4, "H5"),
 
-    WX_MP(5, "微信小程序");
+    WEIXIN_MP(5, "微信小程序");
 
-    private final Integer value;
+    LoginDeviceEnum(Integer value, String desc) {
+        this.value = value;
+        this.desc = desc;
+    }
 
-    private final String desc;
+    private Integer value;
+    private String desc;
+
+    @Override
+    public Integer getValue() {
+        return value;
+    }
+
+    @Override
+    public String getDesc() {
+        return desc;
+    }
 }

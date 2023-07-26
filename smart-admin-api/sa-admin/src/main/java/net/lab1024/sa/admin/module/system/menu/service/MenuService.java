@@ -65,12 +65,6 @@ public class MenuService {
             menuEntity.setApiPerms(perms);
         }
         menuDao.insert(menuEntity);
-
-        // 清除权限缓存
-        if (MenuTypeEnum.POINTS.equalsValue(menuEntity.getMenuType())) {
-            MenuCacheService.clearCache();
-        }
-
         return ResponseDTO.ok();
     }
 
@@ -108,11 +102,6 @@ public class MenuService {
             menuEntity.setApiPerms(perms);
         }
         menuDao.updateById(menuEntity);
-
-        // 清除权限缓存
-        if (MenuTypeEnum.POINTS.equalsValue(menuEntity.getMenuType())) {
-            MenuCacheService.clearCache();
-        }
         return ResponseDTO.ok();
     }
 
@@ -129,11 +118,8 @@ public class MenuService {
             return ResponseDTO.userErrorParam("所选菜单不能为空");
         }
         menuDao.deleteByMenuIdList(menuIdList, employeeId, Boolean.TRUE);
-        // 子节点也需要删除
+        //孩子节点也需要删除
         this.recursiveDeleteChildren(menuIdList, employeeId);
-
-        // 清除权限缓存
-        MenuCacheService.clearCache();
         return ResponseDTO.ok();
     }
 

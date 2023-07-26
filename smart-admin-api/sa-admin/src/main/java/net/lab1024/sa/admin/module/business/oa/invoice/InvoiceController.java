@@ -52,7 +52,7 @@ public class InvoiceController {
     @ApiOperation(value = "新建发票信息 @author 善逸")
     @PostMapping("/oa/invoice/create")
     public ResponseDTO<String> createInvoice(@RequestBody @Valid InvoiceAddForm createVO) {
-        RequestUser requestUser = SmartRequestUtil.getUser();
+        RequestUser requestUser = SmartRequestUtil.getRequestUser();
         createVO.setCreateUserId(requestUser.getUserId());
         createVO.setCreateUserName(requestUser.getUserName());
         return invoiceService.createInvoice(createVO);

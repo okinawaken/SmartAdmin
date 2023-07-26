@@ -33,19 +33,19 @@ public class TableColumnController extends SupportBaseController {
     @PostMapping("/tableColumn/update")
     @RepeatSubmit
     public ResponseDTO<String> updateTableColumn(@RequestBody @Valid TableColumnUpdateForm updateForm) {
-        return tableColumnService.updateTableColumns(SmartRequestUtil.getUser(), updateForm);
+        return tableColumnService.updateTableColumns(SmartRequestUtil.getRequestUser(), updateForm);
     }
 
     @ApiOperation("恢复默认（删除） @author 卓大")
     @GetMapping("/tableColumn/delete/{tableId}")
     @RepeatSubmit
     public ResponseDTO<String> deleteTableColumn(@PathVariable Integer tableId) {
-        return tableColumnService.deleteTableColumn(SmartRequestUtil.getUser(), tableId);
+        return tableColumnService.deleteTableColumn(SmartRequestUtil.getRequestUser(), tableId);
     }
 
     @ApiOperation("查询表格列 @author 卓大")
     @GetMapping("/tableColumn/getColumns/{tableId}")
     public ResponseDTO<String> getColumns(@PathVariable Integer tableId) {
-        return ResponseDTO.ok(tableColumnService.getTableColumns(SmartRequestUtil.getUser(), tableId));
+        return ResponseDTO.ok(tableColumnService.getTableColumns(SmartRequestUtil.getRequestUser(), tableId));
     }
 }

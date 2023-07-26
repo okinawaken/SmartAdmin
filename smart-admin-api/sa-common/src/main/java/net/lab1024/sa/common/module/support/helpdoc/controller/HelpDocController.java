@@ -56,7 +56,7 @@ public class HelpDocController extends SupportBaseController {
     @RepeatSubmit
     public ResponseDTO<HelpDocDetailVO> view(@PathVariable Long helpDocId, HttpServletRequest request) {
         return helpDocUserService.view(
-                SmartRequestUtil.getUser(),
+                SmartRequestUtil.getRequestUser(),
                 helpDocId);
     }
 

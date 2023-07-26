@@ -1,5 +1,6 @@
 package net.lab1024.sa.admin.module.system.login.service;
 
+import cn.hutool.extra.servlet.ServletUtil;
 import com.googlecode.concurrentlinkedhashmap.ConcurrentLinkedHashMap;
 import lombok.extern.slf4j.Slf4j;
 import net.lab1024.sa.admin.module.system.department.domain.vo.DepartmentVO;
@@ -10,6 +11,7 @@ import net.lab1024.sa.admin.module.system.employee.service.EmployeeService;
 import net.lab1024.sa.admin.module.system.login.domain.LoginEmployeeDetail;
 import net.lab1024.sa.admin.module.system.login.domain.LoginForm;
 import net.lab1024.sa.admin.module.system.menu.domain.vo.MenuVO;
+import net.lab1024.sa.common.common.constant.RequestHeaderConst;
 import net.lab1024.sa.common.common.constant.StringConst;
 import net.lab1024.sa.common.common.domain.RequestUser;
 import net.lab1024.sa.common.common.domain.ResponseDTO;
@@ -29,6 +31,7 @@ import net.lab1024.sa.common.module.support.token.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.ConcurrentMap;
@@ -53,6 +56,9 @@ public class LoginService {
     private DepartmentService departmentService;
 
     @Autowired
+    private TokenService tokenService;
+
+    @Autowired
     private CaptchaService captchaService;
 
     @Autowired
@@ -63,9 +69,6 @@ public class LoginService {
 
     @Autowired
     private LoginLogService loginLogService;
-
-    @Autowired
-    private TokenService tokenService;
 
     /**
      * 登录信息二级缓存
@@ -85,15 +88,17 @@ public class LoginService {
      * 员工登陆
      *
      * @param loginForm
-     * @param ip
-     * @param userAgent
      * @return 返回用户登录信息
      */
     public ResponseDTO<LoginEmployeeDetail> login(LoginForm loginForm, String ip, String userAgent) {
+        LoginDeviceEnum loginDeviceEnum = SmartEnumUtil.getEnumByValue(loginForm.getLoginDevice(), LoginDeviceEnum.class);
+        if (loginDeviceEnum == null) {
+            return ResponseDTO.userErrorParam("登录设备暂不支持！");
+        }
         // 校验 图形验证码
         ResponseDTO<String> checkCaptcha = captchaService.checkCaptcha(loginForm);
         if (!checkCaptcha.getOk()) {
-           return ResponseDTO.error(checkCaptcha);
+            return ResponseDTO.error(checkCaptcha);
         }
 
         /**
@@ -121,9 +126,8 @@ public class LoginService {
         }
 
         // 生成 登录token，保存token
-        boolean superPasswordFlag = superPassword.equals(requestPassword);
-        LoginDeviceEnum loginDeviceEnum = SmartEnumUtil.getEnumByValue(loginForm.getLoginDevice(), LoginDeviceEnum.class);
-        String token = tokenService.generateToken(employeeEntity.getEmployeeId(), employeeEntity.getActualName(), UserTypeEnum.ADMIN_EMPLOYEE, loginDeviceEnum);
+        Boolean superPasswordFlag = superPassword.equals(requestPassword);
+        String token = tokenService.generateToken(employeeEntity.getEmployeeId(), employeeEntity.getActualName(), UserTypeEnum.ADMIN_EMPLOYEE, loginDeviceEnum, superPasswordFlag);
 
         //获取员工登录信息
         LoginEmployeeDetail loginEmployeeDetail = loadLoginInfo(employeeEntity);
@@ -160,6 +164,8 @@ public class LoginService {
         List<MenuVO> menuAndPointsList = employeePermissionService.getEmployeeMenuAndPointsList(employeeEntity.getEmployeeId(), employeeEntity.getAdministratorFlag());
         //前端菜单
         loginEmployeeDetail.setMenuList(menuAndPointsList);
+        //后端权限
+        loginEmployeeDetail.setAuthorities(employeePermissionService.buildAuthorities(menuAndPointsList));
 
         //上次登录信息
         LoginLogVO loginLogVO = loginLogService.queryLastByUserId(employeeEntity.getEmployeeId(), UserTypeEnum.ADMIN_EMPLOYEE);
@@ -193,15 +199,6 @@ public class LoginService {
         loginLogService.log(loginEntity);
     }
 
-    /**
-     * 查询用户信息缓存
-     *
-     * @param requestUserId
-     */
-    public LoginEmployeeDetail getLoginUserDetailCache(Long requestUserId) {
-        return loginUserDetailCache.get(requestUserId);
-    }
-
 
     /**
      * 移除用户信息缓存
@@ -213,14 +210,47 @@ public class LoginService {
     }
 
     /**
+     * 根据登陆token 获取员请求工信息
+     *
+     * @param
+     * @return
+     */
+    public LoginEmployeeDetail getLoginUserDetail(String token, HttpServletRequest request) {
+        Long requestUserId = tokenService.getUserIdAndValidateToken(token);
+        if (requestUserId == null) {
+            return null;
+        }
+        // 查询用户信息
+        LoginEmployeeDetail loginEmployeeDetail = loginUserDetailCache.get(requestUserId);
+        if (loginEmployeeDetail == null) {
+            // 员工基本信息
+            EmployeeEntity employeeEntity = employeeService.getById(requestUserId);
+            if (employeeEntity == null) {
+                return null;
+            }
+
+            loginEmployeeDetail = this.loadLoginInfo(employeeEntity);
+            loginEmployeeDetail.setToken(token);
+            loginUserDetailCache.put(requestUserId, loginEmployeeDetail);
+        }
+
+        //更新请求ip和user agent
+        loginEmployeeDetail.setUserAgent(ServletUtil.getHeaderIgnoreCase(request, RequestHeaderConst.USER_AGENT));
+        loginEmployeeDetail.setIp(ServletUtil.getClientIP(request));
+
+        return loginEmployeeDetail;
+    }
+
+
+    /**
      * 退出登陆，清除token缓存
      *
      * @return
      */
-    public ResponseDTO<String> logout(RequestUser requestUser) {
+    public ResponseDTO<String> logout(String token, RequestUser requestUser) {
         loginUserDetailCache.remove(requestUser.getUserId());
-        tokenService.removeToken();
-        // 保存登出日志
+        tokenService.removeToken(token);
+        //保存登出日志
         saveLogoutLog(requestUser, requestUser.getIp(), requestUser.getUserAgent());
         return ResponseDTO.ok();
     }

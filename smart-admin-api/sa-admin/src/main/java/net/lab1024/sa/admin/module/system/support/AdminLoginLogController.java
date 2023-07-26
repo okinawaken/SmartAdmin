@@ -10,6 +10,7 @@ import net.lab1024.sa.common.module.support.loginlog.LoginLogService;
 import net.lab1024.sa.common.module.support.loginlog.domain.LoginLogQueryForm;
 import net.lab1024.sa.common.module.support.loginlog.domain.LoginLogVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +32,7 @@ public class AdminLoginLogController extends SupportBaseController {
     private LoginLogService loginLogService;
 
     @ApiOperation(value = "分页查询 @author 卓大")
+    @PreAuthorize("@saAuth.checkPermission('loginLog:query')")
     @PostMapping("/loginLog/page/query")
     public ResponseDTO<PageResult<LoginLogVO>> queryByPage(@RequestBody LoginLogQueryForm queryForm) {
         return loginLogService.queryByPage(queryForm);

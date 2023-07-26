@@ -3,7 +3,7 @@ spring:
   datasource:
     url: jdbc:p6spy:mysql://127.0.0.1:3306/smart_admin_v2?autoReconnect=true&useServerPreparedStmts=false&rewriteBatchedStatements=true&characterEncoding=UTF-8&useSSL=false&allowMultiQueries=true&serverTimezone=Asia/Shanghai
     username: root
-    password: 123456
+    password: Zhuoda1024lab
     initial-size: 2
     min-idle: 2
     max-active: 10
@@ -27,17 +27,17 @@ spring:
 
   # redis 连接池配置信息
   redis:
-    database: 12
+    database: 1
     host: 127.0.0.1
     lettuce:
       pool:
-        max-active: 50
+        max-active: 5
         min-idle: 1
         max-idle: 3
         max-wait: 30000ms
     port: 6379
-    timeout: 10s
-    password: 123456
+    timeout: 10000ms
+    password:
 
   # 上传文件大小配置
   servlet:
@@ -109,6 +109,11 @@ http:
     write-timeout: 50000
     keep-alive: 300000
 
+# token相关配置
+token:
+  key: sa-jwt-key
+  expire-day: 7
+
 # 跨域配置
 access-control-allow-origin: '*'
 
@@ -119,32 +124,3 @@ heart-beat:
 # 热加载配置
 reload:
   interval-seconds: 300
-
-############## Sa-Token 配置 (文档: https://sa-token.cc) ##############
-sa-token:
-  # token 名称（同时也是 cookie 名称）
-  token-name: x-access-token
-  # token 前缀 例如：Bear
-  token-prefix:
-  # jwt秘钥
-  # jwt-secret-key: smart-admin
-  # token 有效期（单位：秒） 默认30天，-1 代表永久有效
-  timeout: 432000
-  # token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结，默认-1 代表不限制，永不冻结
-  active-timeout: -1
-  # 是否允许同一账号多地同时登录 （为 true 时允许一起登录, 为 false 时新登录挤掉旧登录）
-  is-concurrent: false
-  # 在多人登录同一账号时，是否共用一个 token （为 true 时所有登录共用一个 token, 为 false 时每次登录新建一个 token）(jwt模式下恒false)
-  is-share: false
-  # token 风格（默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik）(jwt模式下无用)
-  token-style: simple-uuid
-  # 是否打开自动续签 （如果此值为true，框架会在每次直接或间接调用 getLoginId() 时进行一次过期检查与续签操作）
-  auto-renew: true
-  # 是否输出操作日志
-  is-log: true
-  # 日志等级（trace、debug、info、warn、error、fatal）
-  log-level: debug
-  # 启动时的字符画打印
-  is-print: false
-  # 是否从cookie读取token
-  is-read-cookie: false

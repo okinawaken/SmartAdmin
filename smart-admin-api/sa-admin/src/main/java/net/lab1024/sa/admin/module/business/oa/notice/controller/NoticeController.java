@@ -9,6 +9,7 @@ import net.lab1024.sa.admin.module.business.oa.notice.domain.vo.*;
 import net.lab1024.sa.admin.module.business.oa.notice.service.NoticeEmployeeService;
 import net.lab1024.sa.admin.module.business.oa.notice.service.NoticeService;
 import net.lab1024.sa.admin.module.business.oa.notice.service.NoticeTypeService;
+import net.lab1024.sa.common.common.annoation.SaAuth;
 import net.lab1024.sa.common.common.domain.PageResult;
 import net.lab1024.sa.common.common.domain.ResponseDTO;
 import net.lab1024.sa.common.common.util.SmartRequestUtil;
@@ -72,6 +73,7 @@ public class NoticeController {
 
     @ApiOperation("【管理】通知公告-分页查询 @author 卓大")
     @PostMapping("/oa/notice/query")
+    @SaAuth
     public ResponseDTO<PageResult<NoticeVO>> query(@RequestBody @Valid NoticeQueryForm queryForm) {
         return ResponseDTO.ok(noticeService.query(queryForm));
     }
@@ -79,26 +81,30 @@ public class NoticeController {
     @ApiOperation("【管理】通知公告-添加 @author 卓大")
     @PostMapping("/oa/notice/add")
     @RepeatSubmit
+    @SaAuth
     public ResponseDTO<String> add(@RequestBody @Valid NoticeAddForm addForm) {
-        addForm.setCreateUserId(SmartRequestUtil.getUserId());
+        addForm.setCreateUserId(SmartRequestUtil.getRequestUserId());
         return noticeService.add(addForm);
     }
 
     @ApiOperation("【管理】通知公告-更新 @author 卓大")
     @PostMapping("/oa/notice/update")
     @RepeatSubmit
+    @SaAuth
     public ResponseDTO<String> update(@RequestBody @Valid NoticeUpdateForm updateForm) {
         return noticeService.update(updateForm);
     }
 
     @ApiOperation("【管理】通知公告-更新详情 @author 卓大")
     @GetMapping("/oa/notice/getUpdateVO/{noticeId}")
+    @SaAuth
     public ResponseDTO<NoticeUpdateFormVO> getUpdateFormVO(@PathVariable Long noticeId) {
         return ResponseDTO.ok(noticeService.getUpdateFormVO(noticeId));
     }
 
     @ApiOperation("【管理】通知公告-删除 @author 卓大")
     @GetMapping("/oa/notice/delete/{noticeId}")
+    @SaAuth
     public ResponseDTO<String> delete(@PathVariable Long noticeId) {
         return noticeService.delete(noticeId);
     }
@@ -108,7 +114,7 @@ public class NoticeController {
     @GetMapping("/oa/notice/employee/view/{noticeId}")
     public ResponseDTO<NoticeDetailVO> view(@PathVariable Long noticeId, HttpServletRequest request) {
         return noticeEmployeeService.view(
-                SmartRequestUtil.getUserId(),
+                SmartRequestUtil.getRequestUserId(),
                 noticeId,
                 ServletUtil.getClientIP(request),
                 request.getHeader("User-Agent")
@@ -118,7 +124,7 @@ public class NoticeController {
     @ApiOperation("【员工】通知公告-查询全部 @author 卓大")
     @PostMapping("/oa/notice/employee/query")
     public ResponseDTO<PageResult<NoticeEmployeeVO>> queryEmployeeNotice(@RequestBody @Valid NoticeEmployeeQueryForm noticeEmployeeQueryForm) {
-        return noticeEmployeeService.queryList(SmartRequestUtil.getUserId(), noticeEmployeeQueryForm);
+        return noticeEmployeeService.queryList(SmartRequestUtil.getRequestUserId(), noticeEmployeeQueryForm);
     }
 
     @ApiOperation("【员工】通知公告-查询 查看记录 @author 卓大")

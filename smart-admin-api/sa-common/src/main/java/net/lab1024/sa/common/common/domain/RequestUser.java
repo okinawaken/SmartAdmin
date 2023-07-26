@@ -1,11 +1,9 @@
 package net.lab1024.sa.common.common.domain;
 
-import lombok.Data;
 import net.lab1024.sa.common.common.enumeration.UserTypeEnum;
 
 /**
  * 请求用户
- * 多系统用户 可以继承此类
  *
  * @Author 1024创新实验室-主任: 卓大
  * @Date 2021-12-21 19:55:07
@@ -13,25 +11,39 @@ import net.lab1024.sa.common.common.enumeration.UserTypeEnum;
  * @Email lab1024@163.com
  * @Copyright 1024创新实验室 （ https://1024lab.net ）
  */
-@Data
-public class RequestUser {
+public interface RequestUser {
 
     /**
-     * 当前请求用户id
+     * 请求用户id
+     *
+     * @return
      */
-    private Long userId;
+    Long getUserId();
 
     /**
-     * 当前请求用户名称
+     * 请求用户名称
+     *
+     * @return
      */
-    private String userName;
+    String getUserName();
 
     /**
-     * 当前请求用户类型
+     * 获取用户类型
      */
-    private UserTypeEnum userType;
+    UserTypeEnum getUserType();
 
-    private String ip;
+    /**
+     * 获取请求的IP
+     *
+     * @return
+     */
+    String getIp();
 
-    private String userAgent;
+    /**
+     * 获取请求 user-agent
+     *
+     * @return
+     */
+    String getUserAgent();
+
 }

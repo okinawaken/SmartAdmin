@@ -27,11 +27,6 @@ public class StringConst {
     public static final String HORIZONTAL = "-";
 
     /**
-     * 全局通用 冒号
-     */
-    public static final String COLON = ":";
-
-    /**
      * 全局通用分隔符
      */
     public static final Character SEPARATOR_CHAR = ',';

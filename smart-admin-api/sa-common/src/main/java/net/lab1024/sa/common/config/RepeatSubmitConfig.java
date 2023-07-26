@@ -31,7 +31,7 @@ public class RepeatSubmitConfig {
      * @return
      */
     private String ticket(String servletPath) {
-        Long userId = SmartRequestUtil.getUserId();
+        Long userId = SmartRequestUtil.getRequestUserId();
         if (null == userId) {
             return StringConst.EMPTY;
         }

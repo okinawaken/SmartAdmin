@@ -1,7 +1,6 @@
 package net.lab1024.sa.common.common.util;
 
-import cn.dev33.satoken.context.SaHolder;
-import cn.dev33.satoken.context.model.SaStorage;
+import lombok.extern.slf4j.Slf4j;
 import net.lab1024.sa.common.common.domain.RequestUser;
 
 /**
@@ -13,28 +12,26 @@ import net.lab1024.sa.common.common.domain.RequestUser;
  * @Email lab1024@163.com
  * @Copyright 1024创新实验室 （ https://1024lab.net ）
  */
+@Slf4j
 public class SmartRequestUtil {
 
-    private static final String STORAGE_KEY = "user";
+    private static final ThreadLocal<RequestUser> requestThreadLocal = new ThreadLocal<>();
 
-    public static void setUser(RequestUser user) {
-        SaStorage storage = SaHolder.getStorage();
-        storage.set(STORAGE_KEY, user);
+    public static void setRequestUser(RequestUser requestUser) {
+        requestThreadLocal.set(requestUser);
     }
 
-    /**
-     * 获取 当前 token 请求用户
-     *
-     * @return
-     */
-    public static RequestUser getUser() {
-        SaStorage storage = SaHolder.getStorage();
-        return storage.getModel(STORAGE_KEY, RequestUser.class);
+    public static RequestUser getRequestUser() {
+        return requestThreadLocal.get();
     }
 
-    public static Long getUserId() {
-        RequestUser user = getUser();
-        return null != user ? user.getUserId() : null;
+    public static Long getRequestUserId() {
+        RequestUser requestUser = getRequestUser();
+        return null == requestUser ? null : requestUser.getUserId();
+    }
+
+    public static void remove() {
+        requestThreadLocal.remove();
     }
 
 

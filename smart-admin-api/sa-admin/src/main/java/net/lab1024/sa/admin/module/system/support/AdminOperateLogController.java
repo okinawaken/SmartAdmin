@@ -10,6 +10,7 @@ import net.lab1024.sa.common.module.support.operatelog.OperateLogService;
 import net.lab1024.sa.common.module.support.operatelog.domain.OperateLogQueryForm;
 import net.lab1024.sa.common.module.support.operatelog.domain.OperateLogVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -29,12 +30,14 @@ public class AdminOperateLogController extends SupportBaseController {
     private OperateLogService operateLogService;
 
     @ApiOperation(value = "分页查询 @author 罗伊")
+    @PreAuthorize("@saAuth.checkPermission('operateLog:query')")
     @PostMapping("/operateLog/page/query")
     public ResponseDTO<PageResult<OperateLogVO>> queryByPage(@RequestBody OperateLogQueryForm queryForm) {
         return operateLogService.queryByPage(queryForm);
     }
 
     @ApiOperation(value = "详情 @author 罗伊")
+    @PreAuthorize("@saAuth.checkPermission('operateLog:detail')")
     @GetMapping("/operateLog/detail/{operateLogId}")
     public ResponseDTO<OperateLogVO> detail(@PathVariable Long operateLogId) {
         return operateLogService.detail(operateLogId);

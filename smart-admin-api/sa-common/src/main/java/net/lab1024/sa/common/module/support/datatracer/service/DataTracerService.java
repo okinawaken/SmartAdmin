@@ -157,7 +157,7 @@ public class DataTracerService {
      * 保存数据变动记录
      */
     public void addTrace(DataTracerForm tracerForm) {
-        RequestUser requestUser = SmartRequestUtil.getUser();
+        RequestUser requestUser = SmartRequestUtil.getRequestUser();
         this.addTrace(tracerForm, requestUser);
     }
 
@@ -182,7 +182,7 @@ public class DataTracerService {
      * 批量保存数据变动记录
      */
     public void addTraceList(List<DataTracerForm> tracerFormList) {
-        RequestUser requestUser = SmartRequestUtil.getUser();
+        RequestUser requestUser = SmartRequestUtil.getRequestUser();
         this.addTraceList(tracerFormList, requestUser);
     }
 

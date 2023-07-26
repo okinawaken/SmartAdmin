@@ -5,13 +5,17 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.lab1024.sa.common.common.constant.RequestHeaderConst;
 import net.lab1024.sa.common.common.controller.SupportBaseController;
+import net.lab1024.sa.common.common.domain.PageResult;
 import net.lab1024.sa.common.common.domain.RequestUser;
 import net.lab1024.sa.common.common.domain.ResponseDTO;
 import net.lab1024.sa.common.common.util.SmartRequestUtil;
 import net.lab1024.sa.common.constant.SwaggerTagConst;
-import net.lab1024.sa.common.module.support.file.constant.FileFolderTypeEnum;
+import net.lab1024.sa.common.module.support.file.domain.form.FileQueryForm;
 import net.lab1024.sa.common.module.support.file.domain.form.FileUrlUploadForm;
 import net.lab1024.sa.common.module.support.file.domain.vo.FileUploadVO;
+import net.lab1024.sa.common.module.support.file.domain.vo.FileVO;
+import net.lab1024.sa.common.module.support.repeatsubmit.annoation.RepeatSubmit;
+import net.lab1024.sa.common.module.support.file.constant.FileFolderTypeEnum;
 import net.lab1024.sa.common.module.support.file.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -42,14 +46,14 @@ public class FileController extends SupportBaseController {
     @PostMapping("/file/upload")
     public ResponseDTO<FileUploadVO> upload(@RequestParam MultipartFile file,
                                             @RequestParam Integer folder) {
-        RequestUser requestUser = SmartRequestUtil.getUser();
+        RequestUser requestUser = SmartRequestUtil.getRequestUser();
         return fileService.fileUpload(file, folder, requestUser);
     }
 
     @ApiOperation(value = "文件上传，通过url上传 @author 胡克", notes = FileFolderTypeEnum.INFO)
     @PostMapping("/file/upload/url")
     public ResponseDTO<FileUploadVO> uploadByUrl(@RequestBody @Valid FileUrlUploadForm uploadForm) {
-        RequestUser requestUser = SmartRequestUtil.getUser();
+        RequestUser requestUser = SmartRequestUtil.getRequestUser();
         return fileService.fileUpload(uploadForm,requestUser);
     }
 

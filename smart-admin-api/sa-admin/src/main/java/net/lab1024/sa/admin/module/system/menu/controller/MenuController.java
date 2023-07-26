@@ -14,6 +14,7 @@ import net.lab1024.sa.common.common.domain.ResponseDTO;
 import net.lab1024.sa.common.common.util.SmartRequestUtil;
 import net.lab1024.sa.common.module.support.operatelog.annoation.OperateLog;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -38,22 +39,25 @@ public class MenuController extends AdminBaseController {
 
     @ApiOperation(value = "添加菜单 @author 卓大")
     @PostMapping("/menu/add")
+    @PreAuthorize("@saAuth.checkPermission('system:menu:add')")
     public ResponseDTO<String> addMenu(@RequestBody @Valid MenuAddForm menuAddForm) {
-        menuAddForm.setCreateUserId(SmartRequestUtil.getUserId());
+        menuAddForm.setCreateUserId(SmartRequestUtil.getRequestUserId());
         return menuService.addMenu(menuAddForm);
     }
 
     @ApiOperation(value = "更新菜单 @author 卓大")
     @PostMapping("/menu/update")
+    @PreAuthorize("@saAuth.checkPermission('system:menu:update')")
     public ResponseDTO<String> updateMenu(@RequestBody @Valid MenuUpdateForm menuUpdateForm) {
-        menuUpdateForm.setUpdateUserId(SmartRequestUtil.getUserId());
+        menuUpdateForm.setUpdateUserId(SmartRequestUtil.getRequestUserId());
         return menuService.updateMenu(menuUpdateForm);
     }
 
     @ApiOperation(value = "批量删除菜单 @author 卓大")
     @GetMapping("/menu/batchDelete")
+    @PreAuthorize("@saAuth.checkPermission('system:menu:delete,system:menu:batch:delete')")
     public ResponseDTO<String> batchDeleteMenu(@RequestParam("menuIdList") List<Long> menuIdList) {
-        return menuService.batchDeleteMenu(menuIdList, SmartRequestUtil.getUserId());
+        return menuService.batchDeleteMenu(menuIdList, SmartRequestUtil.getRequestUserId());
     }
 
     @ApiOperation(value = "查询菜单列表 @author 卓大")

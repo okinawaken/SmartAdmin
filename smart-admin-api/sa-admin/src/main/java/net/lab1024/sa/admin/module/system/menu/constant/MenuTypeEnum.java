@@ -1,8 +1,6 @@
 package net.lab1024.sa.admin.module.system.menu.constant;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import net.lab1024.sa.common.common.enumeration.BaseEnum;
 
 /**
@@ -14,8 +12,6 @@ import net.lab1024.sa.common.common.enumeration.BaseEnum;
  * @Email lab1024@163.com
  * @Copyright 1024创新实验室 （ https://1024lab.net ）
  */
-@Getter
-@AllArgsConstructor
 public enum MenuTypeEnum implements BaseEnum {
     /**
      * 目录
@@ -30,7 +26,23 @@ public enum MenuTypeEnum implements BaseEnum {
      */
     POINTS(3, "功能点");
 
-    private final Integer value;
+    private Integer value;
 
-    private final String desc;
+    private String desc;
+
+
+    MenuTypeEnum(Integer value, String desc) {
+        this.value = value;
+        this.desc = desc;
+    }
+
+    @Override
+    public Integer getValue() {
+        return value;
+    }
+
+    @Override
+    public String getDesc() {
+        return desc;
+    }
 }

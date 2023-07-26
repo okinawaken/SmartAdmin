@@ -1,11 +1,12 @@
 package net.lab1024.sa.common.config;
 
-import cn.dev33.satoken.annotation.SaIgnore;
+import cn.hutool.core.util.StrUtil;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import net.lab1024.sa.common.common.annoation.NoNeedLogin;
+import net.lab1024.sa.common.common.annoation.SaAuth;
 import net.lab1024.sa.common.common.domain.RequestUrlVO;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,17 +23,20 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * description
+ * url配置
  *
- * @author Turbolisten
- * @date 2023/7/13 17:42
+ * @Author 1024创新实验室: 罗伊
+ * @Date 2022-05-30 21:22:12
+ * @Wechat zhuoda1024
+ * @Email lab1024@163.com
+ * @Copyright 1024创新实验室 （ https://1024lab.net ）
  */
-@Slf4j
 @Configuration
+@Slf4j
 public class UrlConfig {
-
     @Autowired
     private RequestMappingHandlerMapping requestMappingHandlerMapping;
+
 
     /**
      * 获取每个方法的请求路径
@@ -42,10 +46,11 @@ public class UrlConfig {
     @Bean
     public Map<Method, Set<String>> methodUrlMap() {
         Map<Method, Set<String>> methodUrlMap = Maps.newHashMap();
-        // 获取url与类和方法的对应信息
+        //获取url与类和方法的对应信息
         Map<RequestMappingInfo, HandlerMethod> map = requestMappingHandlerMapping.getHandlerMethods();
         for (Map.Entry<RequestMappingInfo, HandlerMethod> entry : map.entrySet()) {
             RequestMappingInfo requestMappingInfo = entry.getKey();
+
             Set<String> urls = requestMappingInfo.getPatternsCondition().getPatterns();
             if (CollectionUtils.isEmpty(urls)) {
                 continue;
@@ -67,20 +72,14 @@ public class UrlConfig {
         List<RequestUrlVO> authUrlList = Lists.newArrayList();
         for (Map.Entry<Method, Set<String>> entry : methodUrlMap.entrySet()) {
             Method method = entry.getKey();
-            // 忽略权限
-            SaIgnore ignore = method.getAnnotation(SaIgnore.class);
-            if (null != ignore) {
+            SaAuth saAuth = method.getAnnotation(SaAuth.class);
+            if (null == saAuth) {
                 continue;
             }
-            NoNeedLogin noNeedLogin = method.getAnnotation(NoNeedLogin.class);
-            if (null != noNeedLogin) {
-                continue;
-            }
-            Set<String> urlSet = entry.getValue();
-            List<RequestUrlVO> requestUrlList = this.buildRequestUrl(method, urlSet);
+            List<RequestUrlVO> requestUrlList = this.buildRequestUrl(method, entry.getValue());
             authUrlList.addAll(requestUrlList);
         }
-        log.info("需要权限校验的URL：{}", authUrlList.stream().map(RequestUrlVO::getUrl).collect(Collectors.toList()));
+        log.info("需要权限校验的URL：{}", authUrlList.stream().map(e -> e.getUrl()).collect(Collectors.toList()));
         return authUrlList;
     }
 
@@ -89,21 +88,28 @@ public class UrlConfig {
         if (CollectionUtils.isEmpty(urlSet)) {
             return requestUrlList;
         }
-        // swagger api 说明
+        //url对应的方法名称
+        String className = method.getDeclaringClass().getName();
+        String methodName = method.getName();
+        List<String> list = StrUtil.split(className, ".");
+        String controllerName = list.get(list.size() - 1);
+        String name = controllerName + "." + methodName;
+        //swagger 说明信息
         String methodComment = null;
         ApiOperation apiOperation = method.getAnnotation(ApiOperation.class);
         if (apiOperation != null) {
             methodComment = apiOperation.value();
         }
-
         for (String url : urlSet) {
             RequestUrlVO requestUrlVO = new RequestUrlVO();
             requestUrlVO.setUrl(url);
+            requestUrlVO.setName(name);
             requestUrlVO.setComment(methodComment);
             requestUrlList.add(requestUrlVO);
         }
         return requestUrlList;
     }
+
 
     /**
      * 获取无需登录可以匿名访问的url信息
@@ -124,4 +130,21 @@ public class UrlConfig {
         log.info("不需要登录的URL：{}", noNeedLoginUrlList);
         return noNeedLoginUrlList;
     }
+
+    /**
+     * 获取忽略的url信息
+     *
+     * @return
+     */
+    @Bean
+    public List<String> ignoreUrlList() {
+        List<String> ignoreUrlList = Lists.newArrayList();
+        ignoreUrlList.add("/swagger-ui.html");
+        ignoreUrlList.add("/swagger-resources/**");
+        ignoreUrlList.add("/webjars/**");
+        ignoreUrlList.add("/druid/**");
+        ignoreUrlList.add("/*/api-docs");
+        return ignoreUrlList;
+    }
+
 }

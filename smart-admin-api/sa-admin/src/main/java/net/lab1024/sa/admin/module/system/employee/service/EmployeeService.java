@@ -206,12 +206,12 @@ public class EmployeeService {
             return ResponseDTO.error(UserErrorCode.DATA_NOT_EXIST);
         }
 
-        boolean disableFlag = !employeeEntity.getDisabledFlag();
+        boolean disableFlag=!employeeEntity.getDisabledFlag();
         employeeEntity.setDisabledFlag(disableFlag);
         employeeDao.updateDisableFlag(employeeId, disableFlag);
 
         if (employeeEntity.getDisabledFlag()) {
-            tokenService.removeToken(employeeId, UserTypeEnum.ADMIN_EMPLOYEE);
+            tokenService.batchRemoveRedisToken(employeeId, UserTypeEnum.ADMIN_EMPLOYEE);
         }
 
         return ResponseDTO.ok();
@@ -240,7 +240,9 @@ public class EmployeeService {
         }).collect(Collectors.toList());
         employeeManager.updateBatchById(deleteList);
 
-        tokenService.removeToken(employeeIdList, UserTypeEnum.ADMIN_EMPLOYEE);
+        for (Long employeeId : employeeIdList) {
+            tokenService.batchRemoveRedisToken(employeeId, UserTypeEnum.ADMIN_EMPLOYEE);
+        }
         return ResponseDTO.ok();
     }
 

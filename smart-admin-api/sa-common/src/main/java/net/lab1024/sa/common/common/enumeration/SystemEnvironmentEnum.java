@@ -15,32 +15,32 @@ import lombok.Getter;
  */
 @AllArgsConstructor
 @Getter
-public enum SystemEnvEnum implements BaseEnum {
+public enum SystemEnvironmentEnum implements BaseEnum {
     /**
      * dev
      */
-    DEV(EnvConst.DEV, "开发环境"),
+    DEV(SystemEnvironmentNameConst.DEV, "开发环境"),
 
     /**
      * test
      */
-    TEST(EnvConst.TEST, "测试环境"),
+    TEST(SystemEnvironmentNameConst.TEST, "测试环境"),
 
     /**
      * pre
      */
-    PRE(EnvConst.PRE, "预发布环境"),
+    PRE(SystemEnvironmentNameConst.PRE, "预发布环境"),
 
     /**
      * prod
      */
-    PROD(EnvConst.PROD, "生产环境");
+    PROD(SystemEnvironmentNameConst.PROD, "生产环境");
 
     private final String value;
 
     private final String desc;
 
-    public static final class EnvConst {
+    public static final class SystemEnvironmentNameConst {
         public static final String DEV = "dev";
         public static final String TEST = "test";
         public static final String PRE = "pre";
