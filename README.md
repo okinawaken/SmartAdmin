@@ -1,31 +1,44 @@
 ### **SmartAdmin**
 
-SmartAdmin3.X 由河南·洛阳 [1024 创新实验室](https://www.1024lab.net/)基于SpringBoot + Sa-Token + Mybatis-Plus 和 Vue3 + Vite5 + Ant Design Vue 4 (同时支持JavaScript和TypeScript双版本) ，并以 <font color="#DC143C">**「高质量代码」为核心，「简洁、高效、安全」**</font>的快速开发平台。
+**SmartAdmin** 由 **河南·洛阳** [1024创新实验室](https://www.1024lab.net/) 坚持以 <font color="#DC143C">**「高质量代码」为核心，「简洁、高效、安全」**</font>的中后台解决方案！  
 
 <font color="#DC143C">**国内首个满足《网络安全》、《数据安全》、三级等保**</font>， 支持登录限制、支持接口国产加解密、支持数据加解密等一系列安全措施的开源项目。 
 
-<font color="#DC143C">**我们开源一套漂亮的代码和一套整洁的代码规范**</font>，让大家在这浮躁的代码世界里感受到一股把代码写好的清流！同时又让开发者节省大量的时间，减少加班，快乐工作，保持谦逊，保持学习，热爱代码，更热爱生活！
-
-<a target="_blank" href='https://gitee.com/lab1024/smart-admin'><img src='https://gitee.com/lab1024/smart-admin/badge/star.svg?theme=dark' alt='star'></img></a>
-<a target="_blank" href='https://gitee.com/lab1024/smart-admin'><img src='https://gitee.com/lab1024/smart-admin/badge/fork.svg?theme=dark' alt='fork'></img></a>
-<a target="_blank" href="https://github.com/1024-lab/smart-admin"><img  alt="GitHub stars" src="https://img.shields.io/github/stars/1024-lab/smart-admin?style=flat&amp;logo=github"></a>
-<a target="_blank" href="https://github.com/1024-lab/smart-admin"><img  alt="GitHub forks" src="https://img.shields.io/github/forks/1024-lab/smart-admin?style=flat&amp;logo=github"></a>
-<a target="_blank" href='https://gitee.com/lab1024/smart-admin'><img src='https://img.shields.io/github/license/1024-lab/smart-admin' alt='MIT'></img></a>
-### **理念与思想**
-
-- 我们分享的不是徒劳无功的各种功能，而是必须有的功能，如：数据变动记录、系统说明文档、版本更新记录、意见反馈、日志、心跳、单号生成器等等。
-- 我们分享的还有经过上百家公司验证过的前端、后端、vue3等代码规范，好的规范能让我们敲下的每行代码更铿锵有力！
-- **我们推崇高质量的代码，身为开发，代码即利剑，键盘上一套行云流水，宛如侠客，事了拂衣去，深藏身与名。**
-- **我们推崇团队的高度配合默契、互相帮助，从不加班，而不是一看到别人的代码就头皮发麻，留其 [996.ICU](https://baike.baidu.com/item/996.ICU) 加班。**
-- **我们主动思考，保持谦逊，保持学习，热爱代码，更热爱生活。**
-- <font color="#DC143C">**我们希望你，希望你能花费3分钟认真阅读下面的每一个点，让你感受从未有过的技术体验！**</font>
-
-
+<font color="#DC143C">**我们开源一套漂亮的代码和一套整洁的代码规范**</font>，让大家在这浮躁的代码世界里感受到一股把代码写好的清流！同时又让开发者节省大量的时间，减少加班，快乐工作，保持谦逊，保持学习，**热爱代码，更热爱生活**
 ### **技术体系**
 
 - 前端：Vue3 + Vite5 + Vue-Router + Pinia + Ant Design Vue 4.X
 - 移动端：uniapp + uview2.x
 - 后端：SpringBoot + Sa Token + Mybatis-plus + 多种数据库
+- 在线预览：[https://preview.smartadmin.vip](https://preview.smartadmin.vip)  
+- 官方文档：[https://smartadmin.vip](https://smartadmin.vip)  
+### **理念与思想**
+
+- 我们分享的不是徒劳无功的各种功能，而是必须有的功能，如：网络安全、数据变动记录、系统说明文档、版本更新记录、意见反馈、日志、心跳、单号生成器等等。
+- 我们分享的还有经过上百家公司验证过的前端、后端、vue3等代码规范，好的规范能让我们敲下的每行代码更铿锵有力！
+- **我们推崇高质量的代码，身为开发，代码即利剑，键盘上一套行云流水，宛如侠客，事了拂衣去，深藏身与名。**
+- **我们推崇团队的高度配合默契、互相帮助，从不加班，而不是一看到别人的代码就头皮发麻，留其 [996.ICU](https://baike.baidu.com/item/996.ICU) 加班。**
+
+### **功能亮点图**
+
+<table>
+<tr>
+  <td><img src="https://img.smartadmin.1024lab.net/smart-admin-v3/login/login-bg.png"/></td>
+  <td><img src="https://img.smartadmin.1024lab.net/smart-admin-v3/cut/home.png"/></td>
+</tr>
+<tr>
+  <td><img src="https://img.smartadmin.1024lab.net/smart-admin-v3/login/login-fail-log.png"/></td>
+  <td><img src="https://img.smartadmin.1024lab.net/smart-admin-v3/cut/doc.png"/></td>
+</tr>
+<tr>
+  <td><img src="https://img.smartadmin.1024lab.net/smart-admin-v3/cut/code.png"/></td>
+  <td><img src="https://img.smartadmin.1024lab.net/smart-admin-v3/cut/git-diff.png"/></td>
+</tr>
+<tr>
+  <td><img src="https://img.smartadmin.1024lab.net/smart-admin-v3/cut/front.png"/></td>
+  <td><img src="https://img.smartadmin.1024lab.net/smart-admin-v3/cut/back.png"/></td>
+</tr>
+</table>
 
 ### **功能亮点**
 
@@ -58,26 +71,7 @@ SmartAdmin3.X 由河南·洛阳 [1024 创新实验室](https://www.1024lab.net/)
 - **【后端-系统钩子】：** smart-reload，为系统预留钩子，动态加载，在不重启程序前提下执行一些代码
 - 以上只是沧海一粟，更多的细节等待你的发现！[去查看](./CodeFeature.md)
 
-### **演示图**
 
-<table>
-<tr>
-  <td><img src="https://img.smartadmin.1024lab.net/smart-admin-v3/login/login-bg.png"/></td>
-  <td><img src="https://img.smartadmin.1024lab.net/smart-admin-v3/cut/home.png"/></td>
-</tr>
-<tr>
-  <td><img src="https://img.smartadmin.1024lab.net/smart-admin-v3/login/login-fail-log.png"/></td>
-  <td><img src="https://img.smartadmin.1024lab.net/smart-admin-v3/cut/doc.png"/></td>
-</tr>
-<tr>
-  <td><img src="https://img.smartadmin.1024lab.net/smart-admin-v3/cut/code.png"/></td>
-  <td><img src="https://img.smartadmin.1024lab.net/smart-admin-v3/cut/git-diff.png"/></td>
-</tr>
-<tr>
-  <td><img src="https://img.smartadmin.1024lab.net/smart-admin-v3/cut/front.png"/></td>
-  <td><img src="https://img.smartadmin.1024lab.net/smart-admin-v3/cut/back.png"/></td>
-</tr>
-</table>
 
 
 ### **联系我们**
