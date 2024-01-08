@@ -19,8 +19,8 @@
 
         <dependency>
             <groupId>net.1024lab</groupId>
-            <artifactId>sa-common</artifactId>
-            <version>${project.version}</version>
+            <artifactId>sa-base</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
     </dependencies>
@@ -31,7 +31,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>net.lab1024.sa.admin.SmartAdminApplication</mainClass>
+                    <mainClass>net.lab1024.sa.admin.AdminApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>

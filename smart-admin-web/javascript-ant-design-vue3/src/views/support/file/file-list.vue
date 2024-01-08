@@ -25,7 +25,7 @@
         <a-input style="width: 150px" v-model:value="queryForm.creatorName" placeholder="创建人" />
       </a-form-item>
       <a-form-item label="创建时间" class="smart-query-form-item">
-        <a-range-picker v-model:value="queryForm.createTime" :ranges="defaultTimeRanges" style="width: 220px" @change="onChangeCreateTime" />
+        <a-range-picker v-model:value="queryForm.createTime" :presets="defaultTimeRanges" style="width: 220px" @change="onChangeCreateTime" />
       </a-form-item>
       <a-form-item class="smart-query-form-item">
         <a-button type="primary" @click="queryData">
@@ -99,7 +99,7 @@
 
     <FilePreviewModal ref="filePreviewModalRef" />
 
-    <a-modal v-model:visible="uploadModalFlag" title="上传文件" @onCancel="hideUploadModal" @ok="hideUploadModal">
+    <a-modal v-model:open="uploadModalFlag" title="上传文件" @onCancel="hideUploadModal" @ok="hideUploadModal">
       <FileUpload
         list-type="text"
         :maxUploadSize="5"
@@ -113,7 +113,7 @@
 </template>
 <script setup>
   import { onMounted, reactive, ref } from 'vue';
-  import { fileApi } from '/@/api/support/file/file-api';
+  import { fileApi } from '/@/api/support/file-api';
   import SmartEnumSelect from '/@/components/framework/smart-enum-select/index.vue';
   import TableOperator from '/@/components/support/table-operator/index.vue';
   import { PAGE_SIZE_OPTIONS } from '/@/constants/common-const';
@@ -217,6 +217,12 @@
   }
 
   // 查询数据
+
+  function onSearch(){
+    queryForm.pageNum = 1;
+    queryData();
+  }
+
   async function queryData() {
     tableLoading.value = true;
     try {
