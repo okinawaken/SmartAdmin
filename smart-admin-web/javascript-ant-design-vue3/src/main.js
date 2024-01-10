@@ -7,10 +7,11 @@
  * @Email:     lab1024@163.com
  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
  */
-import * as antIcons from '@ant-design/icons-vue';
-import Antd, { message } from 'ant-design-vue';
-import lodash from 'lodash';
+
 import { createApp } from 'vue';
+import Antd, { message } from 'ant-design-vue';
+import * as antIcons from '@ant-design/icons-vue';
+import lodash from 'lodash';
 import JsonViewer from 'vue3-json-viewer';
 import 'vue3-json-viewer/dist/index.css';
 import App from './App.vue';
