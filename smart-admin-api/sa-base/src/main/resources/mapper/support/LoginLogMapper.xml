@@ -30,7 +30,8 @@
         where
         user_id = #{userId}
         and user_type = #{userType}
-        order by create_time desc
+        and login_result = #{loginLogResult}
+        order by login_log_id desc
         limit 1
     </select>
 

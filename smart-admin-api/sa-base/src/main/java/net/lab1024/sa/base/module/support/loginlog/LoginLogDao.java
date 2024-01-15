@@ -40,7 +40,7 @@ public interface LoginLogDao extends BaseMapper<LoginLogEntity> {
      * @param userType
      * @return LoginLogVO
      */
-    LoginLogVO queryLastByUserId(@Param("userId") Long userId,@Param("userType") Integer userType);
+    LoginLogVO queryLastByUserId(@Param("userId") Long userId,@Param("userType") Integer userType, @Param("loginLogResult")Integer loginLogResult);
 
 
 }

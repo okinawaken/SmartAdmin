@@ -4,12 +4,12 @@
     <parent>
         <groupId>net.1024lab</groupId>
         <artifactId>sa-parent</artifactId>
-        <version>1.0.0</version>
+        <version>3.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>sa-admin</artifactId>
-    <version>1.0.0</version>
+    <version>3.0.0</version>
     <packaging>jar</packaging>
 
     <name>sa-admin</name>
@@ -20,7 +20,7 @@
         <dependency>
             <groupId>net.1024lab</groupId>
             <artifactId>sa-base</artifactId>
-            <version>1.0.0</version>
+            <version>3.0.0</version>
         </dependency>
 
     </dependencies>

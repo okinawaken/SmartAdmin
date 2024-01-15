@@ -76,7 +76,8 @@ public class FileConfig implements WebMvcConfigurer {
                 .withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(accessKey, secretKey)))
                 .withClientConfiguration(clientConfig)
                 .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(endpoint, region))
-                .withPathStyleAccessEnabled(true)
+                .withPathStyleAccessEnabled(false)
+                .withChunkedEncodingDisabled(true)
                 .build();
     }
 

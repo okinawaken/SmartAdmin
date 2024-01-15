@@ -17,7 +17,6 @@ import net.lab1024.sa.admin.module.system.menu.domain.vo.MenuVO;
 import net.lab1024.sa.admin.module.system.role.domain.vo.RoleVO;
 import net.lab1024.sa.admin.module.system.role.service.RoleEmployeeService;
 import net.lab1024.sa.admin.module.system.role.service.RoleMenuService;
-import net.lab1024.sa.base.common.code.ErrorCode;
 import net.lab1024.sa.base.common.code.UserErrorCode;
 import net.lab1024.sa.base.common.constant.RequestHeaderConst;
 import net.lab1024.sa.base.common.constant.StringConst;
@@ -37,8 +36,8 @@ import net.lab1024.sa.base.module.support.loginlog.LoginLogResultEnum;
 import net.lab1024.sa.base.module.support.loginlog.LoginLogService;
 import net.lab1024.sa.base.module.support.loginlog.domain.LoginLogEntity;
 import net.lab1024.sa.base.module.support.loginlog.domain.LoginLogVO;
-import net.lab1024.sa.base.module.support.securityprotect.service.ProtectLoginService;
 import net.lab1024.sa.base.module.support.securityprotect.domain.LoginFailEntity;
+import net.lab1024.sa.base.module.support.securityprotect.service.ProtectLoginService;
 import net.lab1024.sa.base.module.support.securityprotect.service.ProtectPasswordService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -57,7 +56,7 @@ import java.util.stream.Collectors;
  * @Date 2021-12-01 22:56:34
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Slf4j
 @Service
@@ -113,7 +112,6 @@ public class LoginService implements StpInterface {
 
     /**
      * 获取验证码
-     *
      */
     public ResponseDTO<CaptchaVO> getCaptcha() {
         return ResponseDTO.ok(captchaService.generateCaptcha());
@@ -134,51 +132,57 @@ public class LoginService implements StpInterface {
         // 校验 图形验证码
         ResponseDTO<String> checkCaptcha = captchaService.checkCaptcha(loginForm);
         if (!checkCaptcha.getOk()) {
-            return ResponseDTO.error(UserErrorCode.PARAM_ERROR,checkCaptcha.getMsg());
+            return ResponseDTO.error(UserErrorCode.PARAM_ERROR, checkCaptcha.getMsg());
         }
 
-        // 验证账号和账号状态
+        // 验证登录名
         EmployeeEntity employeeEntity = employeeService.getByLoginName(loginForm.getLoginName());
         if (null == employeeEntity) {
             return ResponseDTO.userErrorParam("登录名不存在！");
         }
 
+        // 验证账号状态
         if (employeeEntity.getDisabledFlag()) {
             saveLoginLog(employeeEntity, ip, userAgent, "账号已禁用", LoginLogResultEnum.LOGIN_FAIL);
             return ResponseDTO.userErrorParam("您的账号已被禁用,请联系工作人员！");
         }
 
-        // 按照等保要求进行登录校验
-        ResponseDTO<LoginFailEntity> loginFailEntityResponseDTO = protectLoginService.checkLogin(employeeEntity.getEmployeeId(), UserTypeEnum.ADMIN_EMPLOYEE);
-        if (!loginFailEntityResponseDTO.getOk()) {
-            return ResponseDTO.error(loginFailEntityResponseDTO);
-        }
-
         // 解密前端加密的密码
-        loginForm.setPassword(profectPasswordService.decryptSm2Password(loginForm.getPassword()));
+        String requestPassword = profectPasswordService.decryptPassword(loginForm.getPassword());
 
-        // 验证密码：  1、万能密码  或者  2、真实密码
-        String superPassword = EmployeeService.getEncryptPwd(configService.getConfigValue(ConfigKeyEnum.SUPER_PASSWORD));
-        String requestPassword = EmployeeService.getEncryptPwd(loginForm.getPassword());
+        // 验证密码 是否为万能密码
+        String superPassword = configService.getConfigValue(ConfigKeyEnum.SUPER_PASSWORD);
         boolean superPasswordFlag = superPassword.equals(requestPassword);
-        if (!(superPasswordFlag || employeeEntity.getLoginPwd().equals(requestPassword))) {
-            // 记录登录失败
-            saveLoginLog(employeeEntity, ip, userAgent, "密码错误", LoginLogResultEnum.LOGIN_FAIL);
-            // 记录等级保护次数
-            String msg = protectLoginService.recordLoginFail(employeeEntity.getEmployeeId(), UserTypeEnum.ADMIN_EMPLOYEE, employeeEntity.getLoginName(), loginFailEntityResponseDTO.getData());
-            return msg == null ? ResponseDTO.userErrorParam("登录名或密码错误！") : ResponseDTO.error(UserErrorCode.LOGIN_FAIL_WILL_LOCK, msg);
-        }
 
-        // 生成 sa-token的 loginId，对于万能密码：受限制sa token 要求loginId唯一，万能密码只能插入一段uuid
-        String saTokenLoginId = null;
+        // 万能密码特殊操作
         if (superPasswordFlag) {
-            saTokenLoginId = SUPER_PASSWORD_LOGIN_ID_PREFIX + StringConst.COLON + UUID.randomUUID().toString().replace("-", "") + StringConst.COLON + employeeEntity.getEmployeeId();
-        } else {
-            saTokenLoginId = UserTypeEnum.ADMIN_EMPLOYEE.getValue() + StringConst.COLON + employeeEntity.getEmployeeId();
-        }
 
-        // 登录
-        StpUtil.login(saTokenLoginId, String.valueOf(loginDeviceEnum.getDesc()));
+            // 对于万能密码：受限制sa token 要求loginId唯一，万能密码只能插入一段uuid
+            String saTokenLoginId = SUPER_PASSWORD_LOGIN_ID_PREFIX + StringConst.COLON + UUID.randomUUID().toString().replace("-", "") + StringConst.COLON + employeeEntity.getEmployeeId();
+            // 万能密码登录只能登录15分钟
+            StpUtil.login(saTokenLoginId, 900);
+
+        } else {
+
+            // 按照等保登录要求，进行登录失败次数校验
+            ResponseDTO<LoginFailEntity> loginFailEntityResponseDTO = protectLoginService.checkLogin(employeeEntity.getEmployeeId(), UserTypeEnum.ADMIN_EMPLOYEE);
+            if (!loginFailEntityResponseDTO.getOk()) {
+                return ResponseDTO.error(loginFailEntityResponseDTO);
+            }
+
+            // 密码错误
+            if (!employeeEntity.getLoginPwd().equals(EmployeeService.getEncryptPwd(requestPassword))) {
+                // 记录登录失败
+                saveLoginLog(employeeEntity, ip, userAgent, "密码错误", LoginLogResultEnum.LOGIN_FAIL);
+                // 记录等级保护次数
+                String msg = protectLoginService.recordLoginFail(employeeEntity.getEmployeeId(), UserTypeEnum.ADMIN_EMPLOYEE, employeeEntity.getLoginName(), loginFailEntityResponseDTO.getData());
+                return msg == null ? ResponseDTO.userErrorParam("登录名或密码错误！") : ResponseDTO.error(UserErrorCode.LOGIN_FAIL_WILL_LOCK, msg);
+            }
+
+            String saTokenLoginId = UserTypeEnum.ADMIN_EMPLOYEE.getValue() + StringConst.COLON + employeeEntity.getEmployeeId();
+            // 登录
+            StpUtil.login(saTokenLoginId, String.valueOf(loginDeviceEnum.getDesc()));
+        }
 
         // 获取员工信息
         RequestEmployee requestEmployee = loadLoginInfo(employeeEntity);
@@ -186,14 +190,14 @@ public class LoginService implements StpInterface {
         // 放入缓存
         loginEmployeeCache.put(employeeEntity.getEmployeeId(), requestEmployee);
 
-        //保存登录记录
-        saveLoginLog(employeeEntity, ip, userAgent, superPasswordFlag ? "万能密码登录" : loginDeviceEnum.getDesc(), LoginLogResultEnum.LOGIN_SUCCESS);
-
         // 移除登录失败
         protectLoginService.removeLoginFail(employeeEntity.getEmployeeId(), UserTypeEnum.ADMIN_EMPLOYEE);
 
         // 获取登录结果信息
         LoginResultVO loginResultVO = getLoginResult(requestEmployee);
+
+        //保存登录记录
+        saveLoginLog(employeeEntity, ip, userAgent, superPasswordFlag ? "万能密码登录" : loginDeviceEnum.getDesc(), LoginLogResultEnum.LOGIN_SUCCESS);
 
         // 设置 token
         loginResultVO.setToken(StpUtil.getTokenValue());
@@ -207,11 +211,10 @@ public class LoginService implements StpInterface {
 
     /**
      * 获取登录结果信息
-     *
      */
     public LoginResultVO getLoginResult(RequestEmployee requestEmployee) {
 
-        // 基础信息xde2
+        // 基础信息
         LoginResultVO loginResultVO = SmartBeanUtil.copy(requestEmployee, LoginResultVO.class);
 
         // 前端菜单和功能点清单
@@ -224,7 +227,7 @@ public class LoginService implements StpInterface {
         permissionCache.put(requestEmployee.getUserId(), userPermission);
 
         // 上次登录信息
-        LoginLogVO loginLogVO = loginLogService.queryLastByUserId(requestEmployee.getEmployeeId(), UserTypeEnum.ADMIN_EMPLOYEE);
+        LoginLogVO loginLogVO = loginLogService.queryLastByUserId(requestEmployee.getEmployeeId(), UserTypeEnum.ADMIN_EMPLOYEE, LoginLogResultEnum.LOGIN_SUCCESS);
         if (loginLogVO != null) {
             loginResultVO.setLastLoginIp(loginLogVO.getLoginIp());
             loginResultVO.setLastLoginIpRegion(loginLogVO.getLoginIpRegion());
@@ -238,7 +241,6 @@ public class LoginService implements StpInterface {
 
     /**
      * 获取登录的用户信息
-     *
      */
     private RequestEmployee loadLoginInfo(EmployeeEntity employeeEntity) {
 
@@ -288,7 +290,6 @@ public class LoginService implements StpInterface {
 
     /**
      * 根据 loginId 获取 员工id
-     *
      */
     Long getEmployeeIdByLoginId(String loginId) {
 
@@ -315,7 +316,6 @@ public class LoginService implements StpInterface {
 
     /**
      * 退出登录
-     *
      */
     public ResponseDTO<String> logout(String token, RequestUser requestUser) {
 
@@ -343,15 +343,15 @@ public class LoginService implements StpInterface {
 
     /**
      * 保存登录日志
-     *
      */
     private void saveLoginLog(EmployeeEntity employeeEntity, String ip, String userAgent, String remark, LoginLogResultEnum result) {
         LoginLogEntity loginEntity = LoginLogEntity.builder()
                 .userId(employeeEntity.getEmployeeId())
                 .userType(UserTypeEnum.ADMIN_EMPLOYEE.getValue())
-                .userName(employeeEntity.getLoginName())
+                .userName(employeeEntity.getActualName())
                 .userAgent(userAgent)
                 .loginIp(ip)
+                .loginIpRegion(SmartIpUtil.getRegion(ip))
                 .remark(remark)
                 .loginResult(result.getValue())
                 .createTime(LocalDateTime.now())
@@ -393,7 +393,6 @@ public class LoginService implements StpInterface {
 
     /**
      * 获取用户的权限（包含 角色列表、权限列表）
-     *
      */
     private UserPermission getUserPermission(Long employeeId) {
 

@@ -60,8 +60,8 @@ public class LoginLogService {
      * @author 卓大
      * @description 查询上一个登录记录
      */
-    public LoginLogVO queryLastByUserId(Long userId, UserTypeEnum userTypeEnum) {
-        return loginLogDao.queryLastByUserId(userId,userTypeEnum.getValue());
+    public LoginLogVO queryLastByUserId(Long userId, UserTypeEnum userTypeEnum, LoginLogResultEnum loginLogResultEnum) {
+        return loginLogDao.queryLastByUserId(userId,userTypeEnum.getValue(), loginLogResultEnum.getValue());
     }
 
 }

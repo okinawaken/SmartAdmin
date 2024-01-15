@@ -64,7 +64,7 @@
       previewCurrent.value = index;
       visible.value = true;
     } else {
-      getDownload(file.fileName, file.fileUrl);
+      window.open(file.fileUrl);
     }
   }
 

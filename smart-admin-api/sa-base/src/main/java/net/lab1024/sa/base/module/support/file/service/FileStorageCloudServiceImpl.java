@@ -1,5 +1,7 @@
 package net.lab1024.sa.base.module.support.file.service;
 
+import cn.hutool.core.date.DatePattern;
+import cn.hutool.core.date.LocalDateTimeUtil;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
@@ -30,6 +32,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -84,7 +87,8 @@ public class FileStorageCloudServiceImpl implements IFileStorageService {
 
         String fileType = FilenameUtils.getExtension(originalFileName);
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
-        String fileKey = path + uuid + "." + fileType;
+        String time = LocalDateTimeUtil.format(LocalDateTime.now(), DatePattern.PURE_DATETIME_FORMATTER);
+        String fileKey = path + uuid + "_" + time+ "." + fileType;
 
         // 文件名称 URL 编码
         String urlEncoderFilename;

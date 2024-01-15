@@ -4,7 +4,7 @@
 
     <groupId>net.1024lab</groupId>
     <artifactId>sa-parent</artifactId>
-    <version>1.0.0</version>
+    <version>3.0.0</version>
     <packaging>pom</packaging>
 
     <name>sa-parent</name>
@@ -22,7 +22,7 @@
         <springboot.version>2.7.5</springboot.version>
         <spring-mock.version>2.0.8</spring-mock.version>
         <mybatis-plus.version>3.5.2</mybatis-plus.version>
-        <p6spy.version>3.8.6</p6spy.version>
+        <p6spy.version>3.9.1</p6spy.version>
         <springdoc-openapi-ui.version>1.7.0</springdoc-openapi-ui.version>
         <knife4j.version>4.3.0</knife4j.version>
         <fastjson.version>2.0.16</fastjson.version>
@@ -50,6 +50,7 @@
         <ip2region.version>2.7.0</ip2region.version>
         <bcprov.version>1.59</bcprov.version>
         <jackson-datatype-jsr310.version>2.13.4</jackson-datatype-jsr310.version>
+        <smartdb.version>1.2.0</smartdb.version>
     </properties>
 
     <dependencyManagement>
@@ -293,12 +294,17 @@
                 <version>${jackson-datatype-jsr310.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>net.1024lab</groupId>
+                <artifactId>smartdb</artifactId>
+                <version>${smartdb.version}</version>
+            </dependency>
         </dependencies>
 
     </dependencyManagement>
 
     <build>
-        <finalName>${profiles.active}-${project.name}</finalName>
+        <finalName>${project.name}-${profiles.active}-${project.version}</finalName>
         <resources>
             <resource>
                 <filtering>false</filtering>
@@ -337,14 +343,6 @@
                     <source>1.8</source>
                     <target>1.8</target>
                     <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <testFailureIgnore>true</testFailureIgnore>
-                    <skipTests>true</skipTests>
                 </configuration>
             </plugin>
             <plugin>

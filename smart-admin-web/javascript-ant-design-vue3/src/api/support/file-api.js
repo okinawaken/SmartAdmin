@@ -33,6 +33,6 @@ export const fileApi = {
    * 下载文件流（根据fileKey） @author 胡克
    */
   downLoadFile: (fileName, fileKey) => {
-    return getDownload(fileName, '/support/file/downLoad', { fileKey });
+    return getDownload('/support/file/downLoad', { fileKey });
   },
 };

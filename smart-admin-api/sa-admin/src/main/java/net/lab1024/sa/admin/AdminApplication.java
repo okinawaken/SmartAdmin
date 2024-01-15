@@ -37,5 +37,4 @@ public class AdminApplication {
         application.addListeners(new LogVariableListener(), new Ip2RegionListener());
         application.run(args);
     }
-
 }

@@ -9,17 +9,17 @@
   *
 -->
 <template>
-    <div class="container">
-      <a-image
-        class="img-prev"
-        :style="{ display: 'none' }"
-        :preview="{
-          visible,
-          onVisibleChange: setVisible,
-        }"
-        :src="previewUrl"
-      />
-    </div>
+  <div class="container">
+    <a-image
+      class="img-prev"
+      :style="{ display: 'none' }"
+      :preview="{
+        visible,
+        onVisibleChange: setVisible,
+      }"
+      :src="previewUrl"
+    />
+  </div>
 </template>
 
 <script setup>
@@ -62,7 +62,7 @@
       setVisible(true);
       return;
     }
-    getDownload(fileItem.fileName, fileItem.fileUrl);
+    window.open(fileItem.fileUrl);
   }
 
   // 判断图片类型

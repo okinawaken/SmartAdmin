@@ -140,7 +140,6 @@
     {
       title: '文件名称',
       dataIndex: 'fileName',
-      ellipsis: true,
       width: 200,
     },
     {
@@ -152,7 +151,6 @@
     {
       title: '文件key',
       dataIndex: 'fileKey',
-      ellipsis: true,
     },
     {
       title: '文件类型',
@@ -218,7 +216,7 @@
 
   // 查询数据
 
-  function onSearch(){
+  function onSearch() {
     queryForm.pageNum = 1;
     queryData();
   }

@@ -5,6 +5,7 @@ import net.lab1024.sa.base.common.constant.StringConst;
 import org.lionsoul.ip2region.xdb.Searcher;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -46,21 +47,19 @@ public class SmartIpUtil {
      * @return 返回结果例 [河南省, 洛阳市, 洛龙区]
      */
     public static List<String> getRegionList(String ipStr) {
+        List<String> regionList = new ArrayList<>();
         try {
-            List<String> regionList = new ArrayList<>();
             if (SmartStringUtil.isEmpty(ipStr)) {
                 return regionList;
             }
             ipStr = ipStr.trim();
             String region = IP_SEARCHER.search(ipStr);
             String[] split = region.split("\\|");
-            for (String str : split) {
-                regionList.add(str);
-            }
-            return regionList;
+            regionList.addAll(Arrays.asList(split));
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            log.error("解析ip地址出错", e);
         }
+        return regionList;
     }
 
     /**
@@ -77,7 +76,8 @@ public class SmartIpUtil {
             ipStr = ipStr.trim();
             return IP_SEARCHER.search(ipStr);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            log.error("解析ip地址出错", e);
+            return StringConst.EMPTY;
         }
     }
 

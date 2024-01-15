@@ -91,7 +91,7 @@ public class ProtectPasswordService {
      * @param encryptedPassword
      * @return
      */
-    public String decryptSm2Password(String encryptedPassword) {
+    public String decryptPassword(String encryptedPassword) {
         return apiEncryptService.decrypt(encryptedPassword);
     }
 

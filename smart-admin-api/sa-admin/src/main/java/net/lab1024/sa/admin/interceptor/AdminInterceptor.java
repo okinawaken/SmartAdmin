@@ -159,6 +159,7 @@ public class AdminInterceptor implements HandlerInterceptor {
         }
 
         StpUtil.checkActiveTimeout();
+        StpUtil.updateLastActiveToNow();
     }
 
 
