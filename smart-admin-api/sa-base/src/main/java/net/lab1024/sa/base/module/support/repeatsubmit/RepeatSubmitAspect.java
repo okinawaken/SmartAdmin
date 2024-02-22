@@ -61,12 +61,14 @@ public class RepeatSubmitAspect {
             RepeatSubmit annotation = method.getAnnotation(RepeatSubmit.class);
 
             // 说明注解去掉了
-            if (annotation != null) {
+            if (annotation == null) {
                 return point.proceed();
             }
 
             int interval = Math.min(annotation.value(), RepeatSubmit.MAX_INTERVAL);
             if (System.currentTimeMillis() < timeStamp + interval) {
+                // 续上时间 能在间隔时间内反复提示用户提交频繁
+                this.repeatSubmitTicket.putTicket(ticket);
                 // 提交频繁
                 return ResponseDTO.error(UserErrorCode.REPEAT_SUBMIT);
             }
@@ -80,8 +82,6 @@ public class RepeatSubmitAspect {
         } catch (Throwable throwable) {
             log.error("", throwable);
             throw throwable;
-        } finally {
-            this.repeatSubmitTicket.removeTicket(ticket);
         }
         return obj;
     }
