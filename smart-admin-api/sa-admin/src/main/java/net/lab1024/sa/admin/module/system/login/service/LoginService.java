@@ -108,7 +108,7 @@ public class LoginService implements StpInterface {
     private ProtectLoginService protectLoginService;
 
     @Resource
-    private ProtectPasswordService profectPasswordService;
+    private ProtectPasswordService protectPasswordService;
 
     /**
      * 获取验证码
@@ -148,7 +148,7 @@ public class LoginService implements StpInterface {
         }
 
         // 解密前端加密的密码
-        String requestPassword = profectPasswordService.decryptPassword(loginForm.getPassword());
+        String requestPassword = protectPasswordService.decryptPassword(loginForm.getPassword());
 
         // 验证密码 是否为万能密码
         String superPassword = configService.getConfigValue(ConfigKeyEnum.SUPER_PASSWORD);
