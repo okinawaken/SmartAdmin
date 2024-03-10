@@ -8,7 +8,7 @@
 ### **技术体系**
 
 - 前端：Vue3 + Vite5 + Vue-Router + Pinia + Ant Design Vue 4.X
-- 移动端：uniapp + uview2.x
+- 移动端：uniapp (vue3版本) + uni-ui + （同时支持APP、小程序、H5）
 - 后端：SpringBoot + Sa Token + Mybatis-plus + 多种数据库
 - 在线预览：[https://preview.smartadmin.vip](https://preview.smartadmin.vip)  
 - 官方文档：[https://smartadmin.vip](https://smartadmin.vip)  
