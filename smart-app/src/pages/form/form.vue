@@ -1,199 +1,94 @@
 <template>
-  <view class="">
-    <view class="form-card">
-      <view class="title"> 常用功能 </view>
-      <view class="content">
-        <uni-forms :label-width="100" :modelValue="formData" label-position="left">
-          <uni-forms-item class="uni-forms-item" label="姓名" name="name">
-            <input class="input" type="text" v-model="formData.name" placeholder="请输入姓名" />
+  <view class="smart-form">
+    <uni-forms :label-width="100" :modelValue="formData" label-position="left">
+      <view class="smart-form-group">
+        <view class="smart-form-group-title"> 常用功能 </view>
+        <view class="smart-form-group-content">
+          <uni-forms-item class="smart-form-item" label="姓名" name="name" required>
+            <uni-easyinput trim="all" v-model="formData.name" placeholder="请输入姓名" />
           </uni-forms-item>
-          <uni-forms-item class="uni-forms-item" label="手机号码" name="name">
-            <input class="input" type="text" v-model="formData.name" placeholder="请输入手机号码" />
+          <uni-forms-item class="smart-form-item" label="手机号码" name="name" required>
+            <uni-easyinput trim="all" v-model="formData.name" placeholder="请输入手机号码" />
           </uni-forms-item>
-          <uni-forms-item class="uni-forms-item" label="邮箱地址" name="name">
-            <input class="input" type="text" v-model="formData.name" placeholder="请输入邮箱地址" />
+          <uni-forms-item class="smart-form-item" label="邮箱地址" name="name">
+            <uni-easyinput trim="all" v-model="formData.name" placeholder="请输入邮箱地址" />
           </uni-forms-item>
-          <uni-forms-item class="uni-forms-item" label="性别" name="name">
-            <RadioSex v-model="formData.sex"></RadioSex>
+          <uni-forms-item class="smart-form-item" label="性别" required>
+            <uni-data-checkbox v-model="formData.sex" :localdata="sexs" />
           </uni-forms-item>
-          <uni-forms-item class="uni-forms-item" label="出生日期" name="name">
-            <view class="item-box">
-              <picker ref="datePickerRef" mode="date" @change="bindDateChange">
-                <input ref="dateInputRef" class="input" type="text" v-model="date" placeholder="点击选择时间" />
-              </picker>
-            </view>
+          <uni-forms-item class="smart-form-item" label="出生日期" name="name">
+            <uni-datetime-picker type="date" return-type="timestamp" v-model="formData.datetimesingle" />
           </uni-forms-item>
-          <uni-forms-item class="uni-forms-item" label="所在地" name="name">
-            <input class="input" disabled type="text" v-model="formData.name" placeholder="点击选择所在地" />
-          </uni-forms-item>
-        </uni-forms>
+        </view>
       </view>
-    </view>
-    <view class="form-card">
-      <view class="title"> 推送用户 </view>
-      <view class="content">
-        <uni-forms :label-width="100" :modelValue="formData" label-position="left">
-          <uni-forms-item class="uni-forms-item" label="选择用户" name="name">
-            <view class="item-box" @click="openSelectPeople">
-              <image class="user-select-image" src="/src/static/images/form/add.png" mode=""></image>
-            </view>
+      <view class="smart-form-group">
+        <view class="smart-form-group-title"> 兴趣爱好 </view>
+        <view class="smart-form-group-content">
+          <uni-forms-item class="smart-form-item" label="兴趣爱好" name="interest">
+            <uni-data-checkbox mode="button" multiple v-model="formData.interest" :localdata="interestList"></uni-data-checkbox>
           </uni-forms-item>
-        </uni-forms>
+        </view>
       </view>
-    </view>
-    <view class="form-card">
-      <view class="title"> 兴趣爱好 </view>
-      <Interest v-model="formData.interest" :list="interestList"></Interest>
-    </view>
-    <view class="form-card">
-      <view class="title"> 推送用户 </view>
-      <view class="content">
-        <uni-forms :label-width="100" :modelValue="formData" label-position="left">
-          <uni-forms-item class="uni-forms-item" label="亮度调整" name="name">
-            <view class="item-box">
-              <slider style="width: 100%" value="50" activeColor="#2291F9" backgroundColor="#f5f6f8" block-color="#2291F9" block-size="20" />
-            </view>
+      <view class="smart-form-group">
+        <view class="smart-form-group-title"> 屏幕设置 </view>
+        <view class="smart-form-group-content">
+          <uni-forms-item class="smart-form-item" label="亮度调整" name="name">
+            <slider style="width: 100%" value="50" activeColor="#2291F9" backgroundColor="#f5f6f8" block-color="#2291F9" block-size="20" />
           </uni-forms-item>
-          <uni-forms-item class="uni-forms-item" label="字体大小" name="name">
-            <FontSizeSelece v-model="formData.fontType"></FontSizeSelece>
+        </view>
+      </view>
+      <view class="smart-form-group">
+        <view class="smart-form-group-title"> 自我介绍 </view>
+        <view class="smart-form-group-content">
+          <uni-forms-item class="smart-form-item" label="兴趣爱好" name="interest">
+            <uni-easyinput type="textarea" autoHeight v-model="value" placeholder="请输入自我介绍" />
           </uni-forms-item>
-        </uni-forms>
+
+          <uni-forms-item class="smart-form-item" label="上传图片" name="interest">
+            <uni-file-picker limit="9" title="最多选择9张图片" />
+          </uni-forms-item>
+        </view>
       </view>
-    </view>
-    <view class="form-card">
-      <view class="title"> 自我介绍 </view>
-      <view class="content">
-        <uni-forms :modelValue="formData" label-position="left">
-          <view class="textarea">
-            <textarea auto-height style="font-size: 30rpx" placeholder="请输入自我介绍" placeholder-class="textarea-placeholder" />
-          </view>
-          <view class="example-body">
-            <uni-file-picker limit="9" title="上传图片">
-              <image style="width: 100%; height: 100%" src="/static/images/form/add-image.png" mode=""></image>
-            </uni-file-picker>
-          </view>
-        </uni-forms>
-      </view>
+    </uni-forms>
+    <view class="smart-form-submit fixed-bottom-button">
+      <button class="smart-form-submit-btn smart-margin-right20" type="default">取消</button>
+      <button class="smart-form-submit-btn" type="warn">重置</button>
+      <button class="smart-form-submit-btn" type="primary">确定</button>
     </view>
   </view>
 </template>
 
 <script setup>
-  import RadioSex from './components/radio-sex.vue';
-  import Interest from './components/interest.vue';
-  import FontSizeSelece from './components/font-size-select.vue';
-  import { reactive, ref } from 'vue';
+  import { reactive } from 'vue';
 
-  const interestList = ['唱歌', '跳舞', 'RAP', '篮球', '音乐', '唱歌', '跳舞', 'RAP', '篮球'];
-  const formData = reactive({
-    interest: 4,
-    fontType: 0,
-  });
-  const hobby = ref('');
-  const date = ref();
-  const bindDateChange = (e) => {
-    date.value = e.detail.value;
-  };
+  const sexs = [
+    {
+      text: '男',
+      value: 0,
+    },
+    {
+      text: '女',
+      value: 1,
+    },
+    {
+      text: '你懂的',
+      value: 2,
+    },
+  ];
 
-  const openSelectPeople = () => {
-    uni.navigateTo({
-      url: '/pages/select-people/select-people',
-    });
-  };
+  const interestList = [
+    { text: '唱歌', value: 1 },
+    { text: '足球', value: 2 },
+    { text: '篮球', value: 3 },
+    { text: '跑步', value: 4 },
+    { text: '写字', value: 5 },
+    { text: '美术', value: 6 },
+    { text: '射击', value: 7 },
+    { text: '健身', value: 8 },
+    { text: '马术', value: 9 },
+    { text: '美食', value: 10 },
+  ];
+  const formData = reactive({});
 </script>
 
-<style lang="scss" scoped>
-  page {
-    background: #f5f6f8;
-  }
-
-  ::v-deep .uni-forms-item__content {
-    display: flex;
-    align-items: center;
-  }
-
-  ::v-deep .uni-forms-item__label {
-    font-size: 32rpx;
-    color: #000000;
-    padding-top: 28rpx;
-  }
-
-  ::v-deep .uni-forms-item {
-    margin-bottom: 0 !important;
-  }
-
-  ::v-deep .uni-slider-thumb {
-    background: #fff !important;
-    border: 10rpx solid #1a9aff;
-    box-sizing: border-box;
-  }
-
-  .uni-forms-item {
-    height: 100rpx;
-    border-bottom: 1rpx solid #ededed;
-
-    &:last-child {
-      border: none;
-    }
-  }
-
-  .form-card {
-    box-sizing: border-box;
-    width: 700rpx;
-    margin: 20rpx auto 0;
-    background: #fff;
-    border-radius: 16rpx;
-
-    .title {
-      width: 100%;
-      height: 84rpx;
-      background-image: url('/static/images/list/form-list.png');
-      background-size: 100% 84rpx;
-      line-height: 84rpx;
-      text-indent: 30rpx;
-      font-size: 32rpx;
-      color: #323333;
-      font-weight: bold;
-    }
-
-    .content {
-      padding: 0 30rpx;
-    }
-
-    .input {
-      font-size: 30rpx;
-      text-align: right;
-      width: 100%;
-    }
-  }
-
-  .item-box {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-  }
-
-  .user-select-image {
-    width: 40rpx;
-    height: 40rpx;
-  }
-
-  .textarea {
-    background: #fcfcfc;
-    border: 0.5px solid #ededed;
-    border-radius: 4px;
-    width: 100%;
-    height: 320rpx;
-    margin-top: 24rpx;
-    padding: 24rpx 30rpx;
-    box-sizing: border-box;
-    .textarea-placeholder {
-      color: #cccccc;
-      font-size: 30rpx;
-    }
-  }
-
-  .example-body {
-    padding-bottom: 24rpx;
-  }
-</style>
+<style lang="scss" scoped></style>

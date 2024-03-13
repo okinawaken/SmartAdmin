@@ -25,23 +25,20 @@
       <view class="list-container">
         <view class="list-item" @click="gotoDetail(item.changeLogId)" v-for="item in listData" :key="item.changeLogId">
           <view class="list-item-row">
-            <view class="list-item-content bolder">{{ item.version }}</view>
+            <view class="list-item-content bolder"
+              >{{ item.version }}版本{{ $smartEnumPlugin.getDescByValue('CHANGE_LOG_TYPE_ENUM', item.type) }}</view
+            >
             <uni-tag
               :text="$smartEnumPlugin.getDescByValue('CHANGE_LOG_TYPE_ENUM', item.type)"
               :type="$smartEnumPlugin.getObjectByValue('CHANGE_LOG_TYPE_ENUM', item.type).type"
             />
           </view>
           <view class="list-item-row">
-            <view class="list-item-label">发布日期：{{ item.publicDate }} - {{ item.publishAuthor }}</view>
-          </view>
-          <view class="list-item-row">
-            <view class="list-item-label">{{ item.content }}</view>
+            <view class="list-item-label">发布日期：{{ item.publicDate }}</view>
           </view>
         </view>
       </view>
     </mescroll-body>
-
-    <uni-fab ref="fab" :pattern="fabPattern" horizontal="right" @fabClick="gotoAdd" />
   </view>
 </template>
 
@@ -121,7 +118,7 @@
   // --------------------------- 详情 ---------------------------------
 
   function gotoDetail(id) {
-    uni.navigateTo({ url: '/pages/enterprise/enterprise-detail?enterpriseId=' + id });
+    uni.navigateTo({ url: '/pages/support/change-log/change-log-detail?changeLogId=' + id });
   }
 </script>
 
@@ -172,9 +169,10 @@
           font-size: 30rpx;
           font-weight: 400;
           text-align: left;
+          color: $uni-text-color-grey;
         }
         .bolder {
-          font-weight: 600 !important;
+          font-weight: 500 !important;
           font-size: 34rpx !important;
         }
         .list-item-content {

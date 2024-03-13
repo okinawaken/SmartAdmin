@@ -14,4 +14,11 @@ export const changeLogApi = {
   queryPage: (param) => {
     return postRequest('/support/changeLog/queryPage', param);
   },
+
+  /**
+   * 详情  @author  卓大
+   */
+  getDetail: (changeLogId) => {
+    return getRequest(`/support/changeLog/getDetail/${changeLogId}`);
+  },
 };

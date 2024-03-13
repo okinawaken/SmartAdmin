@@ -66,5 +66,5 @@ const tabsList = [{
 			color: #ccc;
 		}
 	}
-	
+
 </style>
