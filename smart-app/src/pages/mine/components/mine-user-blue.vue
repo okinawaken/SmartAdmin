@@ -6,15 +6,11 @@
   <!-- 用户信息 -->
   <view class="user-info-box">
     <view class="user-icon">
-      <image
-        :src="'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsafe-img.xhscdn.com%2Fbw1%2F4d40b566-1f0a-4f8d-bc97-c513df8775b3%3FimageView2%2F2%2Fw%2F1080%2Fformat%2Fjpg&refer=http%3A%2F%2Fsafe-img.xhscdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1708226948&t=a9a155669b60f13d6a32c00de2477f22'"
-        class="user-image"
-      >
-      </image>
+      <image src="https://img.smartadmin.1024lab.net/hexagon/logo.png" class="user-image"> </image>
     </view>
     <view class="user-info">
       <view class="user-name">{{ actualName }}</view>
-      <view class="user-phone">{{ phone }}</view>
+      <view class="user-phone">{{ departmentName }}</view>
     </view>
     <view class="vip-flag">
       <image src="/@/static/images/mine/no-vip-flag.png" mode=""></image>
@@ -31,18 +27,21 @@
   const phone = computed(() => {
     return useUserStore().phone;
   });
+  const departmentName = computed(() => {
+    return useUserStore().departmentName;
+  });
 </script>
 <style scoped lang="scss">
   .nav-container {
     flex-shrink: 0;
     width: 100%;
-    height: 312rpx;
+    height: 200rpx;
     background: url('@/static/images/mine/top-background.png') center/100% no-repeat;
     position: relative;
     .title {
       text-align: center;
-      margin-top: 100rpx;
-      font-size: 34rpx;
+      margin-top: 30rpx;
+      font-size: 36rpx;
       color: #fff;
       font-weight: bold;
     }
@@ -50,7 +49,7 @@
 
   .user-info-box {
     z-index: 10;
-    margin: -53px 12px 0;
+    margin: -60rpx 12px 0;
     background: #ffffff;
     border-radius: 6px;
     box-shadow: 0px 3px 4px 0px rgba(24, 144, 255, 0.06);

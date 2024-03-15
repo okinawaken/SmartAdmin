@@ -1,11 +1,11 @@
 <template>
   <view class="container">
     <!-- 用户 -->
-    <!--    <MineUserBlue />-->
-    <MineUserWhite />
+    <MineUserBlue v-if="blueUserFlag" />
+    <MineUserWhite v-if="!blueUserFlag" />
 
     <!---功能菜单--->
-    <MineMenu />
+    <MineMenu @change-style="onChangeStyle" />
 
     <!---退出--->
     <view class="logout-btn" @click="logout">
@@ -17,7 +17,13 @@
   import MineMenu from './components/mine-menu.vue';
   import MineUserBlue from './components/mine-user-blue.vue';
   import MineUserWhite from './components/mine-user-white.vue';
+  import { ref } from 'vue';
   const logout = () => {};
+
+  const blueUserFlag = ref(true);
+  function onChangeStyle() {
+    blueUserFlag.value = !blueUserFlag.value;
+  }
 </script>
 <style lang="scss" scoped>
   .container {

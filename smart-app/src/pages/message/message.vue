@@ -1,16 +1,19 @@
 <template>
-  <view>
+  <view class="container">
     <view class="message" v-for="(item, index) in 10">
       <view class="message-header">
         <view class="header-left">
           <image src="/src/static/images/message/message.png" mode=""></image>
           <view> 系统通知 </view>
         </view>
-        <view class="header-time"> 2023-08-20 20:48 </view>
+        <view class="header-time"> 2023-08-20 20:48:21 </view>
       </view>
-      <view class="header-content">
-        <view class="content-title"> 报销-付款已完成 </view>
-        <view class="content"> 您的费用保修单已完成，付款金额300.00元，请注意查收。 </view>
+      <view class="content">
+        <view class="message-title">
+          报销-付款已完成
+          <uni-icons v-if="index % 2 === 1" color="red" class="smart-margin-left10" type="info-filled" :size="14"></uni-icons>
+        </view>
+        <view class="message-body"> 您的费用保修单已完成，付款金额300.00元，请注意查收。 </view>
       </view>
     </view>
   </view>
@@ -53,22 +56,26 @@
       .header-time {
         font-size: 28rpx;
         font-weight: 400;
-        color: #cccccc;
+        color: #999999;
       }
     }
-    .header-content {
+    .content {
       box-sizing: border-box;
       padding: 24rpx;
       background-color: #f7f8f9;
       width: 100%;
       border-radius: 8rpx;
-      .content-title {
+      .message-title {
         color: #323333;
         font-size: 34rpx;
         font-weight: bold;
         margin-bottom: 8rpx;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
       }
-      .content {
+      .message-body {
         font-size: 28rpx;
         color: #777777;
       }

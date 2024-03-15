@@ -1,15 +1,11 @@
 <template>
   <view class="user-info-box">
     <view class="user-icon">
-      <image
-        class="user-image"
-        src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsafe-img.xhscdn.com%2Fbw1%2F4d40b566-1f0a-4f8d-bc97-c513df8775b3%3FimageView2%2F2%2Fw%2F1080%2Fformat%2Fjpg&refer=http%3A%2F%2Fsafe-img.xhscdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1708226948&t=a9a155669b60f13d6a32c00de2477f22"
-      >
-      </image>
+      <image class="user-image" src="https://img.smartadmin.1024lab.net/hexagon/logo.png"> </image>
     </view>
     <view class="user-info">
       <view class="user-name">{{ actualName }}</view>
-      <view class="user-phone">{{ phone }}</view>
+      <view class="user-phone">{{ departmentName }}</view>
     </view>
   </view>
 
@@ -41,6 +37,9 @@
   });
   const phone = computed(() => {
     return useUserStore().phone;
+  });
+  const departmentName = computed(() => {
+    return useUserStore().departmentName;
   });
   const menuList = [
     {

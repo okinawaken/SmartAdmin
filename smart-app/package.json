@@ -1,6 +1,13 @@
 {
-  "name": "uni-preset-vue",
-  "version": "0.0.0",
+  "name": "smart-app",
+  "version": "3.0.0",
+  "author": {
+    "name": "1024创新实验室（1024lab）",
+    "email": "lab1024@163.com",
+    "url": "https://www.1024lab.net"
+  },
+  "license": "MIT",
+  "homepage": "https://smartadmin.1024lab.net",
   "scripts": {
     "dev:app": "uni -p app",
     "dev:app-android": "uni -p app-android",
@@ -55,12 +62,13 @@
     "@dcloudio/uni-mp-xhs": "3.0.0-3090920231225001",
     "@dcloudio/uni-quickapp-webview": "3.0.0-3090920231225001",
     "@dcloudio/uni-ui": "1.5.0",
-    "lodash": "^4.17.21",
-    "pinia": "^2.0.36",
-    "vue": "3.2.47",
-    "vue-i18n": "9.1.9",
+    "crypto-js": "4.1.1",
+    "dayjs": "1.11.10",
+    "lodash": "4.17.21",
+    "pinia": "2.0.36",
     "sm-crypto": "0.3.13",
-    "crypto-js": "4.1.1"
+    "vue": "3.2.47",
+    "vue-i18n": "9.1.9"
   },
   "devDependencies": {
     "@dcloudio/types": "3.3.2",
@@ -69,13 +77,13 @@
     "@dcloudio/uni-stacktracey": "3.0.0-3090920231225001",
     "@dcloudio/vite-plugin-uni": "3.0.0-3090920231225001",
     "@vue/runtime-core": "3.2.45",
-    "sass": "1.69.7",
-    "sass-loader": "10.1.1",
-    "vite": "4.0.3",
-    "prettier": "3.0.2",
     "eslint": "8.16.0",
     "eslint-config-prettier": "9.0.0",
     "eslint-plugin-prettier": "5.0.0",
-    "eslint-plugin-vue": "9.17.0"
+    "eslint-plugin-vue": "9.17.0",
+    "prettier": "3.0.2",
+    "sass": "1.69.7",
+    "sass-loader": "10.1.1",
+    "vite": "4.0.3"
   }
 }

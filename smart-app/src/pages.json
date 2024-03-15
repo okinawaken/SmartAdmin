@@ -103,15 +103,6 @@
 			}
 		},
 		{
-			"path" : "pages/list/list",
-			"style" :
-			{
-				"navigationBarTitleText" : "常见列表",
-				"enablePullDownRefresh" : true,
-				"navigationStyle": "custom"
-			}
-		},
-		{
 			"path" : "pages/message/message",
 			"style" : 
 			{
@@ -139,10 +130,19 @@
 			}
 		},
 		{
-			"path" : "pages/pure-list/pure-list",
+			"path" : "pages/list/list",
+			"style" :
+			{
+				"navigationBarTitleText" : "常见列表样式1",
+				"enablePullDownRefresh" : false,
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path" : "pages/list2/list",
 			"style" : 
 			{
-				"navigationBarTitleText" : "列表",
+				"navigationBarTitleText" : "常见列表样式2",
 				"enablePullDownRefresh" : false,
 				"navigationBarBackgroundColor": "#fff"
 			}
@@ -179,6 +179,12 @@
 		  "iconPath": "static/images/tabbar/list-icon.png",
 		  "selectedIconPath": "static/images/tabbar/list-icon-h.png",
 		  "text": "常见列表"
+		},
+		{
+		  "pagePath": "pages/list2/list",
+		  "iconPath": "static/images/tabbar/list-icon.png",
+		  "selectedIconPath": "static/images/tabbar/list-icon-h.png",
+		  "text": "常见列表2"
 		},
 		{
 		  "pagePath": "pages/message/message",

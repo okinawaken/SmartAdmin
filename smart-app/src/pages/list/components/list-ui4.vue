@@ -19,28 +19,82 @@
         </view>
         <view class="item-top-item">
           <view class="item-top-label"> 客户经理： </view>
-          <view class="item-title"> 林jj </view>
+          <view class="item-title"> 卓大 </view>
         </view>
         <view class="item-top-item">
           <view class="item-top-label"> 生产厂商： </view>
-          <view class="item-title"> 闫jj </view>
+          <view class="item-title"> 1024工厂 </view>
         </view>
       </view>
 
-      <!-- <view class="decollator">
-				<view class="decollator-left">
-					
-				</view>
-				<view class="decollator-center">
-					
-				</view>
-				<view class="decollator-right">
-					
-				</view>
-			</view> -->
       <view class="item-footer">
-        <view class="item-footer-left"> 订单总价： </view>
-        <!-- <image src="" mode=""></image> -->
+        <view class="item-footer-left"> 付款金额： </view>
+        <view class="item-footer-right"> ￥300000.00 </view>
+      </view>
+    </view>
+
+    <view class="item">
+      <view class="item-top">
+        <view class="item-top-item">
+          <view class="item-top-label"> 创建时间： </view>
+          <view class="item-title"> 2023-08-27 21:33 </view>
+          <view class="item-state">
+            <view class="tag" type="success"> 已付款 </view>
+          </view>
+        </view>
+        <view class="item-top-item">
+          <view class="item-top-label"> 客户名称： </view>
+          <view class="item-title"> 六边形工程师 </view>
+        </view>
+        <view class="item-top-item">
+          <view class="item-top-label"> 供应商名称： </view>
+          <view class="item-title"> 1024数字科技有限公司 </view>
+        </view>
+        <view class="item-top-item">
+          <view class="item-top-label"> 客户经理： </view>
+          <view class="item-title"> 卓大 </view>
+        </view>
+        <view class="item-top-item">
+          <view class="item-top-label"> 生产厂商： </view>
+          <view class="item-title"> 1024工厂 </view>
+        </view>
+      </view>
+
+      <view class="item-footer">
+        <view class="item-footer-left"> 付款金额： </view>
+        <view class="item-footer-right"> ￥300000.00 </view>
+      </view>
+    </view>
+
+    <view class="item">
+      <view class="item-top">
+        <view class="item-top-item">
+          <view class="item-top-label"> 创建时间： </view>
+          <view class="item-title"> 2024-01-11 21:33 </view>
+          <view class="item-state">
+            <view class="tag" type="warring"> 未付款 </view>
+          </view>
+        </view>
+        <view class="item-top-item">
+          <view class="item-top-label"> 客户名称： </view>
+          <view class="item-title"> 孙传芳 </view>
+        </view>
+        <view class="item-top-item">
+          <view class="item-top-label"> 供应商名称： </view>
+          <view class="item-title"> 1024数字科技有限公司 </view>
+        </view>
+        <view class="item-top-item">
+          <view class="item-top-label"> 客户经理： </view>
+          <view class="item-title"> 胡克 </view>
+        </view>
+        <view class="item-top-item">
+          <view class="item-top-label"> 生产厂商： </view>
+          <view class="item-title"> 数字工厂 </view>
+        </view>
+      </view>
+
+      <view class="item-footer">
+        <view class="item-footer-left"> 付款金额： </view>
         <view class="item-footer-right"> ￥300000.00 </view>
       </view>
     </view>
@@ -101,6 +155,7 @@
     border-radius: 12rpx;
     box-shadow: 0px 3px 4px 0px rgba(24, 144, 255, 0.06);
     padding-top: 24rpx;
+    margin-bottom: 30rpx;
     overflow: hidden;
 
     .item-top {
@@ -134,8 +189,12 @@
           line-height: 40rpx;
           font-size: 24rpx;
           &[type='warring'] {
-            color: #ff6c00;
-            background: #fff0ed;
+            background-color: $error-color;
+            color: white;
+          }
+          &[type='success'] {
+            background-color: $uni-color-success;
+            color: white;
           }
         }
       }
@@ -180,7 +239,7 @@
     }
     .item-footer-right {
       font-size: 34rpx;
-      color: #444;
+      color: red;
       font-weight: bold;
     }
   }

@@ -1,28 +1,32 @@
 <template>
-  <view class="item" v-for="(item, index) in 2" :key="index">
+  <view class="item" v-for="(item, index) in 6" :key="index">
     <view class="header">
       <view class="header-left">
         <image class="header-left-image" src="/static/images/pure-list/maintain.png" mode=""></image>
-        <view class="header-left-title"> 报修信息 </view>
+        <view class="header-left-title"> 反馈信息 </view>
       </view>
       <view class="header-right-id"> 保修单还：12876 </view>
     </view>
     <view class="footer">
       <view class="footer-item">
-        <view class="label"> 设备： </view>
-        <view class="info"> 灭火控制柜（plc） </view>
+        <view class="label"> 商品名称：</view>
+        <view class="info"> 家用净水器 </view>
       </view>
       <view class="footer-item">
-        <view class="label"> 描述： </view>
-        <view class="info"> 总设备压力过大，导致气压不稳 </view>
+        <view class="label"> 描述情况：</view>
+        <view class="info"> 水有杂志且存在异味 </view>
       </view>
       <view class="footer-item">
-        <view class="label"> 报修人： </view>
-        <view class="info"> 闫jj </view>
+        <view class="label">提交人：</view>
+        <view class="info"> 刘邦</view>
       </view>
       <view class="footer-item">
-        <view class="label"> 受理人： </view>
-        <view class="info"> 王jj </view>
+        <view class="label"> 受理人员： </view>
+        <view class="info"> 迪丽热巴 </view>
+      </view>
+      <view class="footer-item">
+        <view class="label"> 提交时间： </view>
+        <view class="info"> 2023-01-01 12:12:12 </view>
       </view>
     </view>
   </view>
@@ -81,7 +85,7 @@
         align-items: center;
         margin-bottom: 16rpx;
         .label {
-          width: 112rpx;
+          width: 80px;
           font-size: 28rpx;
           color: #777777;
         }

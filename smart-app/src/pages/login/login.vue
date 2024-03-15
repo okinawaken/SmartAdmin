@@ -15,7 +15,7 @@
           :clearable="true"
           placeholderStyle="color:#CCCCCC"
           border="none"
-          v-model="loginForm.username"
+          v-model="loginForm.loginName"
         />
       </view>
 
@@ -72,10 +72,10 @@
 
   const loginForm = reactive({
     loginName: 'admin',
-    password: '',
+    password: '123456',
     captchaCode: '',
     captchaUuid: '',
-    loginDevice: LOGIN_DEVICE_ENUM.PC.value,
+    loginDevice: LOGIN_DEVICE_ENUM.H5.value,
   });
 
   const loginCheckBoxRef = ref();
@@ -87,7 +87,7 @@
       });
       return;
     }
-    if (!loginForm.username) {
+    if (!loginForm.loginName) {
       uni.showToast({
         icon: 'none',
         title: '请输入用户名',
@@ -103,7 +103,7 @@
     }
 
     try {
-      uni.showLoading('登录中');
+      uni.showLoading({ title: '登录中' });
       // 密码加密
       let encryptPasswordForm = Object.assign({}, loginForm, {
         password: encryptData(loginForm.password),

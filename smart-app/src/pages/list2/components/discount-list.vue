@@ -1,18 +1,58 @@
 <template>
-  <view class="item" v-for="(item, index) in 2" :key="index">
-    <view v-if="index == 1" class="forbidden">
+  <view class="item">
+    <view class="header">
+      <view class="header-left">
+        <view class="header-left-title"> 手机优惠券 </view>
+        <view class="header-left-time"> 有效期至2024.08.28 </view>
+      </view>
+      <view class="header-right-price"> ￥<text>10</text> </view>
+    </view>
+    <view class="footer">
+      <view class="footer-left"> 适用于：双11商品 </view>
+      <view v-if="index != 1" class="footer-right"> 去使用 </view>
+    </view>
+  </view>
+  <view class="item">
+    <view class="forbidden">
       <image src="/static/images/pure-list/employ.png" mode=""></image>
     </view>
     <view class="header">
       <view class="header-left">
-        <view class="header-left-title"> 双十一课程优惠券 </view>
-        <view class="header-left-time"> 有效期至2023.08.28 </view>
+        <view class="header-left-title"> 笔记本优惠券 </view>
+        <view class="header-left-time"> 有效期至2024.08.28 </view>
       </view>
-      <view class="header-right-price" :class="index == 1 ? 'grayscale' : ''"> ￥<text>10</text> </view>
+      <view class="header-right-price grayscale"> ￥<text>99</text> </view>
     </view>
     <view class="footer">
-      <view class="footer-left"> 适用于：直播课 </view>
+      <view class="footer-left"> 适用于：双11商品 </view>
+    </view>
+  </view>
+  <view class="item">
+    <view class="header">
+      <view class="header-left">
+        <view class="header-left-title"> 汽车优惠券 </view>
+        <view class="header-left-time"> 有效期至2024.08.28 </view>
+      </view>
+      <view class="header-right-price"> ￥<text>9999</text> </view>
+    </view>
+    <view class="footer">
+      <view class="footer-left"> 适用于：双11商品 </view>
       <view v-if="index != 1" class="footer-right"> 去使用 </view>
+    </view>
+  </view>
+  <view class="item">
+    <view class="forbidden">
+      <image src="/static/images/pure-list/employ.png" mode=""></image>
+    </view>
+    <view class="header">
+      <view class="header-left">
+        <view class="header-left-title"> 笔记本优惠券 </view>
+        <view class="header-left-time"> 有效期至2024.08.28 </view>
+      </view>
+      <view class="header-right-price grayscale"> ￥<text>99</text> </view>
+    </view>
+    <view class="footer">
+      <view class="footer-left"> 适用于：双11商品 </view>
     </view>
   </view>
 </template>

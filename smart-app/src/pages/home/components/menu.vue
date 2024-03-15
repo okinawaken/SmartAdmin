@@ -42,21 +42,22 @@
         </view>
       </uni-grid-item>
       <uni-grid-item class="menu-grid">
-        <view class="menu-item" @click="switchTab('/pages/list/list')">
-          <image class="item-image" src="/@/static/images/index/ic_home_menu9.png"></image>
-          <view class="item-text"> 常见列表 </view>
-        </view>
-      </uni-grid-item>
-      <uni-grid-item class="menu-grid">
         <view class="menu-item" @click="navigateTo('/pages/order-detail/order-detail')">
           <image class="item-image" src="/@/static/images/index/ic_home_menu7.png"></image>
-          <view class="item-text"> 物流快递 </view>
+          <view class="item-text"> 复杂详情 </view>
         </view>
       </uni-grid-item>
       <uni-grid-item class="menu-grid">
-        <view class="menu-item" @click="navigateTo('/pages/pure-list/pure-list')">
+        <view class="menu-item" @click="switchTab('/pages/list/list')">
+          <image class="item-image" src="/@/static/images/index/ic_home_menu9.png"></image>
+          <view class="item-text"> 列表样式1 </view>
+        </view>
+      </uni-grid-item>
+
+      <uni-grid-item class="menu-grid">
+        <view class="menu-item" @click="switchTab('/pages/list2/list')">
           <image class="item-image" src="/@/static/images/index/ic_home_menu8.png"></image>
-          <view class="item-text"> 优惠券 </view>
+          <view class="item-text"> 列表样式2 </view>
         </view>
       </uni-grid-item>
       <uni-grid-item class="menu-grid">

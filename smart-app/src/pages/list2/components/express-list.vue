@@ -1,7 +1,7 @@
 <template>
-  <view class="item" v-for="(item, index) in 2">
+  <view class="item" v-for="(item, index) in 6">
     <view class="item-header">
-      <view class="header-title"> 订单号：HUMU2268394 </view>
+      <view class="header-title"> 快递号：KD12382387 </view>
       <view class="header-right" :class="index == 1 ? 'pay' : 'nopay'">
         {{ index == 1 ? '已支付' : '未支付' }}
       </view>
@@ -12,7 +12,7 @@
           <view> </view>
         </view>
         <view class="start-address-right">
-          <view class="start-address-text"> 出发地：洛阳西工百货楼 </view>
+          <view class="start-address-text"> 出发地：洛阳市六边形科技园 </view>
           <view class="start-time"> 出发时间：2023.08.23 </view>
         </view>
       </view>
@@ -20,7 +20,7 @@
         <view class="atom end">
           <view> </view>
         </view>
-        <view class="start-address-text"> 目的地：洛阳宜阳县 </view>
+        <view class="start-address-text"> 目的地：上海市壹零贰肆软件园 </view>
       </view>
     </view>
     <view class="footer">
@@ -42,7 +42,7 @@
 <style lang="scss" scoped>
   .item {
     width: 700rpx;
-    margin: 20rpx auto 0;
+    margin: 30rpx auto 0;
     background: #ffffff;
     border-radius: 12rpx;
     box-shadow: 0px 3px 4px 0px rgba(24, 144, 255, 0.06);
@@ -56,9 +56,9 @@
       margin-bottom: 26rpx;
       .header-title {
         width: 480rpx;
-        font-size: 34rpx;
+        font-size: 28rpx;
+        font-weight: bold;
         color: #444;
-        font-weight: 600;
       }
       .header-right {
         position: absolute;
@@ -117,7 +117,7 @@
         align-items: flex-start;
       }
       .start-address-text {
-        font-size: 30x;
+        font-size: 30rpx;
         font-weight: bold;
         color: #444444;
         margin-bottom: 4rpx;

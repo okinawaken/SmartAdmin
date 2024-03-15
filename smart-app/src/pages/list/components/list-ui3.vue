@@ -45,6 +45,98 @@
         </view>
       </view>
     </view>
+
+    <view class="item">
+      <view class="item-header">
+        <view class="item-top">
+          <view class="item-top-left"> 2023-08-20 19:15 </view>
+          <view class="item-top-right">
+            <view class="tag" type="warring"> 未付款 </view>
+          </view>
+        </view>
+        <view class="line-border-bottom"> </view>
+        <view class="item-center">
+          <view class="item-center-left">
+            <view class="item-top-z"> 装 </view>
+            <view class="item-center"> </view>
+            <view class="item-bottom-x"> 卸 </view>
+          </view>
+          <view class="item-center-address">
+            <view class="m-b-16">
+              <view class="item-title"> 装货地址 </view>
+              <view class="item-address"> 河南省洛阳市洛龙区110号 </view>
+            </view>
+            <view class="m-b-16">
+              <view class="item-title"> 卸货地址 </view>
+              <view class="item-address"> 河南省洛阳市西工区120号 </view>
+            </view>
+          </view>
+        </view>
+
+        <view class="line-border-bottom"> </view>
+        <view class="item-footer">
+          <view class="item-footer-left">
+            <text>￥586.00</text>
+          </view>
+          <view class="item-footer-right">
+            <view class="camera">
+              <image src="/static/images/list/camera.png" mode=""></image>
+              拍照
+            </view>
+            <view class="ok">
+              <image src="/static/images/list/success.png" mode=""></image>
+              完成
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="item">
+      <view class="item-header">
+        <view class="item-top">
+          <view class="item-top-left"> 2023-08-20 19:15 </view>
+          <view class="item-top-right">
+            <view class="tag" type="warring"> 未付款 </view>
+          </view>
+        </view>
+        <view class="line-border-bottom"> </view>
+        <view class="item-center">
+          <view class="item-center-left">
+            <view class="item-top-z"> 装 </view>
+            <view class="item-center"> </view>
+            <view class="item-bottom-x"> 卸 </view>
+          </view>
+          <view class="item-center-address">
+            <view class="m-b-16">
+              <view class="item-title"> 装货地址 </view>
+              <view class="item-address"> 河南省洛阳市洛龙区110号 </view>
+            </view>
+            <view class="m-b-16">
+              <view class="item-title"> 卸货地址 </view>
+              <view class="item-address"> 河南省洛阳市西工区120号 </view>
+            </view>
+          </view>
+        </view>
+
+        <view class="line-border-bottom"> </view>
+        <view class="item-footer">
+          <view class="item-footer-left">
+            <text>￥586.00</text>
+          </view>
+          <view class="item-footer-right">
+            <view class="camera">
+              <image src="/static/images/list/camera.png" mode=""></image>
+              拍照
+            </view>
+            <view class="ok">
+              <image src="/static/images/list/success.png" mode=""></image>
+              完成
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
   </view>
 </template>
 
@@ -73,6 +165,7 @@
     border-radius: 12rpx;
     box-shadow: 0px 3px 4px 0px rgba(24, 144, 255, 0.06);
     padding-top: 24rpx;
+    margin-bottom: 30rpx;
     overflow: hidden;
 
     .item-top {

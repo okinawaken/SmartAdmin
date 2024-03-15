@@ -1,7 +1,7 @@
 <template>
   <view class="container">
     <view>
-      <smart-tabs :tabsList="tabs" v-model="smartTabIndex" @change="onTabChange" :fixed="true" />
+      <smart-detail-tabs :tabsList="tabs" v-model="smartTabIndex" @change="onTabChange" :fixed="true" />
     </view>
     <view class="smart-detail smart-margin-top60 content" id="detail1">
       <view class="smart-detail-card">
@@ -83,7 +83,7 @@
 </template>
 
 <script setup>
-  import SmartTabs from '/@/components/smart-tabs/index.vue';
+  import SmartDetailTabs from '/@/components/smart-detail-tabs/index.vue';
   import { ref, reactive } from 'vue';
   import { enterpriseApi } from '/@/api/business/oa/enterprise-api';
   import { onShow, onLoad } from '@dcloudio/uni-app';
@@ -220,54 +220,6 @@
     background-color: #f4f4f4;
     height: 100vh;
     overflow-y: scroll;
-  }
-
-  .smart-detail {
-    .smart-detail-card {
-      background-color: white;
-      margin: 0 auto 14px auto;
-      width: 94%;
-      border-radius: 16rpx;
-      box-sizing: border-box;
-      padding: 16rpx 30rpx;
-
-      .smart-detail-card-title {
-        height: 70rpx;
-        display: flex;
-        align-items: center;
-        font-size: $uni-font-size-lg;
-        color: #323333;
-        font-weight: bold;
-        margin-bottom: 16rpx;
-        &::before {
-          content: '';
-          height: 32rpx;
-          width: 3px;
-          border-radius: 4rpx;
-          margin-right: 10rpx;
-          background-color: $uni-color-primary;
-        }
-      }
-
-      .smart-detail-card-cell {
-        display: flex;
-        min-height: 80rpx;
-        padding: 10rpx 0;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        border-top: 1rpx solid #ededed;
-        .smart-detail-card-label {
-          color: #666666;
-          font-size: $uni-font-size-lg;
-        }
-        .smart-detail-card-value {
-          color: black;
-          font-size: $uni-font-size-lg;
-          padding: 20rpx 0;
-        }
-      }
-    }
   }
 
   .content {

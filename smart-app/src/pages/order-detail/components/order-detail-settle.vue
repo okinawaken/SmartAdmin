@@ -1,16 +1,15 @@
 <template>
-  <view class="view">
-    <view class="view-title">
-      <view class="title-left-bg"> </view>
-      <view class="title-text"> 付款单号1 </view>
-      <view class="sub-title">
-        <view class="success"> 已审核 </view>
-        <view class="warning"> 待支付 </view>
-      </view>
+  <view class="smart-detail-card">
+    <view class="smart-detail-card-title"> 结算信息 </view>
+    <view class="view-item">
+      <view class="item-left"> 订单号： </view>
+      <view class="item-right"> TYD2023080979 </view>
     </view>
     <view class="view-item">
-      <view class="item-left"> 运单号： </view>
-      <view class="item-right"> TYD2023080979 </view>
+      <view class="item-left"> 付款状态： </view>
+      <view class="item-right">
+        <view class="success"> 已审核 </view>
+      </view>
     </view>
     <view class="view-item">
       <view class="item-left"> 应付金额： </view>
@@ -22,7 +21,7 @@
     </view>
     <view class="view-item">
       <view class="item-left"> 收款账户： </view>
-      <view class="item-right"> 王强/623457910384 </view>
+      <view class="item-right"> 项羽/61248348910384 </view>
     </view>
   </view>
 </template>
@@ -32,13 +31,11 @@
 <style lang="scss" scoped>
   .view {
     width: 94%;
-    margin: 0 auto;
     background: #fff;
     border-radius: 16rpx;
     box-sizing: border-box;
-    padding: 0 30rpx;
-    padding-bottom: 24rpx;
-    margin-bottom: 24rpx;
+    padding: 0 30rpx 24rpx;
+    margin: 0 auto 24rpx;
   }
 
   .view-title {
