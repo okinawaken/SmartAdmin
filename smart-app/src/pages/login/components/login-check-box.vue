@@ -17,7 +17,7 @@
 
   import { ref } from 'vue';
 
-  const agreeFlag = ref(false);
+  const agreeFlag = ref(true);
 
   function agree() {
     agreeFlag.value = !agreeFlag.value;
@@ -38,14 +38,14 @@
     .check-item {
       display: flex;
       align-items: center;
-      font-size: $small-size;
+      font-size: 12px;
       font-weight: 400;
       color: #999999;
-      margin-bottom: 7px;
+      margin-bottom: 20rpx;
 
       image {
-        width: 17px;
-        height: 17px;
+        width: 24px;
+        height: 24px;
         margin-right: 2px;
       }
 

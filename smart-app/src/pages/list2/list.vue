@@ -1,13 +1,15 @@
 <template>
-  <y-tabs v-model="active" sticky :offsetTop="0" color="#007aff">
-    <y-tab class="y-tab-virtual" v-for="item in tabsList" :key="item.value" :title="item.title"> </y-tab>
-  </y-tabs>
+  <view>
+    <y-tabs v-model="active" sticky :offsetTop="43" color="#007aff">
+      <y-tab v-for="item in tabsList" :key="item.value" :title="item.title"> </y-tab>
+    </y-tabs>
 
-  <ExpressList v-if="active === 0" />
-  <DiscountList v-if="active === 1" />
-  <IotList v-if="active === 2" />
-  <ServiceList v-if="active === 3" />
-  <CourseList v-if="active === 4" />
+    <ExpressList v-if="active === 0" />
+    <DiscountList v-if="active === 1" />
+    <IotList v-if="active === 2" />
+    <ServiceList v-if="active === 3" />
+    <CourseList v-if="active === 4" />
+  </view>
 </template>
 
 <script setup>
@@ -48,6 +50,6 @@
 
 <style lang="scss" scoped>
   page {
-    background: #f5f6f8;
+    background-color: #f5f5f5;
   }
 </style>

@@ -7,18 +7,18 @@
             <image class="icon" src="/static/images/mine/mine-account.png" mode=""></image>
           </template>
         </uni-list-item>
-        <uni-list-item title="消息通知" link showBadge badgeText="6" badgeType="error" @click="gotoMessage">
+        <uni-list-item title="消息通知" link="switchTab" showBadge badgeText="6" badgeType="error" to="/pages/message/message">
           <template #header>
             <image class="icon" src="/static/images/mine/mine-message.png" mode=""></image>
           </template>
         </uni-list-item>
 
-        <uni-list-item title="意见反馈" link rightText="欢迎吐槽" showBadge>
+        <uni-list-item title="意见反馈" link rightText="欢迎吐槽" showBadge to="/pages/support/feedback/feedback-form">
           <template #header>
             <image class="icon" src="/static/images/mine/mine-feedback.png" mode=""></image>
           </template>
         </uni-list-item>
-        <uni-list-item title="联系客服" showBadge>
+        <uni-list-item title="联系客服" showBadge clickable @click="callService">
           <template #header>
             <image class="icon" src="/static/images/mine/mine-service.png" mode=""></image>
           </template>
@@ -56,9 +56,9 @@
             <image class="icon" src="/static/images/mine/mine-about-us.png" mode=""></image>
           </template>
         </uni-list-item>
-        <uni-list-item title="设置" link showBadge>
+        <uni-list-item title="设置" showBadge clickable @click="developing">
           <template #header>
-            <image class="icon" src="/static/images/mine/mine-protocol.png" mode=""></image>
+            <image class="icon" src="/static/images/mine/mine-protocol.png"></image>
           </template>
         </uni-list-item>
       </uni-list>
@@ -66,14 +66,22 @@
   </view>
 </template>
 <script setup>
+  import { SmartToast } from '/@/lib/smart-support';
+
   const emits = defineEmits(['changeStyle']);
 
   function changeStyle() {
     emits('changeStyle');
   }
 
-  function gotoMessage() {
-    uni.switchTab({ url: '/pages/message/message' });
+  function developing() {
+    SmartToast.toast('敬请期待');
+  }
+
+  function callService() {
+    uni.makePhoneCall({
+      phoneNumber: '18637925892',
+    });
   }
 </script>
 <style scoped lang="scss">

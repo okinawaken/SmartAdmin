@@ -12,6 +12,7 @@ import loginDevice from './system/login-device-const';
 import enterpriseConst from './business/oa/enterprise-const';
 import goodsConst from './business/erp/goods-const';
 import changeLogConst from './support/change-log-const';
+import fileConst from './support/file-const';
 
 export default {
   FLAG_NUMBER_ENUM,
@@ -21,4 +22,5 @@ export default {
   ...enterpriseConst,
   ...goodsConst,
   ...changeLogConst,
+  ...fileConst,
 };

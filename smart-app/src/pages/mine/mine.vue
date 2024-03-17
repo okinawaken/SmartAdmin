@@ -18,11 +18,29 @@
   import MineUserBlue from './components/mine-user-blue.vue';
   import MineUserWhite from './components/mine-user-white.vue';
   import { ref } from 'vue';
-  const logout = () => {};
+  import { useUserStore } from '/@/store/modules/system/user';
+  import { SmartLoading, SmartToast } from '/@/lib/smart-support';
+  import { smartSentry } from '/@/lib/smart-sentry';
 
+  const userStore = useUserStore();
   const blueUserFlag = ref(true);
   function onChangeStyle() {
     blueUserFlag.value = !blueUserFlag.value;
+  }
+
+  async function logout() {
+    try {
+      setTimeout(() => {
+        userStore.logout();
+        uni.navigateTo({ url: '/pages/login/login' });
+      }, 500);
+      await SmartLoading.show();
+      SmartToast.toast('退出成功');
+    } catch (e) {
+      smartSentry.captureError(e);
+    } finally {
+      SmartLoading.hide();
+    }
   }
 </script>
 <style lang="scss" scoped>
@@ -37,13 +55,12 @@
     margin: 24px 27px 50px;
     height: 44px;
     opacity: 0.5;
-    background: #ffffff;
+    background: $uni-color-error;
     border-radius: 22px;
-    box-shadow: 0px 3px 4px 0px rgba(24, 144, 255, 0.06);
     font-size: 15px;
     line-height: 44px;
     font-weight: 700;
     text-align: center;
-    color: #353535;
+    color: white;
   }
 </style>

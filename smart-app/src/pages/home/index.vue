@@ -37,15 +37,23 @@
   import Notice from './components/notice.vue';
   import Goods from './components/goods.vue';
   import { ref } from 'vue';
+  import { onShow } from '@dcloudio/uni-app';
 
   const showBannerFlag = ref(false);
   function changeHome() {
     showBannerFlag.value = !showBannerFlag.value;
   }
+
+  onShow(() => {
+    uni.pageScrollTo({
+      scrollTop: 0,
+      duration: 300,
+    });
+  });
 </script>
 
 <style lang="scss" scoped>
-  page {
+  .page {
     background-color: #f5f5f5;
   }
 

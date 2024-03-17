@@ -23,6 +23,41 @@ function getUserToken() {
 }
 
 /**
+ * 处理返回的消息
+ */
+function handleResponse(response, resolve, reject) {
+  // 如果是加密数据
+  if (response.data.dataType === DATA_TYPE_ENUM.ENCRYPT.value) {
+    response.data.encryptData = response.data.data;
+    let decryptStr = decryptData(response.data.data);
+    if (decryptStr) {
+      response.data.data = JSON.parse(decryptStr);
+    }
+  }
+
+  const res = response.data;
+  if (res.code && res.code !== 1) {
+    // `token` 过期或者账号已在别处登录
+    if (res.code === 30007 || res.code === 30008 || res.code === 30012) {
+      uni.showToast({
+        title: res.msg,
+        icon: 'none',
+      });
+      useUserStore().clearUserLoginInfo();
+      uni.navigateTo({ url: '/pages/login/login' });
+    }
+
+    uni.showToast({
+      title: res.msg,
+      icon: 'none',
+    });
+    reject(response);
+  } else {
+    resolve(res);
+  }
+}
+
+/**
  * 通用请求封装
  */
 export const request = function (url, method, data) {
@@ -35,35 +70,7 @@ export const request = function (url, method, data) {
         'x-access-token': getUserToken(),
       },
       success: (response) => {
-        // 如果是加密数据
-        if (response.data.dataType === DATA_TYPE_ENUM.ENCRYPT.value) {
-          response.data.encryptData = response.data.data;
-          let decryptStr = decryptData(response.data.data);
-          if (decryptStr) {
-            response.data.data = JSON.parse(decryptStr);
-          }
-        }
-
-        const res = response.data;
-        if (res.code && res.code !== 1) {
-          // `token` 过期或者账号已在别处登录
-          if (res.code === 30007 || res.code === 30008 || res.code === 30012) {
-            uni.showToast({
-              title: res.msg,
-              icon: 'none',
-            });
-            useUserStore().clearUserLoginInfo();
-            uni.navigateTo({ url: '/pages/login/login' });
-          }
-
-          uni.showToast({
-            title: res.msg,
-            icon: 'none',
-          });
-          reject(response);
-        } else {
-          resolve(res);
-        }
+        handleResponse(response, resolve, reject);
       },
       fail: (error) => {
         reject(error);
@@ -93,4 +100,29 @@ export const postRequest = (url, data) => {
  */
 export const postEncryptRequest = (url, data) => {
   return request(url, 'POST', { encryptData: encryptData(data) });
+};
+
+// ================================= 文件 =================================
+
+export const uploadRequest = function (filePath, folder) {
+  return new Promise((resolve, reject) => {
+    uni.uploadFile({
+      url: baseUrl + '/support/file/upload',
+      filePath,
+      header: {
+        'x-access-token': getUserToken(),
+      },
+      name: 'file',
+      formData: {
+        folder,
+      },
+      success: (response) => {
+        response.data = JSON.parse(response.data.replace('\uFEFF', ''));
+        handleResponse(response, resolve, reject);
+      },
+      fail: (error) => {
+        reject(error);
+      },
+    });
+  });
 };

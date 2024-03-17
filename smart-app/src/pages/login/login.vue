@@ -60,7 +60,7 @@
   </view>
 </template>
 <script setup>
-  import { nextTick, reactive, ref } from 'vue';
+  import { reactive, ref } from 'vue';
   import { onShow } from '@dcloudio/uni-app';
   import OtherWayBox from './components/other-way-box.vue';
   import LoginCheckBox from './components/login-check-box.vue';
@@ -292,9 +292,8 @@
 
   .login-check-box {
     flex-shrink: 0;
-    margin-top: 69px;
-    margin-bottom: 63px;
-    margin-left: 22px;
+    margin-top: 150rpx;
+    margin-bottom: 120rpx;
     align-self: flex-start;
   }
 </style>

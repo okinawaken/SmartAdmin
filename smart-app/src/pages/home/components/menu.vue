@@ -1,6 +1,6 @@
 <template>
   <view class="menu-container">
-    <uni-grid :column="5" :highlight="true" :showBorder="false">
+    <uni-grid :column="5" :highlight="true" :show-border="false" customStyle="display: block;">
       <!--------------------------------- 第一排--------------------------------->
       <uni-grid-item class="menu-grid">
         <view class="menu-item" @click="changeHome">
@@ -61,9 +61,9 @@
         </view>
       </uni-grid-item>
       <uni-grid-item class="menu-grid">
-        <view class="menu-item" @click="navigateTo('/pages/change-log/change-log-list')">
+        <view class="menu-item" @click="developing">
           <image class="item-image" src="/@/static/images/index/ic_home_menu10.png"></image>
-          <view class="item-text"> 加密安全 </view>
+          <view class="item-text"> 接口加密 </view>
         </view>
       </uni-grid-item>
     </uni-grid>
@@ -71,6 +71,7 @@
 </template>
 
 <script setup>
+  import { SmartToast } from '/@/lib/smart-support';
   const emit = defineEmits(['changeHome']);
 
   function changeHome() {
@@ -86,6 +87,10 @@
     uni.switchTab({
       url,
     });
+  }
+
+  function developing() {
+    SmartToast.toast('敬请期待');
   }
 </script>
 
@@ -110,6 +115,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      width: 134rpx;
+      height: 134rpx;
       .item-image {
         width: 80rpx;
         height: 80rpx;

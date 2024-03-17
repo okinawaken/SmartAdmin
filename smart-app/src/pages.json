@@ -10,7 +10,8 @@
 		{
 			"path": "pages/home/index",
 			"style": {
-				"navigationStyle":"custom"
+				"navigationStyle":"custom",
+				"navigationBarTitleText": "首页"
 			}
 		},
 		{
@@ -135,7 +136,7 @@
 			{
 				"navigationBarTitleText" : "常见列表样式1",
 				"enablePullDownRefresh" : false,
-				"navigationStyle": "custom"
+				"navigationBarBackgroundColor": "#fff"
 			}
 		},
 		{
@@ -152,6 +153,15 @@
 			"style" : 
 			{
 				"navigationBarTitleText" : "运单详情",
+				"enablePullDownRefresh" : false,
+				"navigationBarBackgroundColor": "#fff"
+			}
+		},
+		{
+			"path" : "pages/support/feedback/feedback-form",
+			"style" :
+			{
+				"navigationBarTitleText" : "意见反馈",
 				"enablePullDownRefresh" : false,
 				"navigationBarBackgroundColor": "#fff"
 			}
@@ -178,7 +188,7 @@
 		  "pagePath": "pages/list/list",
 		  "iconPath": "static/images/tabbar/list-icon.png",
 		  "selectedIconPath": "static/images/tabbar/list-icon-h.png",
-		  "text": "常见列表"
+		  "text": "常见列表1"
 		},
 		{
 		  "pagePath": "pages/list2/list",

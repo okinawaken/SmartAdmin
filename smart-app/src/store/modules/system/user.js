@@ -51,6 +51,7 @@ export const useUserStore = defineStore({
   actions: {
     logout() {
       this.token = null;
+      this.setUserLoginInfo(defaultUserInfo);
       uni.removeStorage(USER_TOKEN);
     },
     clearUserLoginInfo() {

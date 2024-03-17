@@ -1,7 +1,7 @@
 <template>
   <view>
-    <y-tabs v-model="active" sticky :offsetTop="0" color="#007aff">
-      <y-tab class="y-tab-virtual" v-for="item in tabsList" :key="item.value" :title="item.title"> </y-tab>
+    <y-tabs v-model="active" sticky :offsetTop="43" color="#007aff">
+      <y-tab v-for="item in tabsList" :key="item.value" :title="item.title"> </y-tab>
     </y-tabs>
 
     <ListUI1 v-if="active === 0" />
@@ -42,25 +42,6 @@
 
 <style lang="scss" scoped>
   page {
-    background: #f5f6f8;
-  }
-  .input {
-    width: 526rpx;
-    height: 72rpx;
-    background: #f7f8f9;
-    border-radius: 4px;
-    margin: 8rpx 0;
-    display: flex;
-    align-items: center;
-    icon {
-      margin-left: 20rpx;
-    }
-    input {
-      margin-left: 8rpx;
-      font-size: 28rpx;
-    }
-    .placeolder-input {
-      color: #ccc;
-    }
+    background-color: #f5f5f5;
   }
 </style>
