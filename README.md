@@ -12,7 +12,7 @@
 - 后端：SpringBoot + Sa Token + Mybatis-plus + 多种数据库
 - 电脑在线预览：[https://preview.smartadmin.vip](https://preview.smartadmin.vip)
 - 官方文档：[https://smartadmin.vip](https://smartadmin.vip)  
-- 移动端在线预览：[https://app.smartadmin.vip](https://app.smartadmin.vip)
+- 移动端在线预览：[https://app.smartadmin.vip](https://app.smartadmin.vip/#/pages/login/login)
 ### **理念与思想**
 
 - 我们分享的不是徒劳无功的各种功能，而是必须有的功能，如：网络安全、数据变动记录、系统说明文档、版本更新记录、意见反馈、日志、心跳、单号生成器等等。
