@@ -2,16 +2,17 @@
 
 **SmartAdmin** 由 **河南·洛阳** [1024创新实验室](https://www.1024lab.net/) 坚持以 <font color="#DC143C">**「高质量代码」为核心，「简洁、高效、安全」**</font>的中后台解决方案！  
 
-<font color="#DC143C">**国内首个满足《网络安全》、《数据安全》、三级等保**</font>， 支持登录限制、支持接口国产加解密、支持数据加解密等一系列安全措施的开源项目。 
+<font color="#DC143C">**国内满足《网络安全》、《数据安全》、三级等保**</font>， 支持登录限制、支持接口国产加解密、支持数据加解密等一系列安全措施的开源项目。 
 
 <font color="#DC143C">**我们开源一套漂亮的代码和一套整洁的代码规范**</font>，让大家在这浮躁的代码世界里感受到一股把代码写好的清流！同时又让开发者节省大量的时间，减少加班，快乐工作，保持谦逊，保持学习，**热爱代码，更热爱生活**
 ### **技术体系**
 
 - 前端：Vue3 + Vite5 + Vue-Router + Pinia + Ant Design Vue 4.X
-- 移动端：uniapp + uview2.x
+- 移动端：uniapp (vue3版本) + uni-ui + （同时支持APP、小程序、H5）
 - 后端：SpringBoot + Sa Token + Mybatis-plus + 多种数据库
-- 在线预览：[https://preview.smartadmin.vip](https://preview.smartadmin.vip)  
+- 电脑在线预览：[https://preview.smartadmin.vip](https://preview.smartadmin.vip)
 - 官方文档：[https://smartadmin.vip](https://smartadmin.vip)  
+- 移动端在线预览：[https://app.smartadmin.vip](https://app.smartadmin.vip/#/pages/login/login)
 ### **理念与思想**
 
 - 我们分享的不是徒劳无功的各种功能，而是必须有的功能，如：网络安全、数据变动记录、系统说明文档、版本更新记录、意见反馈、日志、心跳、单号生成器等等。
@@ -74,22 +75,5 @@
 
 
 
-### **联系我们**
-
-[1024 创新实验室-主任：卓大](https://zhuoda.vip)，混迹于各个技术圈，研究过计算机，熟悉点 java，略懂点前端。  
-[1024 创新实验室（河南·洛阳）](https://1024lab.net) 致力于成为中原领先、国内一流的技术团队，以技术创新为驱动，合作各类项目（软件外包、技术顾问、培训等等）。
-
-<table>
-<tr>
-  <td><img src="https://img.smartadmin.1024lab.net/wechat/zhuoda-wechat.jpg" width="250" /></td>
-  <td><img src="https://img.smartadmin.1024lab.net/wechat/liubianxing-gzh.jpg" width="250" /></td>
-  <td><img src="https://img.smartadmin.1024lab.net/wechat/zhuoda-wechat-money-v1.jpg" width="250" /></td>
-</tr>
-<tr>
-  <td style="text-align:center">加 主任 “卓大” 微信 <br> 拉你入群，一起学习</td>
-  <td style="text-align:center">关注 “六边形工程师” <br> 分享：赚钱、代码、生活</td>
-  <td style="text-align:center">请 “1024创新实验室” 喝咖啡 <br> 支持我们的开源与分享 </td>
-</tr>
-</table>
 
 
