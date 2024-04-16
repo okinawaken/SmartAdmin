@@ -1,7 +1,6 @@
 package net.lab1024.sa.admin.module.business.oa.enterprise;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
-import com.alibaba.excel.EasyExcel;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +10,7 @@ import net.lab1024.sa.admin.module.business.oa.enterprise.domain.vo.EnterpriseEm
 import net.lab1024.sa.admin.module.business.oa.enterprise.domain.vo.EnterpriseExcelVO;
 import net.lab1024.sa.admin.module.business.oa.enterprise.domain.vo.EnterpriseListVO;
 import net.lab1024.sa.admin.module.business.oa.enterprise.domain.vo.EnterpriseVO;
+import net.lab1024.sa.admin.util.excel.ExcelUtils;
 import net.lab1024.sa.base.common.domain.PageResult;
 import net.lab1024.sa.base.common.domain.RequestUser;
 import net.lab1024.sa.base.common.domain.ResponseDTO;
@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -53,21 +52,14 @@ public class EnterpriseController {
 
     @Operation(summary = "导出企业信息 @author 卓大")
     @PostMapping("/oa/enterprise/exportExcel")
-    public void exportExcel(@RequestBody @Valid EnterpriseQueryForm queryForm, HttpServletResponse response) throws IOException {
+    public void exportExcel(@RequestBody @Valid EnterpriseQueryForm queryForm, HttpServletResponse response) {
         List<EnterpriseExcelVO> data = enterpriseService.getExcelExportData(queryForm);
         if (CollectionUtils.isEmpty(data)) {
             SmartResponseUtil.write(response, ResponseDTO.userErrorParam("暂无数据"));
             return;
         }
-
-        // 设置下载消息头
-        SmartResponseUtil.setDownloadFileHeader(response, "企业基本信息.xls", null);
-
-        // 下载
-        EasyExcel.write(response.getOutputStream(), EnterpriseExcelVO.class)
-                .autoCloseStream(Boolean.FALSE)
-                .sheet("企业信息")
-                .doWrite(data);
+        ExcelUtils<EnterpriseExcelVO> utils = new ExcelUtils<>(EnterpriseExcelVO.class);
+        utils.exportData(response,data,"企业基本信息");
     }
 
     @Operation(summary = "查询企业详情 @author 开云")
