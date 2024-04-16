@@ -65,7 +65,7 @@ public class InvoiceController {
     }
 
     @Operation(summary = "删除发票信息 @author 善逸")
-    @GetMapping("/invoice/delete/{invoiceId}")
+    @GetMapping("/oa/invoice/delete/{invoiceId}")
     public ResponseDTO<String> deleteInvoice(@PathVariable Long invoiceId) {
         return invoiceService.deleteInvoice(invoiceId);
     }
