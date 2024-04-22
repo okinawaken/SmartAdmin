@@ -245,12 +245,12 @@
 
         <dependency>
             <groupId>org.apache.poi</groupId>
-            <artifactId>ooxml-schemas</artifactId>
+            <artifactId>poi-scratchpad</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.apache.poi</groupId>
-            <artifactId>poi-scratchpad</artifactId>
+            <artifactId>ooxml-schemas</artifactId>
         </dependency>
 
         <dependency>

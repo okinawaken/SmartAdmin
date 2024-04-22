@@ -1,11 +1,11 @@
 <!--
   * 登录
-  * 
-  * @Author:    1024创新实验室-主任：卓大 
-  * @Date:      2022-09-12 22:34:00 
-  * @Wechat:    zhuda1024 
-  * @Email:     lab1024@163.com 
-  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
+  *
+  * @Author:    1024创新实验室-主任：卓大
+  * @Date:      2022-09-12 22:34:00
+  * @Wechat:    zhuda1024
+  * @Email:     lab1024@163.com
+  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
   *
 -->
 <template>
@@ -154,7 +154,7 @@
     notification['success']({
       message: '温馨提示',
       description: 'SmartAdmin 提供 9种 登录背景风格哦！',
-      duration: null,
+      duration: 8,
       onClick: () => {},
       btn: () =>
         h(
