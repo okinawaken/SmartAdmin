@@ -1,7 +1,6 @@
 package net.lab1024.sa.admin.module.business.goods.controller;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
-import com.alibaba.excel.EasyExcel;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import net.lab1024.sa.admin.constant.AdminSwaggerTagConst;
@@ -11,17 +10,16 @@ import net.lab1024.sa.admin.module.business.goods.domain.form.GoodsUpdateForm;
 import net.lab1024.sa.admin.module.business.goods.domain.vo.GoodsExcelVO;
 import net.lab1024.sa.admin.module.business.goods.domain.vo.GoodsVO;
 import net.lab1024.sa.admin.module.business.goods.service.GoodsService;
+import net.lab1024.sa.admin.util.excel.ExcelUtils;
 import net.lab1024.sa.base.common.domain.PageResult;
 import net.lab1024.sa.base.common.domain.ResponseDTO;
 import net.lab1024.sa.base.common.domain.ValidateList;
-import net.lab1024.sa.base.common.util.SmartResponseUtil;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -87,18 +85,10 @@ public class GoodsController {
     @Operation(summary = "导出 @author 卓大")
     @GetMapping("/goods/exportGoods")
     @SaCheckPermission("goods:exportGoods")
-    public void exportGoods(HttpServletResponse response) throws IOException {
-
+    public void exportGoods(HttpServletResponse response)  {
         List<GoodsExcelVO> goodsList = goodsService.getAllGoods();
-
-        // 设置下载消息头
-        SmartResponseUtil.setDownloadFileHeader(response, "商品列表.xls", null);
-
-        // 下载
-        EasyExcel.write(response.getOutputStream(), GoodsExcelVO.class)
-                .autoCloseStream(Boolean.FALSE)
-                .sheet("商品")
-                .doWrite(goodsList);
+        ExcelUtils<GoodsExcelVO> utils = new ExcelUtils<>(GoodsExcelVO.class);
+        utils.exportData(response,goodsList,"商品列表");
     }
 
 }
