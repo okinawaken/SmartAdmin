@@ -1245,7 +1245,7 @@ INSERT INTO `t_smart_job` VALUES (2, '示例任务2', 'net.lab1024.sa.base.modul
 -- ----------------------------
 DROP TABLE IF EXISTS `t_smart_job_log`;
 CREATE TABLE `t_smart_job_log`  (
-  `log_id` int(0) NOT NULL AUTO_INCREMENT,
+  `log_id` bigint(0) NOT NULL AUTO_INCREMENT,
   `job_id` int(0) NOT NULL COMMENT '任务id',
   `job_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '任务名称',
   `param` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '执行参数',
