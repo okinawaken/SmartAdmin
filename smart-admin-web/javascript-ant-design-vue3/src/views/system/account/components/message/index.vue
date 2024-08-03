@@ -43,7 +43,7 @@
   </a-form>
 
   <a-table size="small" :dataSource="tableData" :columns="columns" rowKey="messageId" :pagination="false" bordered>
-    <template #bodyCell="{ text, record, index, column }">
+    <template #bodyCell="{ text, record, column }">
       <template v-if="column.dataIndex === 'messageType'">
         <span>{{ $smartEnumPlugin.getDescByValue('MESSAGE_TYPE_ENUM', text) }}</span>
       </template>

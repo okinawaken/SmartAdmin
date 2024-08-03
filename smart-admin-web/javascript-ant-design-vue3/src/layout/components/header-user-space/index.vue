@@ -18,7 +18,9 @@
         size="small"
       />
       <!---消息通知--->
-      <HeaderMessage ref="headerMessage" />
+      <a-button type="text" @click="showMessage" style="padding: 4px 5px">
+        <HeaderMessage ref="headerMessage" />
+      </a-button>
       <!---国际化--->
       <!-- <a-button type="text" @click="showSetting" class="operate-icon">
         <template #icon><switcher-outlined /></template>
