@@ -12,7 +12,7 @@
     title="代码配置"
     style=""
     :open="visibleFlag"
-    :width="1000"
+    :width="1500"
     :footerStyle="{ textAlign: 'right' }"
     @close="onClose"
     :maskClosable="false"
@@ -175,7 +175,7 @@
       let insertAndUpdateValidated = await insertAndUpdateRef.value.validateForm();
       let deleteValidated = await deleteRef.value.validateForm();
 
-      if (!basicValidated || !insertAndUpdateValidated || !deleteValidated ) {
+      if (!basicValidated || !insertAndUpdateValidated || !deleteValidated) {
         return;
       }
 
@@ -201,7 +201,7 @@
       onClose();
     } catch (e) {
       smartSentry.captureError(e);
-    }finally{
+    } finally {
       SmartLoading.hide();
     }
   }
