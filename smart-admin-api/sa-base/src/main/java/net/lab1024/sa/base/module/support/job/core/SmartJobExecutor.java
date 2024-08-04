@@ -142,6 +142,7 @@ public class SmartJobExecutor implements Runnable {
         logEntity.setSuccessFlag(true);
         // 执行开始时间
         logEntity.setExecuteStartTime(executeTime);
+        logEntity.setExecuteTimeMillis(0L);
         logEntity.setCreateName(executorName);
         logEntity.setIp(SmartIpUtil.getLocalFirstIp());
         logEntity.setProcessId(SmartJobUtil.getProcessId());
