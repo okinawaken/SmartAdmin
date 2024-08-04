@@ -1,5 +1,5 @@
 <!--
-  * 已办/代办
+  * 待办工作
   * 
   * @Author:    1024创新实验室-主任：卓大 
   * @Date:      2022-09-12 22:34:00
@@ -70,16 +70,21 @@
 
   function handleCheckbox(e) {
     localSave(localKey.TO_BE_DONE, JSON.stringify(toBeDoneList.value));
+    useUserStore().toBeDoneCount = toDoList.value.length;
   }
 
   function itemStar(data) {
     data.starFlag = !data.starFlag;
+    // 将取消 star 的删除掉
     const index = toBeDoneList.value.findIndex((item) => item.title === data.title);
     toBeDoneList.value.splice(index, 1);
     if (data.starFlag) {
+      // 最新添加标记star的移动到第一位
       toBeDoneList.value.unshift(data);
     } else {
-      toBeDoneList.value.push(data);
+      // 取消标记star的移动到最后一个标记 star 的后面添加
+      const lastStarIndex = toBeDoneList.value.findLastIndex((item) => item.starFlag);
+      toBeDoneList.value.splice(lastStarIndex + 1, 0, data);
     }
     localSave(localKey.TO_BE_DONE, JSON.stringify(toBeDoneList.value));
   }
@@ -94,9 +99,9 @@
 
   // 添加待办工作
   function addToBeDone(data) {
-    toBeDoneList.value.unshift(data);
-    useUserStore().toBeDoneCount = toBeDoneList.value.length;
+    toBeDoneList.value.push(data);
     localSave(localKey.TO_BE_DONE, JSON.stringify(toBeDoneList.value));
+    useUserStore().toBeDoneCount = toDoList.value.length;
   }
 
   function toDelete(data) {
@@ -121,8 +126,8 @@
   function deleteToBeDone(data) {
     const index = toBeDoneList.value.findIndex((item) => item.title === data.title);
     toBeDoneList.value.splice(index, 1);
-    useUserStore().toBeDoneCount = toBeDoneList.value.length;
     localSave(localKey.TO_BE_DONE, JSON.stringify(toBeDoneList.value));
+    useUserStore().toBeDoneCount = toDoList.value.length;
   }
 </script>
 <style lang="less" scoped>

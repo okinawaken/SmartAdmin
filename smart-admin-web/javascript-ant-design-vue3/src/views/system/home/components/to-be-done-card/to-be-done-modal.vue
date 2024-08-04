@@ -1,15 +1,17 @@
 <template>
-  <a-modal v-model:open="visible" title="新建待办" @close="onClose">
-    <a-form ref="formRef" :model="form" :rules="rules">
-      <a-form-item label="标题" name="title">
-        <a-input v-model:value="form.title" placeholder="请输入标题" />
-      </a-form-item>
-    </a-form>
-    <template #footer>
-      <a-button @click="onClose">取消</a-button>
-      <a-button type="primary" @click="onSubmit">确定</a-button>
-    </template>
-  </a-modal>
+  <div>
+    <a-modal v-model:open="visible" title="新建待办" @close="onClose">
+      <a-form ref="formRef" :model="form" :rules="rules">
+        <a-form-item label="标题" name="title">
+          <a-input v-model:value="form.title" placeholder="请输入标题" />
+        </a-form-item>
+      </a-form>
+      <template #footer>
+        <a-button @click="onClose">取消</a-button>
+        <a-button type="primary" @click="onSubmit">确定</a-button>
+      </template>
+    </a-modal>
+  </div>
 </template>
 <script setup>
   import { reactive, ref } from 'vue';
