@@ -9,7 +9,7 @@
   *
 -->
 <template>
-  <div>
+  <div class="card-container">
     <a-card size="small">
       <template #title>
         <div class="title">
@@ -47,4 +47,22 @@
     return token.colorPrimary;
   });
 </script>
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+  .card-container {
+    height: 100%;
+
+    .title {
+      display: flex;
+      align-items: center;
+      &::before {
+        content: '';
+        position: absolute;
+        top: 3px;
+        left: 0;
+        width: 3px;
+        height: 30px;
+        background-color: v-bind('token.colorPrimary');
+      }
+    }
+  }
+</style>
