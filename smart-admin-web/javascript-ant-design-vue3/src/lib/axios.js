@@ -26,7 +26,7 @@ const smartAxios = axios.create({
 
 // 退出系统
 function logout() {
-  useUserStore.logout();
+  useUserStore().logout();
   location.href = '/';
 }
 

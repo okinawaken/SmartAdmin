@@ -9,15 +9,19 @@
 -->
 
 <template>
-  <a-dropdown trigger="click" v-model:open="show">
-    <a-badge :count="unreadMessageCount + toBeDoneCount">
-      <div style="width: 26px; height: 26px">
-        <BellOutlined :style="{ fontSize: '16px' }" />
-      </div>
-    </a-badge>
+  <div>
+    <a-popover v-model:open="show" trigger="contextmenu" placement="bottomLeft" @openChange="() => (show = true)">
+      <a-button type="text" @click="showMessage" style="padding: 4px 5px">
+        <a-badge :count="unreadMessageCount + toBeDoneCount">
+          <div style="width: 26px; height: 26px">
+            <BellOutlined :style="{ fontSize: '16px' }" />
+          </div>
+        </a-badge>
+      </a-button>
 
-    <template #overlay>
-      <a-card class="message-container" :bodyStyle="{ padding: 0 }">
+      <template #content>
+        <!-- 为了能在点击查看消息详情弹窗的同时防止消息气泡卡片关闭 所以加了一个手动关闭按钮 -->
+        <a-button type="text" @click="closeMessage" style="padding: 4px 5px"> 关闭 </a-button>
         <a-spin :spinning="loading">
           <a-tabs class="dropdown-tabs" centered :tabBarStyle="{ textAlign: 'center' }" style="width: 300px">
             <a-tab-pane key="message">
@@ -30,7 +34,8 @@
                   <a-list-item-meta>
                     <template #title>
                       <div class="title">
-                        <a @click="gotoMessage">{{ item.title }}</a>
+                        <a-badge status="error" />
+                        <a @click="showMessageDetail(item)">{{ item.title }}</a>
                       </div>
                     </template>
                     <template #description>
@@ -38,12 +43,12 @@
                     </template>
                   </a-list-item-meta>
                 </a-list-item>
-                <a-list-item v-if="unreadMessageCount !== 0">
+                <a-list-item v-if="unreadMessageCount > 3">
                   <a-button type="text" @click="gotoMessage" style="padding: 4px 5px"> ... 查看更多 </a-button>
                 </a-list-item>
               </a-list>
             </a-tab-pane>
-            <a-tab-pane key="TO_BE_DONE">
+            <a-tab-pane key="to_be_done">
               <template #tab>
                 待办工作
                 <a-badge :count="toBeDoneCount" showZero :offset="[0, -20]" />
@@ -62,10 +67,10 @@
             </a-tab-pane>
           </a-tabs>
         </a-spin>
-      </a-card>
-    </template>
-  </a-dropdown>
-  <MessageDetail ref="messageDetailRef" @refresh="queryMessage" />
+      </template>
+    </a-popover>
+    <MessageDetailModal ref="messageDetailModalRef" @refresh="queryMessage" />
+  </div>
 </template>
 
 <script setup>
@@ -77,23 +82,26 @@
   import dayjs from 'dayjs';
   import { theme } from 'ant-design-vue';
   import { useRouter } from 'vue-router';
-  import MessageDetail from '/@/views/system/account/components/message/components/message-detail.vue';
+  import MessageDetailModal from './header-message-detail-modal.vue';
   import localKey from '/@/constants/local-storage-key-const';
   import { localRead } from '/@/utils/local-util';
 
   const { useToken } = theme;
   const { token } = useToken();
 
-  defineExpose({ showMessage });
-
-  function showMessage() {
-    queryMessage();
-    loadToBeDoneList();
-    show.value = true;
-  }
-
   const loading = ref(false);
   const show = ref(false);
+
+  // 点击按钮打开消息气泡卡片的同时刷新消息
+  function showMessage() {
+    show.value = true;
+    queryMessage();
+    loadToBeDoneList();
+  }
+
+  function closeMessage() {
+    show.value = false;
+  }
 
   // ------------------------- 查询消息  -------------------------
 
@@ -122,6 +130,11 @@
     } finally {
       loading.value = false;
     }
+  }
+
+  const messageDetailModalRef = ref();
+  function showMessageDetail(data) {
+    messageDetailModalRef.value.show(data);
   }
 
   const router = useRouter();
@@ -230,10 +243,6 @@
     overflow: hidden;
     text-overflow: ellipsis;
     cursor: pointer;
-  }
-
-  .message-container {
-    border: #eeeeee solid 1px;
   }
 
   .dropdown-tabs {

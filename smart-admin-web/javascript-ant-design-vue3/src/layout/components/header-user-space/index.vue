@@ -18,9 +18,7 @@
         size="small"
       />
       <!---消息通知--->
-      <a-button type="text" @click="showMessage" style="padding: 4px 5px">
-        <HeaderMessage ref="headerMessage" />
-      </a-button>
+      <HeaderMessage ref="headerMessage" />
       <!---国际化--->
       <!-- <a-button type="text" @click="showSetting" class="operate-icon">
         <template #icon><switcher-outlined /></template>
@@ -57,12 +55,6 @@
   const headerSetting = ref();
   function showSetting() {
     headerSetting.value.show();
-  }
-
-  //消息通知
-  const headerMessage = ref();
-  function showMessage() {
-    headerMessage.value.showMessage();
   }
 
   //帮助文档
