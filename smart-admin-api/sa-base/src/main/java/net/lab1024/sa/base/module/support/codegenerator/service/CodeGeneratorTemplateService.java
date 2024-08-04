@@ -94,6 +94,7 @@ public class CodeGeneratorTemplateService {
                 String fileName = templateFile.startsWith("java") ? upperCamel + templateSplit[templateSplit.length - 1] : lowerHyphen + "-" + templateSplit[templateSplit.length - 1];
                 String fullPathFileName = templateFile.replaceAll(templateSplit[templateSplit.length - 1], fileName);
                 fullPathFileName = fullPathFileName.replaceAll("java/", "java/" + basic.getModuleName().toLowerCase() + "/");
+                fullPathFileName = fullPathFileName.replaceAll("js/", "js/" + basic.getModuleName().toLowerCase() + "/");
 
                 String fileContent = generate(tableName, templateFile, codeGeneratorConfigEntity);
                 File file = new File(uuid + "/" + fullPathFileName);

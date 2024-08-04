@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
  * @Date 2022/9/29 17:20:41
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 
 public class QueryFormVariableService extends CodeGenerateBaseVariableService {
@@ -75,9 +75,6 @@ public class QueryFormVariableService extends CodeGenerateBaseVariableService {
             CodeField codeField = null;
 
             switch (queryTypeEnum) {
-                case LIKE:
-                    finalFieldMap.put("javaType", "String");
-                    break;
                 case EQUAL:
                     codeField = getCodeFieldByColumnName(field.getColumnNameList().get(0), form);
                     if (codeField == null) {
@@ -119,6 +116,7 @@ public class QueryFormVariableService extends CodeGenerateBaseVariableService {
 
         // lombok
         packageList.add("import lombok.Data;");
+        packageList.add("import lombok.EqualsAndHashCode;");
 
         List<String> packageNameList = packageList.stream().filter(Objects::nonNull).collect(Collectors.toList());
         Collections.sort(packageNameList);

@@ -88,18 +88,18 @@
 
         <!---------- 表格 begin ----------->
         <a-table
-                size="small"
-                :dataSource="tableData"
-                :columns="columns"
-                rowKey="$!{primaryKeyFieldName}"
-                bordered
-                :loading="tableLoading"
-                :pagination="false"
+            size="small"
+            :dataSource="tableData"
+            :columns="columns"
+            rowKey="$!{primaryKeyFieldName}"
+            bordered
+            :loading="tableLoading"
+            :pagination="false"
 #if($deleteInfo.isSupportDelete && ($deleteInfo.deleteEnum == "Batch"||$deleteInfo.deleteEnum == "SingleAndBatch"))
-                :row-selection="{ selectedRowKeys: selectedRowKeyList, onChange: onSelectChange }"
+            :row-selection="{ selectedRowKeys: selectedRowKeyList, onChange: onSelectChange }"
 #end
         >
-            <template #bodyCell="{ text, record, column }">
+            <template #bodyCell="{ record, column }">
                 <template v-if="column.dataIndex === 'action'">
                     <div class="smart-table-operate">
 #if($insertAndUpdate.isSupportInsertAndUpdate)
@@ -116,17 +116,17 @@
 
         <div class="smart-query-table-page">
             <a-pagination
-                    showSizeChanger
-                    showQuickJumper
-                    show-less-items
-                    :pageSizeOptions="PAGE_SIZE_OPTIONS"
-                    :defaultPageSize="queryForm.pageSize"
-                    v-model:current="queryForm.pageNum"
-                    v-model:pageSize="queryForm.pageSize"
-                    :total="total"
-                    @change="queryData"
-                    @showSizeChange="queryData"
-                    :show-total="(total) => `共${total}条`"
+                showSizeChanger
+                showQuickJumper
+                show-less-items
+                :pageSizeOptions="PAGE_SIZE_OPTIONS"
+                :defaultPageSize="queryForm.pageSize"
+                v-model:current="queryForm.pageNum"
+                v-model:pageSize="queryForm.pageSize"
+                :total="total"
+                @change="queryData"
+                @showSizeChange="queryData"
+                :show-total="(total) => `共${total}条`"
             />
         </div>
 
@@ -145,6 +145,7 @@
 #foreach ($import in $frontImportList)
     $!{import}
 #end
+
     // ---------------------------- 表格列 ----------------------------
 
     const columns = ref([
