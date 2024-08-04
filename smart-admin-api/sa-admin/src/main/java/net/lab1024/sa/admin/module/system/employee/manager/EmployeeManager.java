@@ -60,8 +60,11 @@ public class EmployeeManager extends ServiceImpl<EmployeeDao, EmployeeEntity> {
         // 保存员工 获得id
         employeeDao.updateById(employee);
 
-        if (CollectionUtils.isNotEmpty(roleIdList)) {
-            List<RoleEmployeeEntity> roleEmployeeList = roleIdList.stream().map(e -> new RoleEmployeeEntity(e, employee.getEmployeeId())).collect(Collectors.toList());
+        if (CollectionUtils.isEmpty(roleIdList)) {
+            // 删除员工角色
+            this.updateEmployeeRole(employee.getEmployeeId(), null);
+        } else {
+            List<RoleEmployeeEntity> roleEmployeeList = roleIdList.stream().map(roleId -> new RoleEmployeeEntity(roleId, employee.getEmployeeId())).collect(Collectors.toList());
             this.updateEmployeeRole(employee.getEmployeeId(), roleEmployeeList);
         }
     }
