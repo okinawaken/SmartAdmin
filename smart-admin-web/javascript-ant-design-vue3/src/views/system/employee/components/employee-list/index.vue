@@ -169,6 +169,7 @@
       title: '职务',
       dataIndex: 'positionName',
       width: 100,
+      ellipsis: true,
     },
     {
       title: '角色',
@@ -178,12 +179,6 @@
     {
       title: '部门',
       dataIndex: 'departmentName',
-      ellipsis: true,
-      width: 200,
-    },
-    {
-      title: '职务',
-      dataIndex: 'employeeName',
       ellipsis: true,
       width: 200,
     },
