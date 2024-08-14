@@ -2,6 +2,7 @@ package net.lab1024.sa.base.module.support.codegenerator.service.variable.backen
 
 import cn.hutool.core.bean.BeanUtil;
 import net.lab1024.sa.base.common.util.SmartEnumUtil;
+import net.lab1024.sa.base.common.util.SmartStringUtil;
 import net.lab1024.sa.base.module.support.codegenerator.constant.CodeQueryFieldQueryTypeEnum;
 import net.lab1024.sa.base.module.support.codegenerator.domain.form.CodeGeneratorConfigForm;
 import net.lab1024.sa.base.module.support.codegenerator.domain.model.CodeField;
@@ -41,13 +42,10 @@ public class QueryFormVariableService extends CodeGenerateBaseVariableService {
 
 
     public ImmutablePair<List<String>, List<Map<String, Object>>> getPackageListAndFields(CodeGeneratorConfigForm form) {
+
         List<CodeQueryField> fields = form.getQueryFields();
-        if (CollectionUtils.isEmpty(fields)) {
-            return ImmutablePair.of(new ArrayList<>(), new ArrayList<>());
-        }
 
         HashSet<String> packageList = new HashSet<>();
-
 
         /**
          * 1、LocalDate、LocalDateTime、BigDecimal 类型的包名
@@ -106,6 +104,14 @@ public class QueryFormVariableService extends CodeGenerateBaseVariableService {
 
                     finalFieldMap.put("javaType", codeField.getJavaType());
                     break;
+                case DICT:
+                    codeField = getCodeFieldByColumnName(field.getColumnNameList().get(0), form);
+                    if (SmartStringUtil.isNotEmpty(codeField.getDict())) {
+                        finalFieldMap.put("dict", "\n    @JsonDeserialize(using = DictValueVoDeserializer.class)");
+                        packageList.add("import com.fasterxml.jackson.databind.annotation.JsonDeserialize;");
+                        packageList.add("import net.lab1024.sa.base.common.json.deserializer.DictValueVoDeserializer;");
+                    }
+                    finalFieldMap.put("javaType", "String");
                 default:
                     finalFieldMap.put("javaType", "String");
             }
@@ -113,13 +119,11 @@ public class QueryFormVariableService extends CodeGenerateBaseVariableService {
             finalFieldList.add(finalFieldMap);
         }
 
-
         // lombok
         packageList.add("import lombok.Data;");
         packageList.add("import lombok.EqualsAndHashCode;");
 
-        List<String> packageNameList = packageList.stream().filter(Objects::nonNull).collect(Collectors.toList());
-        Collections.sort(packageNameList);
+        List<String> packageNameList = packageList.stream().filter(Objects::nonNull).sorted().collect(Collectors.toList());
         return ImmutablePair.of(packageNameList, finalFieldList);
     }
 

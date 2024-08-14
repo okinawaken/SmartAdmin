@@ -86,7 +86,7 @@ FrontComponentMap.set('varchar', 'Input');
 FrontComponentMap.set('tinytext', 'Input');
 FrontComponentMap.set('text', 'Textarea');
 FrontComponentMap.set('longtext', 'Textarea');
-FrontComponentMap.set('blob', 'Upload');
+FrontComponentMap.set('blob', 'FileUpload');
 FrontComponentMap.set('date', 'Date');
 FrontComponentMap.set('datetime', 'DateTime');
 

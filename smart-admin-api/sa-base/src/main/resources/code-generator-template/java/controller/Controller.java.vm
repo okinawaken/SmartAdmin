@@ -23,7 +23,7 @@ import javax.validation.Valid;
  */
 
 @RestController
-@Tag(name = "")
+@Tag(name = "${basic.description}")
 public class ${name.upperCamel}Controller {
 
     @Resource

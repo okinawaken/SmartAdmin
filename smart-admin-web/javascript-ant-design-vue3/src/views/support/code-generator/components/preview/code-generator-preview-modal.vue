@@ -37,9 +37,9 @@
 </template>
 
 <script setup>
-  import { computed, nextTick, ref, watch } from 'vue';
+  import { computed, nextTick, ref } from 'vue';
   import { codeGeneratorApi } from '/@/api/support/code-generator-api';
-  import { JAVA_FILE_LIST, LANGUAGE_LIST, JS_FILE_LIST, TS_FILE_LIST, JAVA_DOMAIN_FILE_LIST } from '../../code-generator-util';
+  import { JAVA_FILE_LIST, LANGUAGE_LIST, JS_FILE_LIST, TS_FILE_LIST } from '../../code-generator-util';
   import { smartSentry } from '/@/lib/smart-sentry';
   import { lineNumbersBlock } from '/@/lib/highlight-line-number';
   import hljs from 'highlight.js';
