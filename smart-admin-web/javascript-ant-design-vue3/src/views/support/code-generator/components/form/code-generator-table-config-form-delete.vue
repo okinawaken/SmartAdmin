@@ -73,7 +73,7 @@
     //表单
     let deleteInfo = config.deleteInfo;
 
-    formData.isSupportDelete = deleteInfo && deleteInfo.isSupportDelete;
+    formData.isSupportDelete = deleteInfo ? deleteInfo.isSupportDelete : true;
     formData.isPhysicallyDeleted = deleteInfo && deleteInfo.isPhysicallyDeleted ? deleteInfo.isPhysicallyDeleted : !deletedFlagColumn;
     formData.deleteEnum = deleteInfo && deleteInfo.deleteEnum ? deleteInfo.deleteEnum : CODE_DELETE_ENUM.SINGLE_AND_BATCH.value;
   }

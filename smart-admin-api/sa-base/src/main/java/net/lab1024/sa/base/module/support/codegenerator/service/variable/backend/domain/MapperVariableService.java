@@ -65,7 +65,15 @@ public class MapperVariableService extends CodeGenerateBaseVariableService {
                     stringBuilder.append("\n            )");
                 }
                 fieldMap.put("likeStr", stringBuilder.toString());
-            } else {
+            } else if (CodeQueryFieldQueryTypeEnum.DICT.equalsValue(queryField.getQueryTypeEnum())) {
+                String stringBuilder = "AND INSTR(" +
+                        form.getTableName() + "." + queryField.getColumnNameList().get(0) +
+                        ",#{queryForm." +
+                        queryField.getFieldName() +
+                        "})";
+                fieldMap.put("likeStr", stringBuilder);
+            }
+            else {
                 fieldMap.put("columnName", queryField.getColumnNameList().get(0));
             }
         }

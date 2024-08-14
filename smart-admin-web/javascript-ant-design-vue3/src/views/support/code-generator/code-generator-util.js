@@ -86,7 +86,7 @@ FrontComponentMap.set('varchar', 'Input');
 FrontComponentMap.set('tinytext', 'Input');
 FrontComponentMap.set('text', 'Textarea');
 FrontComponentMap.set('longtext', 'Textarea');
-FrontComponentMap.set('blob', 'Upload');
+FrontComponentMap.set('blob', 'FileUpload');
 FrontComponentMap.set('date', 'Date');
 FrontComponentMap.set('datetime', 'DateTime');
 
@@ -133,6 +133,7 @@ export const JAVA_FILE_LIST = [
   'Dao.java', //
   'Mapper.xml', //
   ...JAVA_DOMAIN_FILE_LIST,
+  'Menu.sql', //
 ];
 
 // -------------------------------- 枚举enum --------------------------------

@@ -23,7 +23,12 @@
                 ${queryField.likeStr}
             </if>
 #end
-#if(${queryField.queryTypeEnum} == "Equal" || ${queryField.queryTypeEnum} == "Enum" || ${queryField.queryTypeEnum} == "Dict")
+#if(${queryField.queryTypeEnum} == "Dict")
+            <if test="queryForm.${queryField.fieldName} != null and queryForm.${queryField.fieldName} != ''">
+                ${queryField.likeStr}
+            </if>
+#end
+#if(${queryField.queryTypeEnum} == "Equal" || ${queryField.queryTypeEnum} == "Enum")
             <if test="queryForm.${queryField.fieldName} != null">
                 AND ${tableName}.${queryField.columnName} = #{queryForm.${queryField.fieldName}}
             </if>
