@@ -133,6 +133,7 @@ export const JAVA_FILE_LIST = [
   'Dao.java', //
   'Mapper.xml', //
   ...JAVA_DOMAIN_FILE_LIST,
+  'Menu.sql', //
 ];
 
 // -------------------------------- 枚举enum --------------------------------

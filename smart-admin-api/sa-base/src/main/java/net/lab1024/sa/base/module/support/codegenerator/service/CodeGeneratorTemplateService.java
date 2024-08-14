@@ -67,6 +67,8 @@ public class CodeGeneratorTemplateService {
         map.put("java/manager/Manager.java", new ManagerVariableService());
         map.put("java/dao/Dao.java", new DaoVariableService());
         map.put("java/mapper/Mapper.xml", new MapperVariableService());
+        // 菜单 SQL
+        map.put("java/sql/Menu.sql", new MenuVariableService());
         // 前端
         map.put("js/api.js", new ApiVariableService());
         map.put("js/const.js", new ConstVariableService());
