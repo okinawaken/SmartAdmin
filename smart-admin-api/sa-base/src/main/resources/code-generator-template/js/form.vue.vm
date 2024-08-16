@@ -8,7 +8,7 @@
 <template>
   <a-$!{insertAndUpdate.pageType}
       :title="form.$!{primaryKeyFieldName} ? '编辑' : '添加'"
-      width="$!{insertAndUpdate.width}"
+      :width="$!{insertAndUpdate.width}"
       :open="visibleFlag"
       #if($!{insertAndUpdate.pageType} == 'drawer')
       @close="onClose"
