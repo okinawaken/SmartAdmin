@@ -16,7 +16,7 @@ import { PAGE_PATH_404, PAGE_PATH_LOGIN } from '/@/constants/common-const';
 import { HOME_PAGE_NAME } from '/@/constants/system/home-const';
 import SmartLayout from '../layout/index.vue';
 import { useUserStore } from '/@/store/modules/system/user';
-import { localClear, localRead } from '/@/utils/local-util';
+import { localRead } from '/@/utils/local-util';
 import _ from 'lodash';
 import LocalStorageKeyConst from '/@/constants/local-storage-key-const.js';
 
@@ -41,7 +41,7 @@ router.beforeEach(async (to, from, next) => {
   // 验证登录
   const token = localRead(LocalStorageKeyConst.USER_TOKEN);
   if (!token) {
-    localClear();
+    useUserStore().logout();
     next({ path: PAGE_PATH_LOGIN });
     return;
   }

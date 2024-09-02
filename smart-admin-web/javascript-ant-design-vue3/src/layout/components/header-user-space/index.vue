@@ -57,12 +57,6 @@
     headerSetting.value.show();
   }
 
-  //消息通知
-  const headerMessage = ref();
-  function showMessage() {
-    headerMessage.value.showMessage();
-  }
-
   //帮助文档
   function showHelpDoc() {
     useAppConfigStore().showHelpDoc();
