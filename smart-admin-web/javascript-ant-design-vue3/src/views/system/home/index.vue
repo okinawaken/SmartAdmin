@@ -69,7 +69,7 @@
   import HomeHeader from './home-header.vue';
   import HomeNotice from './home-notice.vue';
   import OfficialAccountCard from './components/official-account-card.vue';
-  import ToBeDoneCard from './components/to-be-done-card.vue';
+  import ToBeDoneCard from './components/to-be-done-card/home-to-be-done.vue';
   import ChangelogCard from './components/changelog-card.vue';
   import Category from './components/echarts/category.vue';
   import Pie from './components/echarts/pie.vue';

@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  * @Date 2021-12-29 21:52:46
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Service
 public class EmployeeManager extends ServiceImpl<EmployeeDao, EmployeeEntity> {
@@ -38,6 +38,7 @@ public class EmployeeManager extends ServiceImpl<EmployeeDao, EmployeeEntity> {
 
     /**
      * 保存员工
+     *
      */
     @Transactional(rollbackFor = Throwable.class)
     public void saveEmployee(EmployeeEntity employee, List<Long> roleIdList) {
@@ -52,6 +53,7 @@ public class EmployeeManager extends ServiceImpl<EmployeeDao, EmployeeEntity> {
 
     /**
      * 更新员工
+     *
      */
     @Transactional(rollbackFor = Throwable.class)
     public void updateEmployee(EmployeeEntity employee, List<Long> roleIdList) {

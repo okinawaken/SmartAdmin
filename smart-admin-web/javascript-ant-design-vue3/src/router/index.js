@@ -13,7 +13,7 @@ import { nextTick } from 'vue';
 import { createRouter, createWebHashHistory } from 'vue-router';
 import { routerArray } from './routers';
 import { PAGE_PATH_404, PAGE_PATH_LOGIN } from '/@/constants/common-const';
-import { HOME_PAGE_NAME, HOME_PAGE_PATH } from '/@/constants/system/home-const';
+import { HOME_PAGE_NAME } from '/@/constants/system/home-const';
 import SmartLayout from '../layout/index.vue';
 import { useUserStore } from '/@/store/modules/system/user';
 import { localClear, localRead } from '/@/utils/local-util';
@@ -41,7 +41,7 @@ router.beforeEach(async (to, from, next) => {
   // 验证登录
   const token = localRead(LocalStorageKeyConst.USER_TOKEN);
   if (!token) {
-    localClear();
+    useUserStore().logout();
     if (to.path === PAGE_PATH_LOGIN) {
       next();
     } else {
