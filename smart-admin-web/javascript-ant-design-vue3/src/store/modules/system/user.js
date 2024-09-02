@@ -35,6 +35,8 @@ export const useUserStore = defineStore({
     departmentId: '',
     //部门名词
     departmentName: '',
+    //是否需要修改密码
+    needUpdatePwdFlag: false,
     //是否为超级管理员
     administratorFlag: true,
     //上次登录ip
@@ -68,6 +70,9 @@ export const useUserStore = defineStore({
         return state.token;
       }
       return localRead(LocalStorageKeyConst.USER_TOKEN);
+    },
+    getNeedUpdatePwdFlag(state){
+      return state.needUpdatePwdFlag;
     },
     //是否初始化了 路由
     getMenuRouterInitFlag(state) {
@@ -137,6 +142,7 @@ export const useUserStore = defineStore({
       this.phone = data.phone;
       this.departmentId = data.departmentId;
       this.departmentName = data.departmentName;
+      this.needUpdatePwdFlag = data.needUpdatePwdFlag;
       this.administratorFlag = data.administratorFlag;
       this.lastLoginIp = data.lastLoginIp;
       this.lastLoginIpRegion = data.lastLoginIpRegion;

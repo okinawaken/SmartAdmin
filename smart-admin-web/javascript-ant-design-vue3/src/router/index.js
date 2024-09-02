@@ -13,7 +13,7 @@ import { nextTick } from 'vue';
 import { createRouter, createWebHashHistory } from 'vue-router';
 import { routerArray } from './routers';
 import { PAGE_PATH_404, PAGE_PATH_LOGIN } from '/@/constants/common-const';
-import { HOME_PAGE_NAME } from '/@/constants/system/home-const';
+import { HOME_PAGE_NAME, HOME_PAGE_PATH } from '/@/constants/system/home-const';
 import SmartLayout from '../layout/index.vue';
 import { useUserStore } from '/@/store/modules/system/user';
 import { localClear, localRead } from '/@/utils/local-util';
@@ -33,7 +33,7 @@ router.beforeEach(async (to, from, next) => {
   nProgress.start();
 
   // 公共页面，任何时候都可以跳转
-  if (to.path === PAGE_PATH_404 || to.path === PAGE_PATH_LOGIN) {
+  if (to.path === PAGE_PATH_404) {
     next();
     return;
   }
@@ -42,7 +42,17 @@ router.beforeEach(async (to, from, next) => {
   const token = localRead(LocalStorageKeyConst.USER_TOKEN);
   if (!token) {
     localClear();
-    next({ path: PAGE_PATH_LOGIN });
+    if (to.path === PAGE_PATH_LOGIN) {
+      next();
+    } else {
+      next({ path: PAGE_PATH_LOGIN });
+    }
+    return;
+  }
+
+  // 登录页，则跳转到首页
+  if (to.path === PAGE_PATH_LOGIN) {
+    next({ path: HOME_PAGE_PATH });
     return;
   }
 

@@ -156,6 +156,11 @@
       width: 85,
     },
     {
+      title: '邮箱',
+      dataIndex: 'email',
+      width: 100,
+    },
+    {
       title: '超管',
       dataIndex: 'administratorFlag',
       width: 60,
@@ -237,6 +242,9 @@
       params.pageNum = 1;
       params.departmentId = allDepartment ? undefined : props.departmentId;
       let res = await employeeApi.queryEmployee(params);
+      for (const item of res.data.list) {
+        item.roleNameList = _.join(item.roleNameList, ',');
+      }
       tableData.value = res.data.list;
       total.value = res.data.total;
       // 清除选中

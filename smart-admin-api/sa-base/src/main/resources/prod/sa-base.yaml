@@ -33,12 +33,22 @@ spring:
         min-idle: 10
         max-idle: 50
         max-wait: 30000ms
-
-  # 上传文件大小配置
-  servlet:
-    multipart:
-      max-file-size: 30MB
-      max-request-size: 30MB
+  # 邮件，置以SSL的方式发送, 这个需要使用这种方式并且端口是465
+  mail:
+    host: smtp.163.com
+    port: 465
+    username: lab1024@163.com
+    password: 1024lab
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+            socketFactory:
+              class: com.sun.mail.util.MailSSLSocketFactory
+              fallback: false
+        debug: false
 
   # json序列化相关配置
   jackson:
