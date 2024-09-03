@@ -10,13 +10,6 @@
 <template>
   <a-space :size="10">
     <div class="setting">
-      <a-input-search
-        @click="search"
-        style="margin-right: 30px; width: 250px"
-        placeholder="搜索：六边形工程师、1024"
-        enter-button="搜索"
-        size="small"
-      />
       <!---消息通知--->
       <HeaderMessage ref="headerMessage" />
       <!---国际化--->
@@ -69,11 +62,6 @@
   const helpDocExpandFlag = computed(() => {
     return useAppConfigStore().helpDocExpandFlag;
   });
-
-  //搜索
-  function search() {
-    window.open('https://1024lab.net');
-  }
 
   const { useToken } = theme;
   const { token } = useToken();

@@ -1,5 +1,5 @@
 <template>
-  <a-modal v-model:open="showFlag" :width="800" title="消息内容" :destroyOnClose="true" @ok="showFlag = false">
+  <a-modal v-model:open="showFlag" :cancelText="null" :width="800" title="消息内容" :closable="false" :maskClosable="false" :destroyOnClose="true" @ok="showFlag = false">
     <a-descriptions bordered :column="2" size="small">
       <a-descriptions-item :labelStyle="{ width: '80px' }" :span="1" label="类型"
         >{{ $smartEnumPlugin.getDescByValue('MESSAGE_TYPE_ENUM', messageDetail.messageType) }}
@@ -10,6 +10,9 @@
         <pre>{{ messageDetail.content }}</pre>
       </a-descriptions-item>
     </a-descriptions>
+    <template #footer>
+      <a-button  type="primary"  @click="showFlag = false">关闭</a-button>
+    </template>
   </a-modal>
 </template>
 <script setup>

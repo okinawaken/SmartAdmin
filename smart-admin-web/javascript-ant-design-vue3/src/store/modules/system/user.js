@@ -120,7 +120,6 @@ export const useUserStore = defineStore({
       this.token = '';
       this.menuList = [];
       this.tagNav = [];
-      this.userInfo = {};
       this.unreadMessageCount = 0;
       localRemove(localKey.USER_TOKEN);
       localRemove(localKey.USER_POINTS);

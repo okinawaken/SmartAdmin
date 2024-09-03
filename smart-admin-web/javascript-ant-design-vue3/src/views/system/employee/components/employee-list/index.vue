@@ -159,6 +159,7 @@
       title: '邮箱',
       dataIndex: 'email',
       width: 100,
+      ellipsis: true,
     },
     {
       title: '超管',

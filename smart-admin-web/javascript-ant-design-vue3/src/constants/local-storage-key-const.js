@@ -18,8 +18,6 @@ const KEY_PREFIX = 'smart_admin_';
 export default {
   // 用户token
   USER_TOKEN: `${KEY_PREFIX}user_token`,
-  // 用户信息
-  USER_INFO: `${KEY_PREFIX}user_info`,
   // 用户权限点
   USER_POINTS: `${KEY_PREFIX}user_points`,
   // 用户的tag列表

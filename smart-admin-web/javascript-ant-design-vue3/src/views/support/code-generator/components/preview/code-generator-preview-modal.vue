@@ -1,17 +1,17 @@
 <!--
   * 代码生成 预览代码
-  * 
-  * @Author:    1024创新实验室-主任：卓大 
-  * @Date:      2022-09-22 21:50:41 
-  * @Wechat:    zhuda1024 
-  * @Email:     lab1024@163.com 
-  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
+  *
+  * @Author:    1024创新实验室-主任：卓大
+  * @Date:      2022-09-22 21:50:41
+  * @Wechat:    zhuda1024
+  * @Email:     lab1024@163.com
+  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
 -->
 <template>
   <a-drawer
     title="代码预览"
     :open="visibleFlag"
-    :width="1500"
+    :width="1200"
     :footerStyle="{ textAlign: 'right' }"
     :bodyStyle="{ padding: '8px 24px' }"
     @close="onClose"
