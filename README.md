@@ -4,7 +4,7 @@
 
 <font color="#DC143C">**国内首个满足《网络安全》、《数据安全》、三级等保**</font>， 支持登录限制、支持接口国产加解密、支持数据加解密等一系列安全措施的开源项目。
 
-前端同时支持 **<font color="#DC143C">JavaScript和TypeScript双版本，</font>**，后端同时支持 **<font color="#DC143C">Java8+SpringBoot2.X和Java17+SpringBoot3.X 双版本</font>**。
+前端同时支持 **<font color="#DC143C">JavaScript和TypeScript双版本</font>**，后端同时支持 **<font color="#DC143C">Java8+SpringBoot2.X和Java17+SpringBoot3.X 双版本</font>**。
 
 <font color="#DC143C">**SmartAdmin开源一套漂亮的代码和一套整洁的代码规范**</font>，让大家在这浮躁的代码世界里感受到一股把代码写好的清流！同时又让开发者节省大量的时间，减少加班，快乐工作，保持谦逊，保持学习，**热爱代码，更热爱生活**
 ### **技术体系**
