@@ -80,7 +80,7 @@ export const employeeApi = {
    * @return {*}
    */
   updateEmployeePassword: (param) => {
-    return postRequest('/employee/update/password',param);
+    return postRequest('/employee/update/password', param);
   },
   /**
    * @description: 更新员工禁用状态
@@ -93,6 +93,6 @@ export const employeeApi = {
 
   // 查询员工-根据部门id
   queryEmployeeByDeptId: (departmentId) => {
-    return getRequest(`/employee/query/dept/${departmentId}`);
+    return getRequest(`/employee/getAllEmployeeByDepartmentId/${departmentId}`);
   },
 };

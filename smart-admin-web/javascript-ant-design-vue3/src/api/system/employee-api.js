@@ -88,6 +88,6 @@ export const employeeApi = {
    * 查询员工-根据部门id
    */
   queryEmployeeByDeptId: (departmentId) => {
-    return getRequest(`/employee/query/dept/${departmentId}`);
+    return getRequest(`/employee/getAllEmployeeByDepartmentId/${departmentId}`);
   },
 };
