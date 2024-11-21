@@ -99,7 +99,9 @@ export const useUserStore = defineStore({
       uni.setStorageSync(USER_TOKEN, data.token);
 
       // 获取用户未读消息
-      this.queryUnreadMessageCount();
+      if(this.token){
+        this.queryUnreadMessageCount();
+      }
     },
   },
 });
