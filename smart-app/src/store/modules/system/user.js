@@ -61,13 +61,19 @@ export const useUserStore = defineStore({
     logout() {
       this.token = null;
       this.setUserLoginInfo(defaultUserInfo);
+      console.log(333,USER_TOKEN);
       uni.removeStorage(USER_TOKEN);
     },
     clearUserLoginInfo() {
       this.setUserLoginInfo(defaultUserInfo);
+      console.log(444,USER_TOKEN);
       uni.removeStorage(USER_TOKEN);
     },
     async getLoginInfo() {
+      let token = uni.getStorageSync(USER_TOKEN);
+      if(!token){
+        return;
+      }
       let res = await loginApi.getLoginInfo();
       this.setUserLoginInfo(res.data);
     },
