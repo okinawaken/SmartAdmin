@@ -17,7 +17,7 @@
             <template #tab>
               <span class="smart-tag-content">
                 <home-outlined style="font-size: 12px" v-if="item.menuName === HOME_PAGE_NAME" class="smart-page-tag-close" />
-                <component v-else :is="$antIcons[item.menuIcon]" />
+                <component class="smart-tag-icon" v-else :is="$antIcons[item.menuIcon]" />
                 {{ item.menuTitle }}
                 <close-outlined @click.stop="closeTag(item, false)" v-if="item.menuName !== HOME_PAGE_NAME" class="smart-page-tag-close" />
               </span>
@@ -229,6 +229,9 @@ const borderRadius = 8 + 'px';
       top: 10px;
       background: #666;
     }
+    .smart-tag-icon{
+        margin-right:5px;
+    }
   }
   :deep(.ant-tabs-tab-active) {
     position: relative;
@@ -331,7 +334,6 @@ const borderRadius = 8 + 'px';
       }
     }
 
-    // background-color: #eeeeee;
     .smart-page-tag-close {
       color: @color-primary;
     }
