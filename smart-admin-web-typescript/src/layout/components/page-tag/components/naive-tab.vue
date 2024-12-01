@@ -50,89 +50,89 @@
   </a-row>
 </template>
 
-<script setup>
-import { AppstoreOutlined, CloseOutlined } from '@ant-design/icons-vue';
-import { computed, ref, watch } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import { HOME_PAGE_NAME } from '/@/constants/system/home-const';
-import { useAppConfigStore } from '/@/store/modules/system/app-config';
-import { useUserStore } from '/@/store/modules/system/user';
-import { theme } from 'ant-design-vue';
+<script setup lang="ts">
+  import { AppstoreOutlined, CloseOutlined } from '@ant-design/icons-vue';
+  import { computed, ref, watch } from 'vue';
+  import { useRoute, useRouter } from 'vue-router';
+  import { HOME_PAGE_NAME } from '/@/constants/system/home-const';
+  import { useAppConfigStore } from '/@/store/modules/system/app-config';
+  import { useUserStore } from '/@/store/modules/system/user';
+  import { theme } from 'ant-design-vue';
 
-//标签页 是否显示
-const pageTagFlag = computed(() => useAppConfigStore().$state.pageTagFlag);
+  //标签页 是否显示
+  const pageTagFlag = computed(() => useAppConfigStore().$state.pageTagFlag);
 
-const router = useRouter();
-const route = useRoute();
-const mode = ref('top');
-const tagNav = computed(() => useUserStore().getTagNav || []);
-const selectedKey = ref(route.name);
+  const router = useRouter();
+  const route = useRoute();
+  const mode = ref('top');
+  const tagNav = computed(() => useUserStore().getTagNav || []);
+  const selectedKey = ref(route.name);
 
-watch(
-  () => route.name,
-  (newValue, oldValue) => {
-    selectedKey.value = newValue;
-  },
-  { immediate: true }
-);
+  watch(
+    () => route.name,
+    (newValue, oldValue) => {
+      selectedKey.value = newValue;
+    },
+    { immediate: true }
+  );
 
-//选择某个标签页
-function selectTab(name) {
-  if (selectedKey.value === name) {
-    return;
-  }
-  // 寻找tag
-  let tag = tagNav.value.find((e) => e.menuName === name);
-  if (!tag) {
-    router.push({ name: HOME_PAGE_NAME });
-    return;
-  }
-  // router.push({ name, query: Object.assign({ _keepAlive: 1 }, tag.menuQuery) });
-  router.push({ name, query: tag.menuQuery });
-}
-
-//通过菜单关闭
-function closeByMenu(closeAll) {
-  let find = tagNav.value.find((e) => e.menuName === selectedKey.value);
-  if (!find || closeAll) {
-    closeTag(null, true);
-  } else {
-    closeTag(find, true);
-  }
-}
-
-//直接关闭
-function closeTag(item, closeAll) {
-  // 关闭单个tag
-  if (item && !closeAll) {
-    let goName = HOME_PAGE_NAME;
-    let goQuery = undefined;
-    if (item.fromMenuName && item.fromMenuName !== item.menuName && tagNav.value.some((e) => e.menuName === item.fromMenuName)) {
-      goName = item.fromMenuName;
-      goQuery = item.fromMenuQuery;
-    } else {
-      // 查询左侧tag
-      let index = tagNav.value.findIndex((e) => e.menuName === item.menuName);
-      if (index > 0) {
-        // 查询左侧tag
-        let leftTagNav = tagNav.value[index - 1];
-        goName = leftTagNav.menuName;
-        goQuery = leftTagNav.menuQuery;
-      }
+  //选择某个标签页
+  function selectTab(name) {
+    if (selectedKey.value === name) {
+      return;
     }
-    // router.push({ name: goName, query: Object.assign({ _keepAlive: 1 }, goQuery) });
-    router.push({ name: goName, query: goQuery });
-  } else if (!item && closeAll) {
-    // 关闭所有tag
-    router.push({ name: HOME_PAGE_NAME });
+    // 寻找tag
+    let tag = tagNav.value.find((e) => e.menuName === name);
+    if (!tag) {
+      router.push({ name: HOME_PAGE_NAME });
+      return;
+    }
+    // router.push({ name, query: Object.assign({ _keepAlive: 1 }, tag.menuQuery) });
+    router.push({ name, query: tag.menuQuery });
   }
-  // 关闭其他tag不做处理 直接调用closeTagNav
-  useUserStore().closeTagNav(item ? item.menuName : null, closeAll);
-}
 
-const { useToken } = theme;
-const { token } = useToken();
-const borderRadius = 8 + 'px';
+  //通过菜单关闭
+  function closeByMenu(closeAll) {
+    let find = tagNav.value.find((e) => e.menuName === selectedKey.value);
+    if (!find || closeAll) {
+      closeTag(null, true);
+    } else {
+      closeTag(find, true);
+    }
+  }
+
+  //直接关闭
+  function closeTag(item, closeAll) {
+    // 关闭单个tag
+    if (item && !closeAll) {
+      let goName = HOME_PAGE_NAME;
+      let goQuery = undefined;
+      if (item.fromMenuName && item.fromMenuName !== item.menuName && tagNav.value.some((e) => e.menuName === item.fromMenuName)) {
+        goName = item.fromMenuName;
+        goQuery = item.fromMenuQuery;
+      } else {
+        // 查询左侧tag
+        let index = tagNav.value.findIndex((e) => e.menuName === item.menuName);
+        if (index > 0) {
+          // 查询左侧tag
+          let leftTagNav = tagNav.value[index - 1];
+          goName = leftTagNav.menuName;
+          goQuery = leftTagNav.menuQuery;
+        }
+      }
+      // router.push({ name: goName, query: Object.assign({ _keepAlive: 1 }, goQuery) });
+      router.push({ name: goName, query: goQuery });
+    } else if (!item && closeAll) {
+      // 关闭所有tag
+      router.push({ name: HOME_PAGE_NAME });
+    }
+    // 关闭其他tag不做处理 直接调用closeTagNav
+    useUserStore().closeTagNav(item ? item.menuName : null, closeAll);
+  }
+
+  const { useToken } = theme;
+  const { token } = useToken();
+  const borderRadius = token.value.borderRadius + 'px';
 </script>
 
 <style scoped lang="less">
