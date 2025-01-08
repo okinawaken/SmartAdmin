@@ -31,8 +31,8 @@ export const PAGE_TAG_ENUM = {
     value: 'antd',
     desc: 'Ant Design',
   },
-  NAIVE: {
-    value: 'naive',
-    desc: 'NAIVE',
+  CHROME: {
+    value: 'chrome',
+    desc: 'Chrome',
   },
 };

@@ -1,5 +1,5 @@
 <!--
-  * 使用naiveUI <a-tabs> 组件
+  * chrome样式 <a-tabs> 组件
   *
   * @Author:    1024创新实验室-主任：卓大
   * @Date:      2024-11-27 20:29:12
@@ -212,7 +212,7 @@ const borderRadius = 8 + 'px';
     }
     &:nth-last-child(2) {
       margin-right: 0 !important;
-      
+
     }
   }
   .smart-page-tag-content {
@@ -227,7 +227,7 @@ const borderRadius = 8 + 'px';
       right: 9px;
       z-index: -2;
       top: 10px;
-      background: #666;
+      background: #eeeeee;
     }
     .smart-page-tag-icon{
         margin-right:5px;
