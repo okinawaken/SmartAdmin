@@ -11,7 +11,7 @@
 <template>
   <div class="clearfix">
     <a-upload
-      multiple
+      :multiple="props.multiple"
       :accept="props.accept"
       :before-upload="beforeUpload"
       :customRequest="customRequest"
