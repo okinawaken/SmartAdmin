@@ -166,6 +166,11 @@ public class LoginService implements StpInterface {
         }
 
         // 验证账号状态
+        if (employeeEntity.getDeletedFlag()) {
+            saveLoginLog(employeeEntity, ip, userAgent, "账号已删除", LoginLogResultEnum.LOGIN_FAIL);
+            return ResponseDTO.userErrorParam("您的账号已被删除,请联系工作人员！");
+        }
+
         if (employeeEntity.getDisabledFlag()) {
             saveLoginLog(employeeEntity, ip, userAgent, "账号已禁用", LoginLogResultEnum.LOGIN_FAIL);
             return ResponseDTO.userErrorParam("您的账号已被禁用,请联系工作人员！");
@@ -508,6 +513,10 @@ public class LoginService implements StpInterface {
         }
 
         // 验证账号状态
+        if (employeeEntity.getDeletedFlag()) {
+            return ResponseDTO.userErrorParam("您的账号已被删除,请联系工作人员！");
+        }
+
         if (employeeEntity.getDisabledFlag()) {
             return ResponseDTO.userErrorParam("您的账号已被禁用,请联系工作人员！");
         }
