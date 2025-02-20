@@ -8,6 +8,7 @@
  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
  */
 import { useUserStore } from '/@/store/modules/system/user';
+import _ from 'lodash';
 
 const privilege = (value) => {
   // 超级管理员
@@ -19,7 +20,7 @@ const privilege = (value) => {
   if (!userPointsList) {
     return false;
   }
-  return userPointsList && userPointsList.includes(value);
+  return _.some(userPointsList, ['apiPerms', value]);
 };
 
 export default {
