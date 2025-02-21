@@ -1,8 +1,8 @@
 package net.lab1024.sa.admin.module.system.employee.controller;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import net.lab1024.sa.admin.constant.AdminSwaggerTagConst;
 import net.lab1024.sa.admin.module.system.employee.domain.form.*;
 import net.lab1024.sa.admin.module.system.employee.domain.vo.EmployeeVO;
@@ -57,11 +57,11 @@ public class EmployeeController {
         return employeeService.updateEmployee(employeeUpdateForm);
     }
 
-    @Operation(summary = "更新登录人信息 @author 善逸")
-    @PostMapping("/employee/update/login")
-    public ResponseDTO<String> updateByLogin(@Valid @RequestBody EmployeeUpdateForm employeeUpdateForm) {
-        employeeUpdateForm.setEmployeeId(SmartRequestUtil.getRequestUserId());
-        return employeeService.updateEmployee(employeeUpdateForm);
+    @Operation(summary = "更新员工个人中心信息 @author 善逸")
+    @PostMapping("/employee/update/center")
+    public ResponseDTO<String> updateCenter(@Valid @RequestBody EmployeeUpdateCenterForm updateCenterForm) {
+        updateCenterForm.setEmployeeId(SmartRequestUtil.getRequestUserId());
+        return employeeService.updateCenter(updateCenterForm);
     }
 
     @Operation(summary = "更新登录人头像 @author 善逸")

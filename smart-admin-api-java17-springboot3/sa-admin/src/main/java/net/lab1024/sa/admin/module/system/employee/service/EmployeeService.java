@@ -168,19 +168,14 @@ public class EmployeeService {
             return ResponseDTO.userErrorParam("部门不存在");
         }
 
-
-        EmployeeEntity existEntity = employeeDao.getByLoginName(employeeUpdateForm.getLoginName(), null);
-        if (null != existEntity && !Objects.equals(existEntity.getEmployeeId(), employeeId)) {
-            return ResponseDTO.userErrorParam("登录名重复");
+        // 检查唯一性
+        ResponseDTO<String> checkResponse = checkUniqueness(employeeId, employeeUpdateForm.getLoginName(), employeeUpdateForm.getPhone(), employeeUpdateForm.getEmail());
+        if (!checkResponse.getOk()) {
+            return checkResponse;
         }
 
-        existEntity = employeeDao.getByPhone(employeeUpdateForm.getPhone(), null);
-        if (null != existEntity && !Objects.equals(existEntity.getEmployeeId(), employeeId)) {
-            return ResponseDTO.userErrorParam("手机号已存在");
-        }
-
-        // 不更新密码
         EmployeeEntity entity = SmartBeanUtil.copy(employeeUpdateForm, EmployeeEntity.class);
+        // 不更新密码
         entity.setLoginPwd(null);
 
         // 更新数据
@@ -188,6 +183,58 @@ public class EmployeeService {
 
         // 清除员工缓存
         loginService.clearLoginEmployeeCache(employeeId);
+
+        return ResponseDTO.ok();
+    }
+
+    /**
+     * 更新员工个人中心信息
+     */
+    public ResponseDTO<String> updateCenter(EmployeeUpdateCenterForm updateCenterForm) {
+
+        Long employeeId = updateCenterForm.getEmployeeId();
+        EmployeeEntity employeeEntity = employeeDao.selectById(employeeId);
+        if (null == employeeEntity) {
+            return ResponseDTO.error(UserErrorCode.DATA_NOT_EXIST);
+        }
+
+        // 检查唯一性 登录账号不能修改则不需要检查
+        ResponseDTO<String> checkResponse = checkUniqueness(employeeId, "", updateCenterForm.getPhone(), updateCenterForm.getEmail());
+        if (!checkResponse.getOk()) {
+            return checkResponse;
+        }
+
+        EmployeeEntity employee = SmartBeanUtil.copy(updateCenterForm, EmployeeEntity.class);
+        // 不更新密码
+        employee.setLoginPwd(null);
+
+        // 更新数据
+        employeeDao.updateById(employee);
+
+        // 清除员工缓存
+        loginService.clearLoginEmployeeCache(employeeId);
+
+        return ResponseDTO.ok();
+    }
+
+    /**
+     * 检查唯一性
+     */
+    private ResponseDTO<String> checkUniqueness(Long employeeId, String loginName, String phone, String email) {
+        EmployeeEntity existEntity = employeeDao.getByLoginName(loginName, null);
+        if (null != existEntity && !Objects.equals(existEntity.getEmployeeId(), employeeId)) {
+            return ResponseDTO.userErrorParam("登录名重复");
+        }
+
+        existEntity = employeeDao.getByPhone(phone, null);
+        if (null != existEntity && !Objects.equals(existEntity.getEmployeeId(), employeeId)) {
+            return ResponseDTO.userErrorParam("手机号已存在");
+        }
+
+        existEntity = employeeDao.getByEmail(email, null);
+        if (null != existEntity && !Objects.equals(existEntity.getEmployeeId(), employeeId)) {
+            return ResponseDTO.userErrorParam("邮箱账号已存在");
+        }
 
         return ResponseDTO.ok();
     }

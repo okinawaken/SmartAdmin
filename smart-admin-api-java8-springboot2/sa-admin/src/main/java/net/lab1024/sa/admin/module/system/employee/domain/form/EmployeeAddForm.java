@@ -4,9 +4,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import net.lab1024.sa.base.common.enumeration.GenderEnum;
 import net.lab1024.sa.base.common.swagger.SchemaEnum;
+import net.lab1024.sa.base.common.util.SmartVerificationUtil;
 import net.lab1024.sa.base.common.validator.enumeration.CheckEnum;
 import org.hibernate.validator.constraints.Length;
-import net.lab1024.sa.base.common.util.SmartVerificationUtil;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -51,17 +51,19 @@ public class EmployeeAddForm {
     @Pattern(regexp = SmartVerificationUtil.PHONE_REGEXP, message = "手机号格式不正确")
     private String phone;
 
-    @Schema(description = "邮箱")
+    @Schema(description = "邮箱账号")
+    @NotNull(message = "邮箱账号不能为空")
+    @Pattern(regexp = SmartVerificationUtil.EMAIL, message = "邮箱账号格式不正确")
     private String email;
+
+    @Schema(description = "职务级别ID")
+    private Long positionId;
 
     @Schema(description = "角色列表")
     private List<Long> roleIdList;
 
     @Schema(description = "备注")
-    @Length(max = 30, message = "备注最多200字符")
+    @Length(max = 200, message = "备注最多200字符")
     private String remark;
-
-    @Schema(description = "职务级别ID")
-    private Long positionId;
 
 }
