@@ -164,7 +164,7 @@ public class LoginService implements StpInterface {
         // 验证登录名
         EmployeeEntity employeeEntity = employeeService.getByLoginName(loginForm.getLoginName());
         if (null == employeeEntity) {
-            return ResponseDTO.userErrorParam("登录名不存在！");
+            return ResponseDTO.userErrorParam("登录名或密码错误！");
         }
 
         // 验证账号状态
@@ -511,7 +511,7 @@ public class LoginService implements StpInterface {
         // 验证登录名
         EmployeeEntity employeeEntity = employeeService.getByLoginName(loginName);
         if (null == employeeEntity) {
-            return ResponseDTO.userErrorParam("登录名不存在！");
+            return ResponseDTO.ok();
         }
 
         // 验证账号状态
