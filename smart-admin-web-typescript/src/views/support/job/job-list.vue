@@ -124,24 +124,22 @@
           </a-table>
           <div class="smart-query-table-page">
             <a-pagination
-                showSizeChanger
-                showQuickJumper
-                show-less-items
-                :pageSizeOptions="PAGE_SIZE_OPTIONS"
-                :defaultPageSize="queryForm.pageSize"
-                v-model:current="queryForm.pageNum"
-                v-model:pageSize="queryForm.pageSize"
-                :total="total"
-                @change="queryJobList"
-                @showSizeChange="queryJobList"
-                :show-total="(total) => `共${total}条`"
+              showSizeChanger
+              showQuickJumper
+              show-less-items
+              :pageSizeOptions="PAGE_SIZE_OPTIONS"
+              :defaultPageSize="queryForm.pageSize"
+              v-model:current="queryForm.pageNum"
+              v-model:pageSize="queryForm.pageSize"
+              :total="total"
+              @change="queryJobList"
+              @showSizeChange="queryJobList"
+              :show-total="(total) => `共${total}条`"
             />
           </div>
         </a-tab-pane>
         <a-tab-pane key="2" tab="已删除任务"><DeletedJobList /></a-tab-pane>
       </a-tabs>
-
-
     </a-card>
 
     <!-- 表单操作 -->
@@ -152,7 +150,7 @@
   </div>
 </template>
 <script setup lang="ts">
-  import {message, Modal} from 'ant-design-vue';
+  import { message, Modal } from 'ant-design-vue';
   import { onMounted, reactive, ref } from 'vue';
   import { jobApi } from '/@/api/support/job-api';
   import { PAGE_SIZE_OPTIONS } from '/@/constants/common-const';
@@ -163,7 +161,7 @@
   import { TRIGGER_TYPE_ENUM } from '/@/constants/support/job-const.js';
   import JobFormModal from './components/job-form-modal.vue';
   import JobLogListModal from './components/job-log-list-modal.vue';
-  import {SmartLoading} from "/@/components/framework/smart-loading/index.js";
+  import { SmartLoading } from "/@/components/framework/smart-loading/index.js";
 
   const columns = ref([
     {
@@ -240,6 +238,8 @@
       width: 170,
     },
   ]);
+
+  const activeKey = ref('1');
 
   // ---------------- 查询数据 -----------------------
 
