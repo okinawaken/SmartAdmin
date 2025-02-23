@@ -243,7 +243,7 @@ CREATE TABLE `t_employee`  (
   `avatar` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `gender` tinyint(1) NOT NULL DEFAULT 0 COMMENT '性别',
   `phone` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '手机号码',
-  `department_id` int(0) NOT NULL COMMENT '部门id',
+  `department_id` bigint(0) NOT NULL COMMENT '部门id',
   `position_id` bigint(0) NULL DEFAULT NULL COMMENT '职务ID',
   `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '邮箱',
   `disabled_flag` tinyint unsigned NOT NULL COMMENT '是否被禁用 0否1是',
@@ -300,7 +300,7 @@ CREATE TABLE `t_file`  (
   `file_size` int(0) NULL DEFAULT NULL COMMENT '文件大小',
   `file_key` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文件key，用于文件下载',
   `file_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文件类型',
-  `creator_id` int(0) NULL DEFAULT NULL COMMENT '创建人，即上传人',
+  `creator_id` bigint(0) NULL DEFAULT NULL COMMENT '创建人，即上传人',
   `creator_user_type` int(0) NULL DEFAULT NULL COMMENT '创建人用户类型',
   `creator_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人姓名',
   `update_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP COMMENT '上次更新时间',
@@ -465,7 +465,7 @@ CREATE TABLE `t_login_fail`  (
 DROP TABLE IF EXISTS `t_login_log`;
 CREATE TABLE `t_login_log`  (
   `login_log_id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `user_id` int(0) NOT NULL COMMENT '用户id',
+  `user_id` bigint(0) NOT NULL COMMENT '用户id',
   `user_type` int(0) NOT NULL COMMENT '用户类型',
   `user_name` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '用户名',
   `login_ip` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '用户ip',
@@ -1016,8 +1016,8 @@ INSERT INTO `t_role` VALUES (37, '财务', NULL, '', '2019-08-30 09:31:16', '201
 DROP TABLE IF EXISTS `t_role_data_scope`;
 CREATE TABLE `t_role_data_scope`  (
   `id` bigint(0) NOT NULL AUTO_INCREMENT,
-  `data_scope_type` int(0) NOT NULL COMMENT '数据范围id',
-  `view_type` int(0) NOT NULL COMMENT '数据范围类型',
+  `data_scope_type` int(0) NOT NULL COMMENT '数据范围类型',
+  `view_type` int(0) NOT NULL COMMENT '数据可见范围类型',
   `role_id` bigint(0) NOT NULL COMMENT '角色id',
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
