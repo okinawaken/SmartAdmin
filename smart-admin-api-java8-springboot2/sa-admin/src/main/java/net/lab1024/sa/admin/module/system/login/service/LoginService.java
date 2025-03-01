@@ -208,7 +208,7 @@ public class LoginService implements StpInterface {
             }
 
             // 密码错误
-            if (!employeeEntity.getLoginPwd().equals(SecurityPasswordService.getEncryptPwd(requestPassword))) {
+            if ( !SecurityPasswordService.matchesPwd(requestPassword,employeeEntity.getLoginPwd()) ) {
                 // 记录登录失败
                 saveLoginLog(employeeEntity, ip, userAgent, "密码错误", LoginLogResultEnum.LOGIN_FAIL);
                 // 记录等级保护次数
