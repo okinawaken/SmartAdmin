@@ -9,46 +9,70 @@
   *
 -->
 <template>
-  <a-modal :width="700" :open="visible" title="设置列" :destroyOnClose="true" :closable="false">
-    <a-alert type="info" show-icon class="smart-margin-bottom10">
-      <template #icon><smile-outlined /></template>
-      <template #message> 可以通过拖拽行直接修改顺序哦；（ <pushpin-outlined />为固定列，不可拖拽 ）</template>
-    </a-alert>
-    <a-table
-      id="smartTableColumnModalTable"
-      rowKey="columnKey"
-      row-class-name="column-row"
-      :columns="tableColumns"
-      :dataSource="tableData"
-      :rowSelection="{ checkStrictly: false, selectedRowKeys: selectedRowKeyList, onChange: onSelectChange }"
-      :pagination="false"
-      size="small"
-      bordered
-    >
-      <template #bodyCell="{ text, record, index, column }">
-        <template v-if="column.dataIndex === 'title'">
-          <a-button type="text" :class="record.fixed ? '' : 'handle'" size="small" style="width: 100%; text-align: left">
-            <template #icon v-if="!record.fixed"> <drag-outlined /> </template>
-            <template #icon v-if="record.fixed"> <pushpin-outlined /> </template>
-            {{ text }}
-          </a-button>
+  <a-modal :width="800" :open="visible" title="设置列" :destroyOnClose="true" :closable="false">
+    <div v-if="!tableId">
+      <a-alert type="error" show-icon class="smart-margin-bottom10">
+        <template #message> 您尚未设置 TableOperator 组件的 tableId</template>
+      </a-alert>
+      <a-alert type="error" class="smart-margin-bottom10">
+        <template #message>
+          1. 请在 src\constants\support\table-id-const.js 中配置 tableId 常量
+          <br />
+          <br />
+          2. 在自己的业务表格页面组件中使用如下：
+          <br />
+          导入: import { TABLE_ID_CONST } from '/@/constants/support/table-id-const';
+          <br />
+          使用: {{ '<TableOperator v-model="columns" :tableId="TABLE_ID_CONST.BUSINESS.XXX" :refresh="queryData" />' }}
+          <br />
+          <br />
+          3. 具体用法可参考员工管理
         </template>
-        <template v-if="column.dataIndex === 'width'">
-          <a-input-number v-model:value="record.width" style="width: 90px; margin-left: 10px; margin-right: 3px" size="small" />px
+      </a-alert>
+    </div>
+    <div v-else>
+      <a-alert type="info" show-icon class="smart-margin-bottom10">
+        <template #icon><smile-outlined /></template>
+        <template #message> 可以通过拖拽行直接修改顺序哦；（ <pushpin-outlined />为固定列，不可拖拽 ）</template>
+      </a-alert>
+      <a-table
+        id="smartTableColumnModalTable"
+        rowKey="columnKey"
+        row-class-name="column-row"
+        :columns="tableColumns"
+        :dataSource="tableData"
+        :rowSelection="{ checkStrictly: false, selectedRowKeys: selectedRowKeyList, onChange: onSelectChange }"
+        :pagination="false"
+        size="small"
+        bordered
+      >
+        <template #bodyCell="{ text, record, index, column }">
+          <template v-if="column.dataIndex === 'title'">
+            <a-button type="text" :class="record.fixed ? '' : 'handle'" size="small" style="width: 100%; text-align: left">
+              <template #icon>
+                <drag-outlined v-if="!record.fixed" />
+                <pushpin-outlined v-else />
+              </template>
+              {{ text }}
+            </a-button>
+          </template>
+          <template v-if="column.dataIndex === 'width'">
+            <a-input-number v-model:value="record.width" style="width: 90px; margin-left: 10px; margin-right: 3px" size="small" />px
+          </template>
+          <template v-if="column.dataIndex === 'operate'">
+            <div class="smart-table-operate" v-if="!record.fixed">
+              <a-button @click="up(index)" v-show="index > 0" type="link" class="handle" size="small" style="margin-right: 12px"> 上移 </a-button>
+              <a-button @click="down(index)" type="link" class="handle" size="small" v-show="index !== tableData.length - 1"> 下移</a-button>
+            </div>
+          </template>
         </template>
-        <template v-if="column.dataIndex === 'operate'">
-          <div class="smart-table-operate" v-if="!record.fixed">
-            <a-button @click="up(index)" v-show="index > 0" type="link" class="handle" size="small" style="margin-right: 12px"> 上移 </a-button>
-            <a-button @click="down(index)" type="link" class="handle" size="small" v-show="index !== tableData.length - 1"> 下移</a-button>
-          </div>
-        </template>
-      </template>
-    </a-table>
+      </a-table>
+    </div>
 
     <template #footer>
       <a-button key="back" @click="hide">取消</a-button>
-      <a-button key="submit" type="primary" :loading="submitLoading" @click="save">保存</a-button>
-      <a-button key="back" :loading="submitLoading" @click="reset" danger style="margin-left: 20px">恢复默认</a-button>
+      <a-button v-if="tableId" key="submit" type="primary" :loading="submitLoading" @click="save">保存</a-button>
+      <a-button v-if="tableId" key="back" :loading="submitLoading" @click="reset" danger style="margin-left: 20px">恢复默认</a-button>
     </template>
   </a-modal>
 </template>
@@ -67,7 +91,7 @@
   defineExpose({ show });
 
   // ---------------- 显示 / 隐藏 --------------------
-  let tableId = 1;
+  let tableId = null;
   const visible = ref(false);
   //显示
   function show(columns, showTableId) {
@@ -83,6 +107,9 @@
 
   //获取用户的列数据
   async function getUserTableColumns(tableId, columns) {
+    if (!tableId) {
+      return;
+    }
     SmartLoading.show();
     let userTableColumnArray = [];
     try {

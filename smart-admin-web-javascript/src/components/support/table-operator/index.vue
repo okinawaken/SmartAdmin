@@ -68,7 +68,15 @@
   // 原始表格列数据（复制一份最原始的columns集合，以供后续各个地方使用）
   let originalColumn = _.cloneDeep(props.modelValue);
 
-  onMounted(buildUserTableColumns);
+  onMounted(() => {
+    buildUserTableColumns();
+    // 监听全屏事件 解决按下 ESC 退出全屏 fullScreenFlag 未改变导致下次第一下点击全屏无效的问题
+    addEventListener('fullscreenchange', (event) => {
+      if (document.fullscreenElement === null) {
+        fullScreenFlag.value = false;
+      }
+    });
+  });
 
   //构建用户的数据列
   async function buildUserTableColumns() {
