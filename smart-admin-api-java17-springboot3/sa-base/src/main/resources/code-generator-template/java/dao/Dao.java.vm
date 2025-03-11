@@ -7,7 +7,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Component;
 
 /**
  * ${basic.description} Dao
@@ -18,7 +17,6 @@ import org.springframework.stereotype.Component;
  */
 
 @Mapper
-@Component
 public interface ${name.upperCamel}Dao extends BaseMapper<${name.upperCamel}Entity> {
 
     /**
