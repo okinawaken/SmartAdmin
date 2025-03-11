@@ -21,6 +21,7 @@
         <java.version>1.8</java.version>
         <springboot.version>2.7.18</springboot.version>
         <spring-mock.version>2.0.8</spring-mock.version>
+        <spring-security-crypto.version>5.8.16</spring-security-crypto.version>
         <mybatis-plus.version>3.5.2</mybatis-plus.version>
         <mysql-connector-j.version>8.0.33</mysql-connector-j.version>
         <p6spy.version>3.9.1</p6spy.version>
@@ -50,7 +51,7 @@
         <velocity-tools.version>3.1</velocity-tools.version>
         <sa-token.version>1.37.0</sa-token.version>
         <ip2region.version>2.7.0</ip2region.version>
-        <bcprov.version>1.59</bcprov.version>
+        <bcprov.version>1.80</bcprov.version>
         <jackson-datatype-jsr310.version>2.13.4</jackson-datatype-jsr310.version>
         <jackson-dataformat-yaml.version>2.16.1</jackson-dataformat-yaml.version>
         <smartdb.version>1.2.0</smartdb.version>
@@ -58,6 +59,7 @@
         <snakeyaml.version>2.2</snakeyaml.version>
         <freemarker.version>2.3.33</freemarker.version>
         <jsoup.version>1.18.1</jsoup.version>
+        <tika.version>2.9.3</tika.version>
     </properties>
 
     <dependencyManagement>
@@ -83,6 +85,12 @@
                         <groupId>commons-logging</groupId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-crypto</artifactId>
+                <version>${spring-security-crypto.version}</version>
             </dependency>
 
             <dependency>
@@ -261,7 +269,7 @@
 
             <dependency>
                 <groupId>org.bouncycastle</groupId>
-                <artifactId>bcprov-jdk15on</artifactId>
+                <artifactId>bcprov-jdk18on</artifactId>
                 <version>${bcprov.version}</version>
             </dependency>
 
@@ -361,6 +369,12 @@
                 <groupId>org.freemarker</groupId>
                 <artifactId>freemarker</artifactId>
                 <version>${freemarker.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.tika</groupId>
+                <artifactId>tika-core</artifactId>
+                <version>${tika.version}</version>
             </dependency>
 
         </dependencies>

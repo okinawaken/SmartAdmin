@@ -238,7 +238,7 @@ DROP TABLE IF EXISTS `t_employee`;
 CREATE TABLE `t_employee`  (
   `employee_id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `login_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '登录帐号',
-  `login_pwd` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '登录密码',
+  `login_pwd` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '登录密码',
   `actual_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '员工名称',
   `avatar` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `gender` tinyint(1) NOT NULL DEFAULT 0 COMMENT '性别',
@@ -258,20 +258,20 @@ CREATE TABLE `t_employee`  (
 -- ----------------------------
 -- Records of t_employee
 -- ----------------------------
-INSERT INTO `t_employee` VALUES (1, 'admin', '40cc20b8891cd3fd1f008ea7f4ac17c3', '管理员', 'public/common/1eea469452484ffea4a42570c4072466_20240702220447.jpg', 0, '13500000000', 1, 3, NULL, 0, 0, 1, NULL, '2024-09-03 21:39:17', '2022-10-04 21:33:50');
-INSERT INTO `t_employee` VALUES (2, 'huke', '40cc20b8891cd3fd1f008ea7f4ac17c3', '胡克', NULL, 0, '13123123121', 1, 4, NULL, 0, 0, 0, NULL, '2024-09-03 21:36:09', '2022-10-04 21:33:50');
-INSERT INTO `t_employee` VALUES (44, 'zhuoda', 'bf63cb6431d613acdee104f692845b22', '卓大', NULL, 1, '18637925892', 1, 6, NULL, 0, 0, 0, NULL, '2024-09-03 21:36:10', '2022-10-04 21:33:50');
-INSERT INTO `t_employee` VALUES (47, 'shanyi', 'ca405fddcb90ac2a71b33fe7126ed2a8', '善逸', 'public/common/f823b00873684f0a9d31f0d62316cc8e_20240630015141.jpg', 1, '17630506613', 2, 5, NULL, 0, 0, 0, '这个是备注', '2024-09-03 21:36:11', '2022-10-04 21:33:50');
-INSERT INTO `t_employee` VALUES (48, 'qinjiu', 'b1cfb0ed0080306199fa76c872d6a32e', '琴酒', NULL, 2, '14112343212', 2, 6, NULL, 0, 0, 0, NULL, '2024-09-03 21:36:12', '2022-10-04 21:33:50');
-INSERT INTO `t_employee` VALUES (63, 'kaiyun', '0e5ec5746bf955f253fa747ab76cfa67', '开云', NULL, 0, '13112312346', 2, 5, NULL, 0, 0, 0, NULL, '2024-09-03 21:36:13', '2022-10-04 21:33:50');
-INSERT INTO `t_employee` VALUES (64, 'qingye', '40cc20b8891cd3fd1f008ea7f4ac17c3', '清野', NULL, 1, '13123123111', 2, 4, NULL, 0, 0, 0, NULL, '2024-09-03 21:36:14', '2022-10-04 21:33:50');
-INSERT INTO `t_employee` VALUES (65, 'feiye', '40cc20b8891cd3fd1f008ea7f4ac17c3', '飞叶', NULL, 1, '13123123112', 4, 3, NULL, 0, 0, 0, NULL, '2024-09-03 21:36:14', '2022-10-04 21:33:50');
-INSERT INTO `t_employee` VALUES (66, 'luoyi', '40cc20b8891cd3fd1f008ea7f4ac17c3', '罗伊', NULL, 1, '13123123142', 4, 2, NULL, 1, 0, 0, NULL, '2024-09-03 21:36:15', '2022-10-04 21:33:50');
-INSERT INTO `t_employee` VALUES (67, 'chuxiao', '7287168489ed5598741362cbec2b0741', '初晓', NULL, 1, '13123123123', 1, 2, NULL, 1, 0, 0, NULL, '2024-09-03 21:36:18', '2022-10-04 21:33:50');
-INSERT INTO `t_employee` VALUES (68, 'xuanpeng', '40cc20b8891cd3fd1f008ea7f4ac17c3', '玄朋', NULL, 1, '13123123124', 1, 3, NULL, 0, 0, 0, NULL, '2024-09-03 21:36:18', '2022-10-04 21:33:50');
-INSERT INTO `t_employee` VALUES (69, 'peixian', '40cc20b8891cd3fd1f008ea7f4ac17c3', '玄朋', NULL, 1, '18377482773', 1, 4, NULL, 0, 0, 0, NULL, '2024-09-03 21:36:19', '2022-10-04 21:33:50');
-INSERT INTO `t_employee` VALUES (73, 'limbo', '50ea4174e4ad0970bcf6423f99c0cbcd', '陈琳博', NULL, 1, '18906662339', 2, 4, NULL, 0, 0, 0, NULL, '2024-09-03 21:36:24', '2024-07-17 10:36:16');
-INSERT INTO `t_employee` VALUES (74, 'xzh', 'f5ca8e50d26e6070ed2198e136ee967d', 'admin1', NULL, 1, '13654567897', 5, 6, NULL, 0, 0, 0, NULL, '2024-09-03 21:36:21', '2024-08-09 09:49:56');
+INSERT INTO `t_employee` VALUES (1, 'admin', '$argon2id$v=19$m=16384,t=2,p=1$e/hqRAZYCYHydMS3SPo7yA$5hdCxLG7q+Jtf6KLJHVg/yb0I8LZrPuKUF66jLq+Drc', '管理员', 'public/common/1eea469452484ffea4a42570c4072466_20240702220447.jpg', 0, '13500000000', 1, 3, NULL, 0, 0, 1, NULL, '2024-09-03 21:39:17', '2022-10-04 21:33:50');
+INSERT INTO `t_employee` VALUES (2, 'huke', '$argon2id$v=19$m=16384,t=2,p=1$e/hqRAZYCYHydMS3SPo7yA$5hdCxLG7q+Jtf6KLJHVg/yb0I8LZrPuKUF66jLq+Drc', '胡克', NULL, 0, '13123123121', 1, 4, NULL, 0, 0, 0, NULL, '2024-09-03 21:36:09', '2022-10-04 21:33:50');
+INSERT INTO `t_employee` VALUES (44, 'zhuoda', '$argon2id$v=19$m=16384,t=2,p=1$e/hqRAZYCYHydMS3SPo7yA$5hdCxLG7q+Jtf6KLJHVg/yb0I8LZrPuKUF66jLq+Drc', '卓大', NULL, 1, '18637925892', 1, 6, NULL, 0, 0, 0, NULL, '2024-09-03 21:36:10', '2022-10-04 21:33:50');
+INSERT INTO `t_employee` VALUES (47, 'shanyi', '$argon2id$v=19$m=16384,t=2,p=1$e/hqRAZYCYHydMS3SPo7yA$5hdCxLG7q+Jtf6KLJHVg/yb0I8LZrPuKUF66jLq+Drc', '善逸', 'public/common/f823b00873684f0a9d31f0d62316cc8e_20240630015141.jpg', 1, '17630506613', 2, 5, NULL, 0, 0, 0, '这个是备注', '2024-09-03 21:36:11', '2022-10-04 21:33:50');
+INSERT INTO `t_employee` VALUES (48, 'qinjiu', '$argon2id$v=19$m=16384,t=2,p=1$e/hqRAZYCYHydMS3SPo7yA$5hdCxLG7q+Jtf6KLJHVg/yb0I8LZrPuKUF66jLq+Drc', '琴酒', NULL, 2, '14112343212', 2, 6, NULL, 0, 0, 0, NULL, '2024-09-03 21:36:12', '2022-10-04 21:33:50');
+INSERT INTO `t_employee` VALUES (63, 'kaiyun', '$argon2id$v=19$m=16384,t=2,p=1$e/hqRAZYCYHydMS3SPo7yA$5hdCxLG7q+Jtf6KLJHVg/yb0I8LZrPuKUF66jLq+Drc', '开云', NULL, 0, '13112312346', 2, 5, NULL, 0, 0, 0, NULL, '2024-09-03 21:36:13', '2022-10-04 21:33:50');
+INSERT INTO `t_employee` VALUES (64, 'qingye', '$argon2id$v=19$m=16384,t=2,p=1$e/hqRAZYCYHydMS3SPo7yA$5hdCxLG7q+Jtf6KLJHVg/yb0I8LZrPuKUF66jLq+Drc', '清野', NULL, 1, '13123123111', 2, 4, NULL, 0, 0, 0, NULL, '2024-09-03 21:36:14', '2022-10-04 21:33:50');
+INSERT INTO `t_employee` VALUES (65, 'feiye', '$argon2id$v=19$m=16384,t=2,p=1$e/hqRAZYCYHydMS3SPo7yA$5hdCxLG7q+Jtf6KLJHVg/yb0I8LZrPuKUF66jLq+Drc', '飞叶', NULL, 1, '13123123112', 4, 3, NULL, 0, 0, 0, NULL, '2024-09-03 21:36:14', '2022-10-04 21:33:50');
+INSERT INTO `t_employee` VALUES (66, 'luoyi', '$argon2id$v=19$m=16384,t=2,p=1$e/hqRAZYCYHydMS3SPo7yA$5hdCxLG7q+Jtf6KLJHVg/yb0I8LZrPuKUF66jLq+Drc', '罗伊', NULL, 1, '13123123142', 4, 2, NULL, 1, 0, 0, NULL, '2024-09-03 21:36:15', '2022-10-04 21:33:50');
+INSERT INTO `t_employee` VALUES (67, 'chuxiao', '$argon2id$v=19$m=16384,t=2,p=1$e/hqRAZYCYHydMS3SPo7yA$5hdCxLG7q+Jtf6KLJHVg/yb0I8LZrPuKUF66jLq+Drc', '初晓', NULL, 1, '13123123123', 1, 2, NULL, 1, 0, 0, NULL, '2024-09-03 21:36:18', '2022-10-04 21:33:50');
+INSERT INTO `t_employee` VALUES (68, 'xuanpeng', '$argon2id$v=19$m=16384,t=2,p=1$e/hqRAZYCYHydMS3SPo7yA$5hdCxLG7q+Jtf6KLJHVg/yb0I8LZrPuKUF66jLq+Drc', '玄朋', NULL, 1, '13123123124', 1, 3, NULL, 0, 0, 0, NULL, '2024-09-03 21:36:18', '2022-10-04 21:33:50');
+INSERT INTO `t_employee` VALUES (69, 'peixian', '$argon2id$v=19$m=16384,t=2,p=1$e/hqRAZYCYHydMS3SPo7yA$5hdCxLG7q+Jtf6KLJHVg/yb0I8LZrPuKUF66jLq+Drc', '玄朋', NULL, 1, '18377482773', 1, 4, NULL, 0, 0, 0, NULL, '2024-09-03 21:36:19', '2022-10-04 21:33:50');
+INSERT INTO `t_employee` VALUES (73, 'limbo', '$argon2id$v=19$m=16384,t=2,p=1$e/hqRAZYCYHydMS3SPo7yA$5hdCxLG7q+Jtf6KLJHVg/yb0I8LZrPuKUF66jLq+Drc', '陈琳博', NULL, 1, '18906662339', 2, 4, NULL, 0, 0, 0, NULL, '2024-09-03 21:36:24', '2024-07-17 10:36:16');
+INSERT INTO `t_employee` VALUES (74, 'xzh', '$argon2id$v=19$m=16384,t=2,p=1$e/hqRAZYCYHydMS3SPo7yA$5hdCxLG7q+Jtf6KLJHVg/yb0I8LZrPuKUF66jLq+Drc', 'admin1', NULL, 1, '13654567897', 5, 6, NULL, 0, 0, 0, NULL, '2024-09-03 21:36:21', '2024-08-09 09:49:56');
 
 -- ----------------------------
 -- Table structure for t_feedback

@@ -297,10 +297,15 @@ public class EmployeeService {
         if (employeeEntity == null) {
             return ResponseDTO.error(UserErrorCode.DATA_NOT_EXIST);
         }
+
         // 校验原始密码
-        String oldPassword = SecurityPasswordService.getEncryptPwd(updatePasswordForm.getOldPassword());
-        if (!Objects.equals(oldPassword, employeeEntity.getLoginPwd())) {
+        if (!SecurityPasswordService.matchesPwd(updatePasswordForm.getOldPassword(),employeeEntity.getLoginPwd()) ) {
             return ResponseDTO.userErrorParam("原密码有误，请重新输入");
+        }
+
+        // 新旧密码相同
+        if (Objects.equals(updatePasswordForm.getOldPassword(), updatePasswordForm.getNewPassword()) ){
+            return ResponseDTO.userErrorParam("新密码与原始密码相同，请重新输入");
         }
 
         // 校验密码复杂度
@@ -309,26 +314,22 @@ public class EmployeeService {
             return validatePassComplexity;
         }
 
-        // 新旧密码相同
-        String newPassword = SecurityPasswordService.getEncryptPwd(updatePasswordForm.getNewPassword());
-        if (Objects.equals(oldPassword, newPassword)) {
-            return ResponseDTO.userErrorParam("新密码与原始密码相同，请重新输入");
-        }
-
         // 根据三级等保规则，校验密码是否重复
         ResponseDTO<String> passwordRepeatTimes = securityPasswordService.validatePasswordRepeatTimes(requestUser, updatePasswordForm.getNewPassword());
         if (!passwordRepeatTimes.getOk()) {
             return ResponseDTO.error(passwordRepeatTimes);
         }
 
+
         // 更新密码
+        String newEncryptPassword = SecurityPasswordService.getEncryptPwd(updatePasswordForm.getNewPassword());
         EmployeeEntity updateEntity = new EmployeeEntity();
         updateEntity.setEmployeeId(employeeId);
-        updateEntity.setLoginPwd(newPassword);
+        updateEntity.setLoginPwd(newEncryptPassword);
         employeeDao.updateById(updateEntity);
 
         // 保存修改密码密码记录
-        securityPasswordService.saveUserChangePasswordLog(requestUser, newPassword, oldPassword);
+        securityPasswordService.saveUserChangePasswordLog(requestUser, newEncryptPassword, employeeEntity.getLoginPwd());
 
         return ResponseDTO.ok();
     }
