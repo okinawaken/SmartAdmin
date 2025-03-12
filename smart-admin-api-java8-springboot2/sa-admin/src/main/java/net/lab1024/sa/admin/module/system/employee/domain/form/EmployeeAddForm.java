@@ -4,9 +4,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import net.lab1024.sa.base.common.enumeration.GenderEnum;
 import net.lab1024.sa.base.common.swagger.SchemaEnum;
-import net.lab1024.sa.base.common.util.SmartVerificationUtil;
 import net.lab1024.sa.base.common.validator.enumeration.CheckEnum;
 import org.hibernate.validator.constraints.Length;
+import net.lab1024.sa.base.common.util.SmartVerificationUtil;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;

@@ -34,10 +34,7 @@ public class SecurityPasswordService {
 
     public static final String PASSWORD_FORMAT_MSG = "密码必须为长度8-20位且必须包含大小写字母、数字、特殊符号（如：@#$%^&*()_+-=）等三种字符";
 
-
     private static final int PASSWORD_LENGTH = 8;
-
-    private static final String PASSWORD_SALT_FORMAT = "smart_%s_admin_$^&*";
 
 
     @Resource
@@ -46,7 +43,7 @@ public class SecurityPasswordService {
     @Resource
     private Level3ProtectConfigService level3ProtectConfigService;
 
-    static Argon2PasswordEncoder encoder = Argon2PasswordEncoder.defaultsForSpringSecurity_v5_8();
+    static Argon2PasswordEncoder ARGON2_PASSWORD_ENCODER = Argon2PasswordEncoder.defaultsForSpringSecurity_v5_8();
 
     /**
      * 校验密码复杂度
@@ -86,7 +83,7 @@ public class SecurityPasswordService {
 
         // 检查最近几次是否有重复密码
         List<String> oldPasswords = passwordLogDao.selectOldPassword(requestUser.getUserType().getValue(), requestUser.getUserId(), level3ProtectConfigService.getRegularChangePasswordNotAllowRepeatTimes());
-        boolean isDuplicate = oldPasswords.stream().anyMatch(oldPassword -> encoder.matches(newPassword, oldPassword));
+        boolean isDuplicate = oldPasswords.stream().anyMatch(oldPassword -> ARGON2_PASSWORD_ENCODER.matches(newPassword, oldPassword));
         if (isDuplicate) {
             return ResponseDTO.userErrorParam(String.format("与前%d个历史密码重复，请换个密码!", level3ProtectConfigService.getRegularChangePasswordNotAllowRepeatTimes()));
         }
@@ -146,14 +143,14 @@ public class SecurityPasswordService {
      * 获取 加密后 的密码
      */
     public static String getEncryptPwd(String password) {
-        return encoder.encode(password);
+        return ARGON2_PASSWORD_ENCODER.encode(password);
     }
 
     /**
      * 校验密码是否匹配
      */
-    public static Boolean matchesPwd( String password,  String encodedPassword){
-     return encoder.matches( password, encodedPassword);
+    public static Boolean matchesPwd(String password, String encodedPassword) {
+        return ARGON2_PASSWORD_ENCODER.matches(password, encodedPassword);
     }
 
 }

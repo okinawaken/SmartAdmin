@@ -161,7 +161,8 @@
   import { TRIGGER_TYPE_ENUM } from '/@/constants/support/job-const.js';
   import JobFormModal from './components/job-form-modal.vue';
   import JobLogListModal from './components/job-log-list-modal.vue';
-  import { SmartLoading } from "/@/components/framework/smart-loading/index.js";
+  import { SmartLoading } from '/@/components/framework/smart-loading/index.js';
+  const activeKey = ref('1');
 
   const columns = ref([
     {
@@ -238,8 +239,6 @@
       width: 170,
     },
   ]);
-
-  const activeKey = ref('1');
 
   // ---------------- 查询数据 -----------------------
 
@@ -333,7 +332,7 @@
 
   // ------------------------------------ 删除操作 -------------------------------------
 
-  function confirmDelete(jobId, jobName){
+  function confirmDelete(jobId, jobName) {
     Modal.confirm({
       title: '警告',
       content: `确定要删除【${jobName}】任务吗?`,
@@ -347,15 +346,15 @@
     });
   }
 
-  async function deleteJob(jobId){
-    try{
+  async function deleteJob(jobId) {
+    try {
       SmartLoading.show();
       await jobApi.deleteJob(jobId);
       message.success('删除成功!');
       queryJobList();
-    }catch (e){
+    } catch (e) {
       smartSentry.captureError(e);
-    }finally {
+    } finally {
       SmartLoading.hide();
     }
   }

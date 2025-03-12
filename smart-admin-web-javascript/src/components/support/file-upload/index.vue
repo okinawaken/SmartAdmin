@@ -16,7 +16,7 @@
       :before-upload="beforeUpload"
       :customRequest="customRequest"
       :file-list="fileList"
-      :headers="{ 'x-access-token': useUserStore().getToken }"
+      :headers="{ Authorization: 'Bearer ' + useUserStore().getToken }"
       :list-type="listType"
       @change="handleChange"
       @preview="handlePreview"

@@ -376,10 +376,10 @@ public class LoginService implements StpInterface {
     /**
      * 退出登录
      */
-    public ResponseDTO<String> logout(String token, RequestUser requestUser) {
+    public ResponseDTO<String> logout(RequestUser requestUser) {
 
         // sa token 登出
-        StpUtil.logoutByTokenValue(token);
+        StpUtil.logout();
 
         // 清空登录信息缓存
         loginEmployeeCache.remove(requestUser.getUserId());

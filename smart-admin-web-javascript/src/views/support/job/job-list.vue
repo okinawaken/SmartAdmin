@@ -165,7 +165,7 @@
   import JobFormModal from './components/job-form-modal.vue';
   import JobLogListModal from './components/job-log-list-modal.vue';
   import { SmartLoading } from '/@/components/framework/smart-loading/index.js';
-
+  const activeKey = ref('1');
   const columns = ref([
     {
       title: 'id',
@@ -241,8 +241,6 @@
       width: 170,
     },
   ]);
-
-  const activeKey = ref('1');
 
   // ---------------- 查询数据 -----------------------
 

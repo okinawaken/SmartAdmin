@@ -38,7 +38,7 @@
 <script setup>
   import _ from 'lodash';
   import { tableColumnApi } from '/@/api/support/table-column-api';
-  import { onMounted, ref, watch } from 'vue';
+  import { onMounted, ref, watch, reactive } from 'vue';
   import SmartTableColumnModal from './smart-table-column-modal.vue';
   import { message } from 'ant-design-vue';
   import { mergeColumn } from './smart-table-column-merge';
@@ -66,17 +66,17 @@
   const emit = defineEmits(['update:modelValue']);
 
   // 原始表格列数据（复制一份最原始的columns集合，以供后续各个地方使用）
-  let originalColumn = _.cloneDeep(props.modelValue);
-
-  onMounted(() => {
-    buildUserTableColumns();
-    // 监听全屏事件 解决按下 ESC 退出全屏 fullScreenFlag 未改变导致下次第一下点击全屏无效的问题
-    addEventListener('fullscreenchange', (event) => {
-      if (document.fullscreenElement === null) {
-        fullScreenFlag.value = false;
-      }
-    });
-  });
+  let originalColumn = reactive(_.cloneDeep(props.modelValue));
+  watch(
+    () => props.modelValue,
+    (value) => {
+      originalColumn = value;
+    },
+    {
+      deep: true,
+    }
+  );
+  onMounted(buildUserTableColumns);
 
   //构建用户的数据列
   async function buildUserTableColumns() {
@@ -176,7 +176,8 @@
   // 将弹窗修改的列数据，赋值给原表格 列数组
   function updateColumn(changeColumnArray) {
     //合并列
-    const newColumns = mergeColumn(_.cloneDeep(originalColumn), changeColumnArray);
+    let obj = mergeColumn(_.cloneDeep(originalColumn), changeColumnArray);
+    const newColumns = obj.newColumns;
     emit(
       'update:modelValue',
       newColumns.filter((e) => e.showFlag)

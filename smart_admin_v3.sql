@@ -1236,8 +1236,8 @@ CREATE TABLE `t_smart_job`  (
 -- ----------------------------
 -- Records of t_smart_job
 -- ----------------------------
-INSERT INTO `t_smart_job` VALUES (1, '示例任务1', 'net.lab1024.sa.base.module.support.job.sample.SmartJobSample1', 'cron', '10 15 0/1 * * *', 1, '1', '2025-01-05 19:15:10', 7988, 1, '测试测试', 0, '管理员', '2024-06-17 20:00:46', '2025-01-08 20:07:51');
-INSERT INTO `t_smart_job` VALUES (2, '示例任务2', 'net.lab1024.sa.base.module.support.job.sample.SmartJobSample2', 'fixed_delay', '120', 1, '一路春光啊一路荆棘呀惊鸿一般短暂如夏花一样绚烂这是一个不能停留太久的世界，一路春光啊一路荆棘呀惊鸿一般短暂如夏花一样绚烂这是一个不能停留太久的世界啊', '2025-01-08 19:56:59', 8144, 2, '一个不能停留太久的世界啊', 0, '管理员', '2024-06-18 20:45:35', '2025-01-08 19:57:00');
+INSERT INTO `t_smart_job` VALUES (1, '示例任务1', 'net.lab1024.sa.base.module.support.job.sample.SmartJobSample1', 'cron', '10 15 0/1 * * *', 1, '执行示例任务1', '2025-01-05 19:15:10', 7988, 1, '执行示例任务1', 0, '管理员', '2024-06-17 20:00:46', '2025-01-08 20:07:51');
+INSERT INTO `t_smart_job` VALUES (2, '示例任务2', 'net.lab1024.sa.base.module.support.job.sample.SmartJobSample2', 'fixed_delay', '120', 1, '执行示例任务2', '2025-01-08 19:56:59', 8144, 2, '执行示例任务2', 0, '管理员', '2024-06-18 20:45:35', '2025-01-08 19:57:00');
 
 
 -- ----------------------------

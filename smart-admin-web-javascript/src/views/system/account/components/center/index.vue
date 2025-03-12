@@ -51,7 +51,7 @@
                 list-type="picture-card"
                 class="avatar-uploader"
                 :show-upload-list="false"
-                :headers="{ 'x-access-token': useUserStore().getToken }"
+                :headers="{ Authorization: 'Bearer ' + useUserStore().getToken }"
                 :customRequest="customRequest"
                 :before-upload="beforeUpload"
               >

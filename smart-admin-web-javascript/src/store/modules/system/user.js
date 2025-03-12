@@ -73,7 +73,7 @@ export const useUserStore = defineStore({
       }
       return localRead(localKey.USER_TOKEN);
     },
-    getNeedUpdatePwdFlag(state) {
+    getNeedUpdatePwdFlag(state){
       return state.needUpdatePwdFlag;
     },
     //是否初始化了 路由
@@ -206,7 +206,7 @@ export const useUserStore = defineStore({
           // @ts-ignore
           menuTitle: route.meta.title,
           menuQuery: route.query,
-          menuIcon: route.meta?.icon,
+          menuIcon:route.meta?.icon, 
           // @ts-ignore
           fromMenuName: from.name,
           fromMenuQuery: from.query,

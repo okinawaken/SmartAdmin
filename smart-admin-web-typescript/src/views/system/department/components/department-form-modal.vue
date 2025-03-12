@@ -28,44 +28,59 @@
   </a-modal>
 </template>
 <script setup lang="ts">
-import message from 'ant-design-vue/lib/message';
-import { reactive, ref } from 'vue';
-import { departmentApi } from '/@/api/system/department-api';
-import DepartmentTreeSelect from '/@/components/system/department-tree-select/index.vue';
-import EmployeeSelect from '/@/components/system/employee-select/index.vue';
-import { smartSentry } from '/@/lib/smart-sentry';
-import { SmartLoading } from '/@/components/framework/smart-loading';
+  import message from 'ant-design-vue/lib/message';
+  import { nextTick, reactive, ref } from 'vue';
+  import { departmentApi } from '/@/api/system/department-api';
+  import DepartmentTreeSelect from '/@/components/system/department-tree-select/index.vue';
+  import EmployeeSelect from '/@/components/system/employee-select/index.vue';
+  import { smartSentry } from '/@/lib/smart-sentry';
+  import { SmartLoading } from '/@/components/framework/smart-loading';
 
-// ----------------------- 对外暴漏 ---------------------
+  // ----------------------- 对外暴漏 ---------------------
 
-defineExpose({
-  showModal,
-});
+  defineExpose({
+    showModal,
+  });
 
-// ----------------------- modal 的显示与隐藏 ---------------------
-const emits = defineEmits(['refresh']);
+  // ----------------------- modal 的显示与隐藏 ---------------------
+  const emits = defineEmits(['refresh']);
 
-const visible = ref(false);
-function showModal(data) {
-  visible.value = true;
-  updateFormData(data);
-}
-function closeModal() {
-  visible.value = false;
-  resetFormData();
-}
+  const visible = ref(false);
+  function showModal(data) {
+    visible.value = true;
+    updateFormData(data);
+    nextTick(() => {
+      // 解决弹窗错误信息显示,没有可忽略
+      const domArr = document.getElementsByClassName('ant-modal');
+      if (domArr && domArr.length > 0) {
+        Array.from(domArr).forEach((item) => {
+          if (item.childNodes && item.childNodes.length > 0) {
+            Array.from(item.childNodes).forEach((child) => {
+              if (child.setAttribute) {
+                child.setAttribute('aria-hidden', 'false');
+              }
+            });
+          }
+        });
+      }
+    });
+  }
+  function closeModal() {
+    visible.value = false;
+    resetFormData();
+  }
 
-// ----------------------- form 表单操作 ---------------------
-const formRef = ref();
-const departmentTreeSelect = ref();
-const defaultDepartmentForm = {
-  id: undefined,
-  managerId: undefined, //部门负责人
-  name: undefined,
-  parentId: undefined,
-  sort: 0,
-};
-const employeeSelect = ref();
+  // ----------------------- form 表单操作 ---------------------
+  const formRef = ref();
+  const departmentTreeSelect = ref();
+  const defaultDepartmentForm = {
+    id: undefined,
+    managerId: undefined, //部门负责人
+    name: undefined,
+    parentId: undefined,
+    sort: 0,
+  };
+  const employeeSelect = ref();
 
 let formState = reactive({
   ...defaultDepartmentForm,
@@ -91,33 +106,33 @@ function resetFormData() {
   Object.assign(formState, defaultDepartmentForm);
 }
 
-async function handleOk() {
-  try {
-    await formRef.value.validate();
-    if (formState.departmentId) {
-      updateDepartment();
-    } else {
-      addDepartment();
+  async function handleOk() {
+    try {
+      await formRef.value.validate();
+      if (formState.departmentId) {
+        updateDepartment();
+      } else {
+        addDepartment();
+      }
+    } catch (error) {
+      message.error('参数验证错误，请仔细填写表单数据!');
     }
-  } catch (error) {
-    message.error('参数验证错误，请仔细填写表单数据!');
   }
-}
 
-// ----------------------- form 表单  ajax 操作 ---------------------
-//添加部门ajax请求
-async function addDepartment() {
-  SmartLoading.show();
-  try {
-    await departmentApi.addDepartment(formState);
-    emits('refresh');
-    closeModal();
-  } catch (error) {
-    smartSentry.captureError(error);
-  } finally {
-    SmartLoading.hide();
+  // ----------------------- form 表单  ajax 操作 ---------------------
+  //添加部门ajax请求
+  async function addDepartment() {
+    SmartLoading.show();
+    try {
+      await departmentApi.addDepartment(formState);
+      emits('refresh');
+      closeModal();
+    } catch (error) {
+      smartSentry.captureError(error);
+    } finally {
+      SmartLoading.hide();
+    }
   }
-}
 
 //更新部门ajax请求
 async function updateDepartment() {

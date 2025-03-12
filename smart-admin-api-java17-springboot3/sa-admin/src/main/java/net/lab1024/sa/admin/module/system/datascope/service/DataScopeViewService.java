@@ -56,7 +56,6 @@ public class DataScopeViewService {
         if (DataScopeViewTypeEnum.DEPARTMENT_AND_SUB == viewType) {
             return this.getDepartmentAndSubEmployeeIdList(employeeId);
         }
-        // 可以查看所有员工数据
         return Lists.newArrayList();
     }
 

@@ -1,5 +1,6 @@
 package net.lab1024.sa.base.module.support.securityprotect.service;
 
+import lombok.extern.slf4j.Slf4j;
 import jakarta.annotation.Resource;
 import net.lab1024.sa.base.common.domain.ResponseDTO;
 import org.apache.tika.config.TikaConfig;
@@ -17,7 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * 三级等保 文件上传 相关
+ * 三级等保 文件 相关
  *
  * @Author 1024创新实验室-主任:卓大
  * @Date 2024/08/22 19:25:59
@@ -27,6 +28,7 @@ import java.util.List;
  */
 
 @Service
+@Slf4j
 public class SecurityFileService {
 
     @Resource
@@ -96,6 +98,7 @@ public class SecurityFileService {
             MediaType mimetype = tika.getDetector().detect(stream, metadata);
             return mimetype.toString();
         } catch (IOException | TikaException e) {
+            log.error(e.getMessage(), e);
             return MimeTypes.OCTET_STREAM;
         }
     }

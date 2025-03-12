@@ -67,7 +67,7 @@
   );
 
   const emit = defineEmits(['update:value', 'change']);
-  
+
   function handleChange(value) {
     emit('update:value', value);
     emit('change', value);
