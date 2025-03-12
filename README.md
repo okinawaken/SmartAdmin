@@ -1,7 +1,3 @@
-# 紧急通知：
-# 先不要下载master使用，这两天正在合并代码，请于2025年3月13日再开始下载使用！！
-# 或者去下载 v3.13 分支！！
-
 ### **SmartAdmin**
 
 **SmartAdmin** 由 **中国·洛阳** [1024创新实验室](https://www.1024lab.net/) 基于SpringBoot2/3+Sa-Token+Mybatis-Plus 和 Vue3+Ant Design Vue+Uni-App+Uni-UI，并以 <font color="#DC143C">**「高质量代码」为核心，「简洁、高效、安全」**</font>的快速开发平台。
