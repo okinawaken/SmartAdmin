@@ -142,7 +142,7 @@ public class LoginService implements StpInterface {
     }
 
     /**
-     * 员工登陆
+     * 员工登录
      *
      * @return 返回用户登录信息
      */
@@ -316,7 +316,7 @@ public class LoginService implements StpInterface {
 
 
     /**
-     * 根据登陆token 获取员请求工信息
+     * 根据登录token 获取员请求工信息
      */
     public RequestEmployee getLoginEmployee(String loginId, HttpServletRequest request) {
         if (loginId == null) {
