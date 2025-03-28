@@ -120,7 +120,7 @@
           {{ text }}
         </template>
         <template v-if="column.dataIndex === 'place'">
-          <DictPreview :options="descList.GOODS_PLACE" :value="text" />
+          <DictPreview :options="descList['GOODS_PLACE']" :value="text" />
         </template>
         <template v-if="column.dataIndex === 'remark'">
           <span>{{ text ? text : '' }}</span>
@@ -234,7 +234,6 @@
       title: '商品状态',
       dataIndex: 'goodsStatus',
       resizable: true,
-      sorter: true,
       filterOptions: {
         type: 'enum-select',
         enumName: 'GOODS_STATUS_ENUM',

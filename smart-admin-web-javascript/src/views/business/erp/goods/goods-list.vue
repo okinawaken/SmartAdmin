@@ -120,7 +120,7 @@
           {{ text }}
         </template>
         <template v-if="column.dataIndex === 'place'">
-          <DictPreview :options="descList.GOODS_PLACE" :value="text" />
+          <DictPreview :options="descList['GOODS_PLACE']" :value="text" />
         </template>
         <template v-if="column.dataIndex === 'remark'">
           <span>{{ text ? text : '' }}</span>
@@ -199,7 +199,6 @@
   import { smartSentry } from '/@/lib/smart-sentry';
   import TableOperator from '/@/components/support/table-operator/index.vue';
   import { TABLE_ID_CONST } from '/@/constants/support/table-id-const';
-  import { GOODS_STATUS_ENUM } from '/@/constants/business/erp/goods-const';
   import DictSelect from '/@/components/support/dict-select/index.vue';
   import SmartEnumSelect from '/@/components/framework/smart-enum-select/index.vue';
   import _ from 'lodash';
@@ -236,7 +235,6 @@
       title: '商品状态',
       dataIndex: 'goodsStatus',
       resizable: true,
-      sorter: true,
       filterOptions: {
         type: 'enum-select',
         enumName: 'GOODS_STATUS_ENUM',
