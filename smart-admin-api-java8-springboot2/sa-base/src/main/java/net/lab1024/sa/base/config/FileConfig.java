@@ -68,7 +68,7 @@ public class FileConfig implements WebMvcConfigurer {
      * @return
      */
     @Bean
-    @ConditionalOnProperty(prefix = "file.storage", name = {"mode"}, havingValue = "cloud")
+    @ConditionalOnProperty(prefix = "file.storage", name = {"mode"}, havingValue = MODE_CLOUD)
     public AmazonS3 initAmazonS3() {
         ClientConfiguration clientConfig = new ClientConfiguration();
         clientConfig.setProtocol(Protocol.HTTPS);

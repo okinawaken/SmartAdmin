@@ -204,7 +204,7 @@ CREATE TABLE `t_dict_key`  (
 -- ----------------------------
 -- Records of t_dict_key
 -- ----------------------------
-INSERT INTO `t_dict_key` VALUES (1, 'GODOS_PLACE', '商品产地', '商品产地的字典', 0, '2022-10-04 21:33:50', '2022-10-04 21:33:50');
+INSERT INTO `t_dict_key` VALUES (1, 'GOODS_PLACE', '商品产地', '商品产地的字典', 0, '2022-10-04 21:33:50', '2022-10-04 21:33:50');
 
 -- ----------------------------
 -- Table structure for t_dict_value
