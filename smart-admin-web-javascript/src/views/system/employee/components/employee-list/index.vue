@@ -56,7 +56,7 @@
       row-key="employeeId"
       bordered
     >
-      <template #bodyCell="{ text, record, index, column }">
+      <template #bodyCell="{ text, record, column }">
         <template v-if="column.dataIndex === 'administratorFlag'">
           <a-tag color="error" v-if="text">超管</a-tag>
         </template>

@@ -107,16 +107,14 @@ public class DictCacheService {
             return null;
         }
 
-        List<DictValueVO> dictValueVOList = DICT_CACHE.get(valueCode);
+        List<DictValueVO> dictValueVOList = DICT_CACHE.get(keyCode);
         if (CollectionUtils.isEmpty(dictValueVOList)) {
             return null;
         }
         Optional<DictValueVO> option = dictValueVOList.stream().filter(e->e.getValueCode().equals(valueCode)).findFirst();
-        if(option.isPresent()){
-            return option.get();
-        }
-        return null;
+        return option.orElse(null);
     }
+
     public String selectValueNameByValueCodeSplit(String keyCode, String valueCodes) {
         if (StrUtil.isEmpty(valueCodes)) {
             return "";

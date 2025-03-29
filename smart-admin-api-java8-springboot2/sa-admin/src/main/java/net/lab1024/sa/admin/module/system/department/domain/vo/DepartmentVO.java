@@ -3,6 +3,7 @@ package net.lab1024.sa.admin.module.system.department.domain.vo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -15,7 +16,9 @@ import java.time.LocalDateTime;
  * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Data
-public class DepartmentVO {
+public class DepartmentVO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Schema(description = "部门id")
     private Long departmentId;

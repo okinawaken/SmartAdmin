@@ -1,11 +1,6 @@
 <template>
   <div>
-    <template v-for="(item, index) in options">
-      <template v-if="values.includes(item.valueCode)">
-        {{ item.valueName }}
-        <span> </span>
-      </template>
-    </template>
+    <span>{{ dictValueName }}</span>
   </div>
 </template>
 
@@ -21,8 +16,11 @@
     // 当前的值
     value: [Number, String, Array],
   });
-  const values = computed(() => {
-    if (props.value === null || typeof props.value === 'undefined' || props.value === '') return [];
-    return Array.isArray(props.value) ? props.value.map((item) => item.valueCode) : props.value.split(',');
+  const dictValueName = computed(() => {
+    if (props.value === null || typeof props.value === 'undefined' || props.value === '') return '';
+    const valueCodeList = Array.isArray(props.value) ? props.value.map((item) => item.valueCode) : props.value.split(',');
+    const valueNameList = props.options.filter((item) => valueCodeList.includes(item.valueCode)).map((item) => item.valueName);
+
+    return valueNameList.join('，');
   });
 </script>
