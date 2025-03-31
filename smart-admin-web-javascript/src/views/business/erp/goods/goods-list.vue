@@ -120,7 +120,7 @@
           {{ text }}
         </template>
         <template v-if="column.dataIndex === 'place'">
-          <DictPreview :options="descList['GOODS_PLACE']" :value="text" />
+          <DictPreview :options="dictList['GOODS_PLACE']" :value="text" />
         </template>
         <template v-if="column.dataIndex === 'remark'">
           <span>{{ text ? text : '' }}</span>
@@ -206,7 +206,7 @@
   import DictPreview from '/@/components/dict-preview/index.vue';
   import { useDict } from '/@/utils/dict';
 
-  const descList = useDict('GOODS_PLACE');
+  const dictList = useDict('GOODS_PLACE', 'GOODS_PLACE');
   // ---------------------------- 表格列 ----------------------------
 
   const columns = ref([

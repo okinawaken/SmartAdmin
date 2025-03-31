@@ -101,18 +101,23 @@
         >
             <template #bodyCell="{ text, record, column }">
 
-	    <!-- 有图片预览时 注释解开并把下面的'picture'修改成自己的图片字段名即可 -->
-              <!-- <template v-if="column.dataIndex === 'picture'">
-                  <FilePreview :fileList="text" type="picture" />
-                </template> -->
-
-	    <!-- 使用字典时 注释解开并把下面的'dict'修改成自己的字典字段名即可 有多个字典字段就复制多份同理修改 不然不显示字典 -->
-              <!-- 方便修改tag的颜色 orange green purple success processing error default warning -->
-              <!-- <template v-if="column.dataIndex === 'dict'">
-                <a-tag color="cyan">
-                  {{ text && text.length > 0 ? text.map((e) => e.valueName).join(',') : '暂无' }}
-                </a-tag>
-              </template> -->
+            #foreach ($field in $listFields)
+                #if($field.frontComponent == "FileUpload")
+                <template v-if="column.dataIndex === '$field.fieldName'">
+                    <FilePreview :fileList="text" type="picture" />
+                </template>
+                #end
+            #end
+                  <!-- 方便直接复制粘贴修改 tag 的颜色 orange green purple success processing error default warning -->
+            #foreach ($field in $listFields)
+                #if($field.dict)
+                <template v-if="column.dataIndex === '$!{field.fieldName}'">
+                    <a-tag color="cyan">
+                        <DictPreview :options="dictList['$!{field.dict}']" :value="text" />
+                    </a-tag>
+                </template>
+                #end
+            #end
 
                 <template v-if="column.dataIndex === 'action'">
                     <div class="smart-table-operate">
@@ -159,7 +164,13 @@
 #foreach ($import in $frontImportList)
     $!{import}
 #end
-    //import FilePreview from '/@/components/support/file-preview/index.vue'; // 图片预览组件
+
+#foreach ($field in $listFields)
+    #if($field.dict)
+    const dictList = useDict(#foreach($field in $fields)#if($field.dict)'$!{field.dict}'#if($foreach.hasNext), #end#end#end);
+        #break
+    #end
+#end
 
     // ---------------------------- 表格列 ----------------------------
 
