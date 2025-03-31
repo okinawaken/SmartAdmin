@@ -206,7 +206,7 @@ CREATE TABLE `t_dict` (
 -- ----------------------------
 -- Records of t_dict
 -- ----------------------------
-INSERT INTO `t_dict` VALUES (1, '商品地区', 'GOODS_PLACE', '用于商品管理中的商品地区1', 0, '2025-03-27 14:42:26', '2025-03-31 11:23:03');
+INSERT INTO `t_dict`(`dict_id`, `dict_name`, `dict_code`, `remark`, `disabled_flag`, `create_time`, `update_time`) VALUES (1, '商品地区', 'GOODS_PLACE', '用于商品管理中的商品地区1', 0, '2025-03-27 14:42:26', '2025-03-31 11:23:03');
 
 -- ----------------------------
 -- Table structure for t_dict_data
