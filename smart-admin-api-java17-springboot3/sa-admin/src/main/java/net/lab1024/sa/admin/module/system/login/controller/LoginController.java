@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.*;
  * @Date 2021-12-15 21:05:46
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 @RestController
 @Tag(name = AdminSwaggerTagConst.System.SYSTEM_LOGIN)
@@ -57,7 +57,7 @@ public class LoginController {
         return ResponseDTO.ok(loginResult);
     }
 
-    @Operation(summary = "退出登录  @author 卓大")
+    @Operation(summary = "退出登陆  @author 卓大")
     @GetMapping("/login/logout")
     public ResponseDTO<String> logout() {
         return loginService.logout(SmartRequestUtil.getRequestUser());

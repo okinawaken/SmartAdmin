@@ -3,7 +3,6 @@ package net.lab1024.sa.admin.module.business.category.domain.vo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
@@ -14,12 +13,11 @@ import java.util.List;
  * @Date 2021/08/05 21:26:58
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Data
 public class CategoryTreeVO implements Serializable {
 
-    @Serial
     private static final long serialVersionUID = 1L;
 
     @Schema(description = "类目id")

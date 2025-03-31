@@ -3,7 +3,6 @@ package net.lab1024.sa.admin.module.system.department.domain.vo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -14,12 +13,11 @@ import java.time.LocalDateTime;
  * @Date 2022-01-12 20:37:48
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
+ * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
  */
 @Data
 public class DepartmentVO implements Serializable {
 
-    @Serial
     private static final long serialVersionUID = 1L;
 
     @Schema(description = "部门id")
