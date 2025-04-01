@@ -1,6 +1,7 @@
 package net.lab1024.sa.base.module.support.codegenerator.service.variable;
 
 import com.google.common.base.CaseFormat;
+import net.lab1024.sa.base.common.util.SmartStringUtil;
 import net.lab1024.sa.base.module.support.codegenerator.constant.CodeFrontComponentEnum;
 import net.lab1024.sa.base.module.support.codegenerator.domain.form.CodeGeneratorConfigForm;
 import net.lab1024.sa.base.module.support.codegenerator.domain.model.CodeField;
@@ -63,8 +64,7 @@ public abstract class CodeGenerateBaseVariableService {
             return null;
         }
 
-        return fields.stream().filter(e -> columnName.equals(e.getColumnName()))
-                .findFirst().get();
+        return fields.stream().filter(e -> SmartStringUtil.equals(columnName, e.getColumnName())).findFirst().orElse(null);
     }
 
 
@@ -113,8 +113,7 @@ public abstract class CodeGenerateBaseVariableService {
             return null;
         }
 
-        Optional<CodeField> first = fields.stream().filter(e -> columnName.equals(e.getColumnName())).findFirst();
-        return first.orElse(null);
+        return fields.stream().filter(e -> columnName.equals(e.getColumnName())).findFirst().orElse(null);
     }
 
     /**
