@@ -79,7 +79,7 @@ server:
 # 文件上传 配置
 file:
   storage:
-    mode: cloud
+    mode: local
     local:
       upload-path: /home/smart_admin_v3/upload/   #文件上传目录
       url-prefix:
@@ -87,8 +87,8 @@ file:
       region: oss-cn-hangzhou
       endpoint: oss-cn-hangzhou.aliyuncs.com
       bucket-name: 1024lab-smart-admin
-      access-key: LTAI5tDnZ1wHwFHWMUNWznK2
-      secret-key: 6tVJ9K2mbrDrcbBLIBRBzho13FZ52t
+      access-key: 
+      secret-key: 
       url-prefix: https://${file.storage.cloud.bucket-name}.${file.storage.cloud.endpoint}/
       private-url-expire-seconds: 3600
 
