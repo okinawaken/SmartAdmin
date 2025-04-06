@@ -13,14 +13,13 @@ import net.lab1024.sa.base.module.support.codegenerator.domain.model.CodeTableFi
 import net.lab1024.sa.base.module.support.codegenerator.service.variable.CodeGenerateBaseVariableService;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @Author 1024创新实验室-主任:卓大
  * @Date 2022/9/29 17:20:41
  * @Wechat zhuoda1024
  * @Email lab1024@163.com
- * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
+ * @Copyright  <a href="https://1024lab.net">1024创新实验室</a>
  */
 
 public class ListVariableService extends CodeGenerateBaseVariableService {
@@ -66,7 +65,7 @@ public class ListVariableService extends CodeGenerateBaseVariableService {
         // 表格列表
         List<Map<String, Object>> listVariable = new ArrayList<>();
         // 过滤掉不显示的字段
-        List<CodeTableField> tableFields = form.getTableFields().stream().filter(CodeTableField::getShowFlag).collect(Collectors.toList());
+        List<CodeTableField> tableFields = form.getTableFields().stream().filter(CodeTableField::getShowFlag).toList();
 
         for (CodeTableField tableField : tableFields) {
             Map<String, Object> objectMap = BeanUtil.beanToMap(tableField);

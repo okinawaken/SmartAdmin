@@ -25,7 +25,7 @@
       </a-form-item>
 
       <a-form-item label="产地" name="place" class="smart-query-form-item">
-        <DictSelect :dictCode="DICT_CODE_ENUM.GOODS_PLACE" v-model:value="queryForm.place" width="120px" />
+        <DictSelect :dict-code="DICT_CODE_ENUM.GOODS_PLACE" v-model:value="queryForm.place" width="120px" />
       </a-form-item>
 
       <a-form-item label="商品状态" name="goodsStatus" class="smart-query-form-item">
@@ -93,7 +93,7 @@
         </a-button>
       </div>
       <div class="smart-table-setting-block">
-        <TableOperator v-model="columns" :tableId="TABLE_ID_CONST.BUSINESS.ERP.GOODS" :refresh="queryData"/>
+        <TableOperator v-model="columns" :tableId="TABLE_ID_CONST.BUSINESS.ERP.GOODS" :refresh="queryData" />
       </div>
     </a-row>
     <!---------- 表格操作行 end ----------->
@@ -246,7 +246,7 @@
       resizable: true,
       filterOptions: {
         type: 'dict-select',
-        dictCode: DICT_CODE_ENUM.GOODS_PLACE,
+        dictCode: DICT_CODE_ENUM.GOODS_PLACE || 'GOODS_PLACE',
       },
       width: 150,
     },
