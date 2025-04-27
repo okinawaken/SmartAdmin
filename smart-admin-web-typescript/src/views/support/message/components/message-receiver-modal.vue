@@ -58,9 +58,9 @@
   import { reactive, ref } from 'vue';
   import { message, Modal } from 'ant-design-vue';
   import { PAGE_SIZE, PAGE_SIZE_OPTIONS } from '/@/constants/common-const';
-  import { smartSentry } from '/src/lib/smart-sentry';
-  import { SmartLoading } from '/src/components/framework/smart-loading';
-  import SmartEnumSelect from '/src/components/framework/smart-enum-select/index.vue';
+  import { smartSentry } from '/@/lib/smart-sentry';
+  import { SmartLoading } from '/@/components/framework/smart-loading';
+  import SmartEnumSelect from '/@/components/framework/smart-enum-select/index.vue';
   import { employeeApi } from '/@/api/system/employee-api';
   // ---------------查询条件----------------
   const queryParamState = {
