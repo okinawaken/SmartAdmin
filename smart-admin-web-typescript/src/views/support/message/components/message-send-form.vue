@@ -24,7 +24,7 @@
   </a-modal>
   <MessageReceiverModal ref="receiverModalRef" @reloadList="addReceiverIdList" />
 </template>
-<script setup>
+<script setup lang="ts">
   import { nextTick, reactive, ref } from 'vue';
   import { message } from 'ant-design-vue';
   import { SmartLoading } from '/@/components/framework/smart-loading';

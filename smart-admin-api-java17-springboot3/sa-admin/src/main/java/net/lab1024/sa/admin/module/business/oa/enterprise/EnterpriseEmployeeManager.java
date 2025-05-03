@@ -1,4 +1,4 @@
-package net.lab1024.sa.admin.module.business.oa.enterprise.manager;
+package net.lab1024.sa.admin.module.business.oa.enterprise;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import net.lab1024.sa.admin.module.business.oa.enterprise.dao.EnterpriseEmployeeDao;

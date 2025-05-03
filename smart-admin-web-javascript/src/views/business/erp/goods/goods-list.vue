@@ -495,40 +495,32 @@
   function camelToUnderscore(str) {
     return str.replace(/([A-Z])/g, '_$1').toLowerCase();
   }
-    
+
   // 动态设置表格高度
   const yHeight = ref(0);
-
+  onMounted(() => {
+    resetGetHeight();
+  });
   function resetGetHeight() {
-  // 搜索部分高度
-  let doc = document.querySelector('.ant-form');
-  // 按钮部分高度
-  let btn = document.querySelector('.smart-table-btn-block');
-  // 表格头高度
-  let tableCell = document.querySelector('.ant-table-cell');
-  // 分页高度
-  let page = document.querySelector('.smart-query-table-page');
-  // 内容区总高度
-  let box = document.querySelector('.admin-content');
-  setTimeout(() => {
+    // 搜索部分高度
+    let doc = document.querySelector('.ant-form');
+    // 按钮部分高度
+    let btn = document.querySelector('.smart-table-btn-block');
+    // 表格头高度
+    let tableCell = document.querySelector('.ant-table-cell');
+    // 分页高度
+    let page = document.querySelector('.smart-query-table-page');
+    // 内容区总高度
+    let box = document.querySelector('.admin-content');
+    setTimeout(() => {
       let dueHeight = doc.offsetHeight + 10 + 24 + btn.offsetHeight + 15 + tableCell.offsetHeight + page.offsetHeight + 20;
       yHeight.value = box.offsetHeight - dueHeight;
     }, 100);
   }
-
-  // 定义一个变量来存储节流后的回调函数
-  let throttledResizeHandler;
-  onMounted(() => {
-  resetGetHeight();
-    throttledResizeHandler = _.throttle(() => {
-        resetGetHeight();
-    }, 1000);
-
-    window.addEventListener('resize', throttledResizeHandler);
-  });
-
-  // 在组件销毁时移除 resize 事件监听器
-  onUnmounted(() => {
-    window.removeEventListener('resize', throttledResizeHandler);
-  });
+  window.addEventListener(
+    'resize',
+    _.throttle(() => {
+      resetGetHeight();
+    }, 1000)
+  );
 </script>
