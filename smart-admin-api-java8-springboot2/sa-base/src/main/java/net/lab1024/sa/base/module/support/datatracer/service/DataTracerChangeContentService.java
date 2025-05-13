@@ -161,6 +161,16 @@ public class DataTracerChangeContentService {
     }
 
     /**
+     * 解析批量bean的内容
+     *
+     * @param objectList 对象列表
+     * @return 单个内容
+     */
+    public  <T> String  getChangeContent(List<T> objectList) {
+        return this.getObjectListContent(objectList);
+    }
+
+    /**
      * 获取一个对象的内容信息
      *
      * @param objectList 对象列表
