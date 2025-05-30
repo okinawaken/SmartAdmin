@@ -54,17 +54,27 @@
       type: Number,
       default: null,
     },
+    dictList: {
+      type: Array,
+      default: null,
+    },
   });
 
   // -------------------------- 查询 字典数据 --------------------------
 
-  const dictList = ref([]);
+  const dictList = ref(props.dictList || []);
   async function queryDict() {
+    if (props.dictList) {
+      dictList.value = props.dictList;
+      return;
+    }
     let response = await dictApi.getAllDict();
     dictList.value = response.data;
   }
 
-  onMounted(queryDict);
+  if (!props.dictList) {
+    queryDict();
+  }
 
   // -------------------------- 选中 相关、事件 --------------------------
   const emit = defineEmits(['update:value', 'change']);
