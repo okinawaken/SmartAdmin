@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
  */
 
 @Data
-public class DictDataVO {
+public class DictDataVO implements Serializable {
 
     @Schema(description = "字典数据id")
     private Long dictDataId;
