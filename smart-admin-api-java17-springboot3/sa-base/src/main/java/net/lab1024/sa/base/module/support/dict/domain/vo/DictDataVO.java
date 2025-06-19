@@ -3,6 +3,7 @@ package net.lab1024.sa.base.module.support.dict.domain.vo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -24,6 +25,12 @@ public class DictDataVO implements Serializable {
 
     @Schema(description = "字典编码")
     private String dictCode;
+
+    @Schema(description = "字典名字")
+    private String dictName;
+
+    @Schema(description = "字典禁用状态")
+    private Integer dictDisabledFlag;
 
     @Schema(description = "字典项值")
     private String dataValue;

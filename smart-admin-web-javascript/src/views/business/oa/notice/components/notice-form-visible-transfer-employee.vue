@@ -79,7 +79,7 @@
       smartSentry.captureError(err);
     }
   }
-buildDepartmentEmployeeTree 
+
   // 递归构建部门员工树
   function buildDepartmentEmployeeTree(departmentTree, employeeList) {
     for (const department of departmentTree) {
