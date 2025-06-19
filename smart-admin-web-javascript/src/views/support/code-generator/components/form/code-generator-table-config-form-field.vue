@@ -68,7 +68,7 @@
       </template>
 
       <template v-if="column.dataIndex === 'dict'">
-        <DictCodeSelect ref="dictRef" v-model:value="record.dict" />
+        <DictCodeSelect ref="dictRef" v-model:value="record.dict" :dict-list="dictList" />
       </template>
 
       <template v-if="column.dataIndex === 'enumName'">
@@ -84,8 +84,16 @@
   import DictCodeSelect from '/@/components/support/dict-code-select/index.vue';
   import { convertUpperCamel, convertLowerCamel } from '/@/utils/str-util';
   import _ from 'lodash';
+  import { dictApi } from '/@/api/support/dict-api';
 
   const dictRef = ref();
+  const dictList = ref([]);
+  async function loadDictList() {
+    const response = await dictApi.getAllDict();
+    dictList.value = response.data;
+  }
+  loadDictList();
+
   function refreshDict() {
     dictRef.value.queryDict();
   }
