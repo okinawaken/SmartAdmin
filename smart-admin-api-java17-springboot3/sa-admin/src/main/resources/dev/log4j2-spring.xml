@@ -10,7 +10,10 @@
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
             <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
-            <PatternLayout pattern="[%d][%-5p][%t] %m (%F:%L)%n"/>
+            <!--设置日志格式及颜色-->
+            <PatternLayout
+                    pattern="%blue{%d{yyyy-MM-dd HH:mm:ss.SSS}} [%highlight{%-5level} ][%t] [%cyan{%c{1.}}:%L] %m%n"
+                    disableAnsi="false" noConsoleNoAnsi="false"/>
         </Console>
         <RollingFile name="debug" fileName="${log-directory}/debug/debug.log"
                      filePattern="${log-directory}/debug/debug-%d{yyyy-MM-dd}-%i.log">
