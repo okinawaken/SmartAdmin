@@ -3,6 +3,7 @@ package net.lab1024.sa.base.module.support.file.service;
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.LocalDateTimeUtil;
 import cn.hutool.core.net.NetUtil;
+import cn.hutool.core.util.IdUtil;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import net.lab1024.sa.base.common.code.SystemErrorCode;
@@ -23,7 +24,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 /**
  * 本地存储 实现
@@ -85,7 +85,7 @@ public class FileStorageLocalServiceImpl implements IFileStorageService {
         //原文件名
         String originalFileName = multipartFile.getOriginalFilename();
         //新文件名
-        String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+        String uuid = IdUtil.fastSimpleUUID();
         String time = LocalDateTimeUtil.format(LocalDateTime.now(), DatePattern.PURE_DATETIME_FORMATTER);
         String newFileName = uuid + "_" + time;
         String fileType = FilenameUtils.getExtension(originalFileName);

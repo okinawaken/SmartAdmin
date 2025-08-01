@@ -2,6 +2,7 @@ package net.lab1024.sa.base.module.support.file.service;
 
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.LocalDateTimeUtil;
+import cn.hutool.core.util.IdUtil;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
@@ -36,7 +37,6 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * 云计算 实现
@@ -86,7 +86,7 @@ public class FileStorageCloudServiceImpl implements IFileStorageService {
         }
 
         String fileType = FilenameUtils.getExtension(originalFileName);
-        String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+        String uuid = IdUtil.fastSimpleUUID();
         String time = LocalDateTimeUtil.format(LocalDateTime.now(), DatePattern.PURE_DATETIME_FORMATTER);
         String fileKey = path + uuid + "_" + time+ "." + fileType;
 
