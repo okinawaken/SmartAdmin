@@ -1,13 +1,14 @@
 package net.lab1024.sa.base.common.json.serializer;
 
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 import java.io.IOException;
 
 /**
- * Long类型序列化 超出 JS 最大最小值 处理
+ * Long类型序列化
  *
  * @Author 1024创新实验室-主任: 卓大
  * @Date 2020-06-02 22:55:07
@@ -26,8 +27,13 @@ public class LongJsonSerializer extends JsonSerializer<Long> {
     private static final long JS_MIN_SAFE_INTEGER = -9007199254740991L;
     private static final long JS_MAX_SAFE_INTEGER = 9007199254740991L;
 
+
     @Override
-    public void serialize(Long value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+    public void serialize(Long value, JsonGenerator gen, SerializerProvider serializerProvider) throws IOException, JsonProcessingException {
+        if (null == value) {
+            gen.writeNull();
+            return;
+        }
         // 如果超出了 JavaScript 安全整数范围，则序列化为字符串
         if (value < JS_MIN_SAFE_INTEGER || value > JS_MAX_SAFE_INTEGER) {
             gen.writeString(Long.toString(value));
