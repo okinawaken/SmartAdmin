@@ -1,9 +1,15 @@
-### 数据库脚本
-默认数据库为Mysql，若为其他数据库，请关注：[SmartAdmin其他数据库](https://smartadmin.vip/views/other/china-db/)
+### 数据库支持
 
-#### 第一次
-如果是第一次部署，只需要执行 smart_admin_v3.sql 文件中的SQL语句即可；
+序号| 数据库                                                               | 类型                 | 支持                  |  下载
+-------- |-------------------------------------------------------------------|--------------------| -----  | ----
+1| [Mysql](https://www.mysql.com)                                    | 国外                 | Java8+Java17 都支持 ✔️ | [下载代码和SQL](https://gitee.com/lab1024/smart-admin/tree/master/%E6%95%B0%E6%8D%AE%E5%BA%93SQL%E8%84%9A%E6%9C%AC/mysql) 
+2| [PostgreSQL](https://www.postgresql.org/)                         | 国外                 | Java8+Java17都支持 ✔️  |  [下载代码和SQL](./../buy.md)
+3| [达梦数据库 DM8](https://www.dameng.com/DM8.html)                      | 国产                 | Java8+Java17 都支持 ✔️ | [下载代码和SQL](./../buy.md) 
+4| [电科(人大)金仓 KingBaseES](https://www.kingbase.com.cn)                | 国产    | Java8+Java17都支持 ✔️ | [下载代码和SQL](./../buy.md)
+5| [华为高斯 GaussDB](https://www.huaweicloud.com/product/gaussdb.html) | 国产 | Java8+Java17都支持 ✔️ | [下载代码和SQL](./../buy.md)
+6| [OpenGaussDB](https://opengauss.org/zh/)                      | 国产    | Java8+Java17都支持 ✔️ | [下载代码和SQL](./../buy.md)
+7| [神通数据库 ShenTong](http://www.shentongdata.com.cn/)             | 国产    | Java8+Java17都支持 ✔️ | [下载代码和SQL](./../buy.md)
+8| [海量数据库 VastData](https://www.vastdata.com.cn)               | 国产      | Java8+Java17都支持 ✔️ | [下载代码和SQL](./../buy.md)
+9| [海扬数据库 OceanBase](https://www.oceanbase.com/)                | 国产     | Java8+Java17都支持 ✔️ | [下载代码和SQL](./../buy.md)
+10| [阿里云 PolarDB](https://www.polardbx.com/)                     | 国产     | Java8+Java17都支持 ✔️ | [下载代码和SQL](./../buy.md)
 
-
-#### 更新
-跟随 SmartAdmin更新，则需要执行 sql-update-log目录中的SQL脚本，需要按照文件版本从小到大执行；
