@@ -10,10 +10,11 @@
   "homepage": "https://smartadmin.1024lab.net",
   "scripts": {
     "localhost": "vite --mode localhost",
-    "dev": "vite",
-    "build:test": "vite build  --base=/admin/ --mode test",
-    "build:pre": "vite build  --mode pre",
-    "build:prod": "vite build  --mode production"
+    "dev": "vite --mode development",
+    "build:dev": "vite build --mode development",
+    "build:test": "vite build --mode test",
+    "build:pre": "vite build --mode pre",
+    "build:prod": "vite build --mode production"
   },
   "type": "module",
   "dependencies": {
