@@ -42,7 +42,7 @@ export default {
       proxy: {
         // 代理路径
         '/': {
-          target: 'http://127.0.0.1:1024/', // 目标服务器地址
+          target: 'http://${SMART_ADMIN_API_HOST:127.0.0.1}:${SMART_ADMIN_API_PORT:1024}/', // 目标服务器地址
           changeOrigin: true, // 是否修改请求头中的 Origin 字段
           rewrite: (path) => path, // 重写路径
         },
