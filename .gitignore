@@ -14,12 +14,15 @@ target/
 
 ### IntelliJ IDEA ###
 .idea
+.env
 *.iws
 *.iml
 *.ipr
 
-### front ###
+### FRONT ###
 **/dist
 **/node_modules
 **/.vscode
 
+### MAC OS ###
+*.DS_Store
